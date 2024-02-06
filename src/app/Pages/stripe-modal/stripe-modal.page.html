@@ -1,0 +1,75 @@
+<ion-content *ngIf="(eventData && eventData.joining_fee > 0) || (packageData && packageData.price > 0)">
+    <div class="container p-3" *ngIf="!addressIncomplete else errorMessage">
+        <form novalidate (ngSubmit)="createToken()" [formGroup]="stripeForm">
+            <div class="row">
+                <div class="col-12" *ngIf="packageData">
+                    <h5 class="mb-3" id="modal-title">Purchase Package</h5>
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>{{ 'stripe_modal.package_name' | translate }}</th>
+                                <td>{{ packageData.name }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.events' | translate }}</th>
+                                <td>{{ packageData.events }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.validaity' | translate }}</th>
+                                <td>{{ packageData.validity }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.price' | translate }}</th>
+                                <td>{{ packageData.formated_price }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.total' | translate }}</th>
+                                <td>{{ packageData.formated_price }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12" *ngIf="eventData">
+                    <h5 class="mb-3" id="modal-title">Enrollment Fee Payment</h5>
+                    <table class="table table-striped table-bordered">
+                        <tbody>
+                            <tr>
+                                <th>{{ 'stripe_modal.event_title' | translate }}</th>
+                                <td>{{ eventData.title }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.start_time' | translate }}</th>
+                                <td>{{ eventData.start_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.ends_time' | translate }}</th>
+                                <td>{{ eventData.end_time }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.timezone' | translate }}</th>
+                                <td>{{ eventData.timezone }}</td>
+                            </tr>
+                            <tr>
+                                <th>{{ 'stripe_modal.joining_fee' | translate }}</th>
+                                <td>{{ eventData.joining_fee_formated }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="form-group col-sm-12">
+                    <label class="mb-2">{{ 'stripe_modal.credit_card_details' | translate }}</label>
+                    <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+                </div>
+            </div>
+            <ion-button class="btn btn-outline-primary btn-block" type="submit">{{ 'submit_btn' | translate }}</ion-button>
+        </form>
+    </div>
+    <ng-template #errorMessage>
+        <div class="d-flex justify-content-center align-items-center h-100 p-3 text-center">
+            <div class="alert-content">
+                <h3 class="mb-3">{{ 'stripe_modal.address_incomplete_message' | translate }}</h3>
+                <button class="btn btn-dark" [routerLink]="['/account']">{{ 'stripe_modal.account_btn' | translate }}</button>
+            </div>
+        </div>
+    </ng-template>
+</ion-content>

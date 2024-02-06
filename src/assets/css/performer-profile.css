@@ -1,0 +1,17 @@
+.banner-section {
+  background: none;
+}
+
+.mega-menu {
+  width: 280px;
+}
+.mega-menu ul {
+  width: 100%;
+}
+
+.banner-section {
+  background: none;
+}
+.banner-section:before {
+  background: none;
+}

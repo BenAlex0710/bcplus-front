@@ -1,0 +1,89 @@
+<ion-header *ngIf="event_info">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="main-title">
+                <h5 class="mb-0 bg-dark text-white p-4">{{ 'guests_list_page.breadcrumb_title' | translate }} <strong class="text-info">({{ event_info.title }})</strong></h5>
+            </div>
+        </div>
+    </div>
+    <form [formGroup]="invitationForm" (submit)="sendInvitation()">
+        <div class="row p-4" *ngIf="event_info.live_status == 'upcoming'">
+            <div class="col-12">
+                <h5 class="mb-2">{{ 'guests_list_page.invite_guests' | translate }}</h5>
+            </div>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" formControlName="full_name" placeholder="{{ 'guests_list_page.guest_full_name' | translate }}">
+                <div *ngIf="formControls.full_name.invalid" class="text-danger">
+                    <div *ngIf="formControls.full_name.errors.server">{{ formControls.full_name.errors.server }}</div>
+                </div>
+            </div>
+            <div class="col-sm-5">
+                <input type="email" class="form-control" formControlName="email" placeholder="{{ 'guests_list_page.email' | translate }}">
+                <div *ngIf="formControls.email.invalid" class="text-danger">
+                    <div *ngIf="formControls.email.errors.server">{{ formControls.email.errors.server }}</div>
+                </div>
+            </div>
+            <div class="col-sm-2">
+                <button class="btn btn-info" type="submit">{{ 'guests_list_page.invite_guests_submit' | translate }}</button>
+            </div>
+        </div>
+    </form>
+</ion-header>
+<ion-content *ngIf="event_info">
+    <div class="p-4">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm" *ngIf="guests">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <!-- <th class="">{{ 'guests_list_page.event_title' | translate }}</th> -->
+                                <th>{{ 'guests_list_page.guest_full_name' | translate }}</th>
+                                <th>{{ 'guests_list_page.email' | translate }}</th>
+                                <!-- <th class="text-center">{{ 'guests_list_page.start_time' | translate }}</th>
+                                <th class="text-center">{{ 'guests_list_page.end_time' | translate }}</th>
+                                <th class="text-center">{{ 'guests_list_page.timezone' | translate }}</th> -->
+                                <th>{{ 'guests_list_page.status' | translate }}</th>
+                                <th class="text-center">{{ 'guests_list_page.action' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="guests.length > 0 else noAttendees">
+                            <tr *ngFor="let guest of guests">
+                                <!-- <td class="align-middle">{{ guest.event.title }}</td> -->
+                                <td class="align-middle">{{ guest.full_name }}</td>
+                                <td class="align-middle">{{ guest.email }}</td>
+                                <!-- <td class="align-middle text-center">{{ guest.event.start_time }}</td>
+                                <td class="align-middle text-center">{{ guest.event.end_time }}</td>
+                                <td class="align-middle text-center">{{ guest.event.timezone }}</td> -->
+                                <td class="align-middle" [ngClass]="guest.status == '0' ? 'text-info' : guest.status == '1' ? 'text-success' : 'text-danger' ">{{ 'guests_list_page.status_labels.'+guest.status | translate }}</td>
+                                <td class="text-center">
+                                    <button class="btn btn-dark btn-sm" title="{{ 'guests_list_page.send_mail_again' | translate }}" (click)="sendEventInvitationsMailAgain(guest.id)">
+                                        <i class="bi bi-send"></i>
+                                    </button>
+                                    <button class="btn btn-danger btn-sm ms-2" title="{{ 'guests_list_page.delete_invitation' | translate }}" (click)="deleteEventInvitation(guest.id)">
+                                        <i class="bi bi-x-circle"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <ng-template #noAttendees>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="15">
+                                        <div class="mb-0"> {{ 'guests_list_page.no_guests_found' | translate }}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                    </table>
+                </div>
+                <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                    <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</ion-content>
+<ion-footer class="p-3 text-end">
+    <button class="btn btn-danger" (click)="closeModal()">{{ 'guests_list_page.close_btn' | translate }}</button>
+</ion-footer>

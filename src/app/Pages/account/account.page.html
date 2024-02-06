@@ -1,0 +1,222 @@
+<ion-content>
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="main-title">
+                    <h3 class="mb-3">{{ 'account_page.breadcrumb_title' | translate }}</h3>
+                </div>
+            </div>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="submitForm()">
+            <div class="row">
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.first_name' | translate }} <span class="required">*</span></label>
+                    <input class="form-control border-form-control" formControlName="first_name" placeholder="{{ 'account_page.input_labels.first_name' | translate }}" type="text">
+                    <div *ngIf="formControls.first_name.invalid" class="text-danger">
+                        <div *ngIf="formControls.first_name.errors.server">{{ formControls.first_name.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.last_name' | translate }} <span class="required">*</span></label>
+                    <input class="form-control border-form-control" formControlName="last_name" placeholder="{{ 'account_page.input_labels.last_name' | translate }}" type="text">
+                    <div *ngIf="formControls.last_name.invalid" class="text-danger">
+                        <div *ngIf="formControls.last_name.errors.server">{{ formControls.last_name.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.email' | translate }} <span class="required">*</span></label>
+                    <input type="email" class="form-control border-form-control" formControlName="email" placeholder="{{ 'account_page.input_labels.email' | translate }} ">
+                    <div *ngIf="formControls.email.invalid" class="text-danger">
+                        <div *ngIf="formControls.email.errors.server">{{ formControls.email.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.username' | translate }} <span class="required">*</span></label>
+                    <input type="text" class="form-control border-form-control" formControlName="username" placeholder="{{ 'account_page.input_labels.username' | translate }} ">
+                    <div *ngIf="formControls.username.invalid" class="text-danger">
+                        <div *ngIf="formControls.username.errors.server">{{ formControls.username.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.headline' | translate }} <span class="required">*</span></label>
+                    <input type="text" class="form-control border-form-control" formControlName="headline" placeholder="{{ 'account_page.input_labels.headline' | translate }} ">
+                    <div *ngIf="formControls.headline.invalid" class="text-danger">
+                        <div *ngIf="formControls.headline.errors.server">{{ formControls.headline.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.bio' | translate }} <span class="required">*</span></label>
+                    <textarea class="form-control border-form-control" rows="6" placeholder="{{ 'account_page.input_labels.bio' | translate }} " formControlName="bio"></textarea>
+                    <div *ngIf="formControls.bio.invalid" class="text-danger">
+                        <div *ngIf="formControls.bio.errors.server">{{ formControls.bio.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12" id="social-profiles">
+                    <h3 class="my-3">{{ 'account_page.input_labels.social_profiles' | translate }}</h3>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.google' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="google_url" placeholder="{{ 'account_page.input_labels.google' | translate }} ">
+                    <div *ngIf="formControls.google_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.google_url.errors.server">{{ formControls.google_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.facebook' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="facebook_url" placeholder="{{ 'account_page.input_labels.facebook' | translate }} ">
+                    <div *ngIf="formControls.facebook_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.facebook_url.errors.server">{{ formControls.facebook_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.instagram' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="instagram_url" placeholder="{{ 'account_page.input_labels.instagram' | translate }} ">
+                    <div *ngIf="formControls.instagram_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.instagram_url.errors.server">{{ formControls.instagram_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.linkedin' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="linkedin_url" placeholder="{{ 'account_page.input_labels.linkedin' | translate }} ">
+                    <div *ngIf="formControls.linkedin_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.linkedin_url.errors.server">{{ formControls.linkedin_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.tiktok' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="tiktok_url" placeholder="{{ 'account_page.input_labels.tiktok' | translate }} ">
+                    <div *ngIf="formControls.tiktok_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.tiktok_url.errors.server">{{ formControls.tiktok_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.snapchat' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="snapchat_url" placeholder="{{ 'account_page.input_labels.snapchat' | translate }} ">
+                    <div *ngIf="formControls.snapchat_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.snapchat_url.errors.server">{{ formControls.snapchat_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.whatsapp' | translate }}</label>
+                    <input type="text" class="form-control border-form-control" formControlName="whatsapp_url" placeholder="{{ 'account_page.input_labels.whatsapp' | translate }} ">
+                    <div *ngIf="formControls.whatsapp_url.invalid" class="text-danger">
+                        <div *ngIf="formControls.whatsapp_url.errors.server">{{ formControls.whatsapp_url.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.photo' | translate }} <small>({{ 'account_page.photo_instruction' | translate }})</small></label>
+                    <div class="file_upload_input_btn mb-2">
+                        <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_image_btn' | translate }}
+                            <input type="file" (change)="showPhotoPreview($event, previewImg)">
+                            <input type="hidden" formControlName="photo">
+                        </button>
+                    </div>
+                    <img #previewImg [src]="(userinfo && userinfo.photo) ? userinfo.photo : './assets/images/resources/user-img.png'" width="60" height="60">
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.banner' | translate }} </label>
+                    <div class="file_upload_input_btn mb-2">
+                        <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_banner_btn' | translate }}
+                            <input type="file" (change)="showBannerPreview($event)">
+                            <input type="hidden" formControlName="banner">
+                        </button>
+                    </div>
+                    <div [ngStyle]="{'display': !isVideo(userinfo?.banner) ? 'none' : 'initial'}">
+                        <video #previewVideoBanner [src]="userinfo?.banner" height="150" controls></video>
+                    </div>
+                    <div [ngStyle]="{'display': isVideo(userinfo?.banner) ? 'none' : 'initial'}">
+                        <img #previewImgBanner [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/user-img.png'" height="150">
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <ion-item class="become-performer-checkbox" [ngClass]="{ 'd-none' : userinfo && userinfo.role == '2'} ">
+                        <ion-checkbox #becomePerformer formControlName="become_perfomer" [checked]="userinfo && userinfo.role == '2' "></ion-checkbox>
+                        <ion-label> &nbsp; {{ 'account_page.input_labels.become_perfomer' | translate }}</ion-label>
+                    </ion-item>
+                </div>
+                <div class="col-sm-12 " *ngIf="becomePerformer.checked">
+                    <div class="row ">
+                        <div class="col-sm-12 mb-3 ">
+                            <label class="control-label mb-2 ">{{ 'account_page.input_labels.performer_type' | translate }}</label>
+                            <!-- <input type="text " class="form-control border-form-control" formControlName="performer_type" placeholder="{{ 'account_page.input_labels.performer_type' | translate }} "> -->
+                            <select class="form-select" formControlName="performer_type" *ngIf="app.settingsOptions" multiple style="height: 150px;">
+                                <!-- <option value="null" selected disabled>{{ 'account_page.input_labels.performer_type' | translate }}</option> -->
+                                <option *ngFor="let type of app.settingsOptions.performer_types " [value]="type.id">{{ type.name }}</option>
+                            </select>
+                            <div *ngIf="formControls.performer_type.invalid" class="text-danger ">
+                                <div *ngIf="formControls.performer_type.errors.server">{{ formControls.performer_type.errors.server }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <label class="control-label mb-2 ">{{ 'account_page.input_labels.organization_name' | translate }}</label>
+                            <input type="text " class="form-control border-form-control" formControlName="organization_name" placeholder="{{ 'account_page.input_labels.organization_name' | translate }} ">
+                            <div *ngIf="formControls.organization_name.invalid" class="text-danger ">
+                                <div *ngIf="formControls.organization_name.errors.server">{{ formControls.organization_name.errors.server }}</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 mb-3 ">
+                            <label class="control-label mb-2 ">{{ 'account_page.input_labels.organization_email' | translate }}</label>
+                            <input type="text " class="form-control border-form-control " formControlName="organization_email" placeholder="{{ 'account_page.input_labels.organization_email' | translate }} ">
+                            <div *ngIf="formControls.organization_email.invalid " class="text-danger ">
+                                <div *ngIf="formControls.organization_email.errors.server ">{{ formControls.organization_email.errors.server }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <h3 class="my-3">{{ 'account_page.input_labels.address' | translate }}</h3>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.address_line1' | translate }} <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="address_line1" placeholder="{{ 'account_page.input_labels.address_line1' | translate }}">
+                    <div *ngIf="formControls.address_line1.invalid" class="text-danger">
+                        <div *ngIf="formControls.address_line1.errors.server">{{ formControls.address_line1.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.address_line2' | translate }} </label>
+                    <input type="text" class="form-control" formControlName="address_line2" placeholder="{{ 'account_page.input_labels.address_line2' | translate }}">
+                    <div *ngIf="formControls.address_line2.invalid" class="text-danger">
+                        <div *ngIf="formControls.address_line2.errors.server">{{ formControls.address_line2.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.city' | translate }} <span class="required">*</span></label>
+                    <input type="text" class="form-control" formControlName="city" placeholder="{{ 'account_page.input_labels.city' | translate }}">
+                    <div *ngIf="formControls.city.invalid" class="text-danger">
+                        <div *ngIf="formControls.city.errors.server">{{ formControls.city.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.state' | translate }} </label>
+                    <input type="text" class="form-control" formControlName="state" placeholder="{{ 'account_page.input_labels.state' | translate }}">
+                    <div *ngIf="formControls.state.invalid" class="text-danger">
+                        <div *ngIf="formControls.state.errors.server">{{ formControls.state.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.country' | translate }} <span class="required">*</span></label>
+                    <select class="form-select" formControlName="country" *ngIf="app.settingsOptions">
+                        <option value="null" selected disabled>{{ 'account_page.input_labels.country' | translate }}</option>
+                        <option *ngFor="let country of app.settingsOptions.countries | keyvalue" [value]="country.key">{{ country.value }}</option>
+                    </select>
+                    <div *ngIf="formControls.country.invalid" class="text-danger">
+                        <div *ngIf="formControls.country.errors.server">{{ formControls.country.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-6 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.zip' | translate }} </label>
+                    <input type="text" class="form-control" formControlName="zip" placeholder="{{ 'account_page.input_labels.zip' | translate }}">
+                    <div *ngIf="formControls.zip.invalid" class="text-danger">
+                        <div *ngIf="formControls.zip.errors.server">{{ formControls.zip.errors.server }}</div>
+                    </div>
+                </div>
+                <div class="col-sm-12 text-right ">
+                    <button type="submit" class="btn btn-theme"> {{ 'account_page.update_btn' | translate }} </button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <app-footer></app-footer>
+
+</ion-content>

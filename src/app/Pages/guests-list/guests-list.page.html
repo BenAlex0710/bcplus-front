@@ -1,0 +1,50 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'guests_list_page.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped" *ngIf="guests">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th class="">{{ 'guests_list_page.event_title' | translate }}</th>
+                                    <th>{{ 'guests_list_page.username' | translate }}</th>
+                                    <th class="text-center">{{ 'guests_list_page.start_time' | translate }}</th>
+                                    <th class="text-center">{{ 'guests_list_page.end_time' | translate }}</th>
+                                    <th class="text-center">{{ 'guests_list_page.timezone' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="guests.length > 0 else noAttendees">
+                                <tr *ngFor="let guest of guests">
+                                    <td class="align-middle">{{ guest.event.title }}</td>
+                                    <td class="align-middle">{{ guest.user.username }}</td>
+                                    <td class="align-middle text-center">{{ guest.event.start_time }}</td>
+                                    <td class="align-middle text-center">{{ guest.event.end_time }}</td>
+                                    <td class="align-middle text-center">{{ guest.event.timezone }}</td>
+                                </tr>
+                            </tbody>
+                            <ng-template #noAttendees>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="15">
+                                            <div class="mb-0"> {{ 'guests_list_page.no_guests_found' | translate }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

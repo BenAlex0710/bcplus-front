@@ -1,0 +1,423 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="mn-sec" *ngIf="event_info">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <!-- <div class="alert alet-info">{{ liveUsers }}</div> -->
+                        <div class="alert alert-danger" *ngIf="canPublish && !agora.cameraAvailable && agora.cameraAvailable !== undefined"> {{ 'single_event.camera_not_available_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="canPublish && agora.cameraAvailable && !agora.cameraPermission && agora.cameraPermission !== undefined"> {{ 'single_event.camera_permission_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="canPublish && !agora.microphoneAvailable && agora.microphoneAvailable !== undefined"> {{ 'single_event.microphone_not_available_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="canPublish && agora.microphoneAvailable && !agora.microphonePermission && agora.microphonePermission !== undefined"> {{ 'single_event.microphone_permission_error' | translate }} </div>
+                        <div class="mn-vid-sc single_video">
+                            <div class="vid-1">
+                                <div class="vid-pr" *ngIf="app.userinfo && !event_info.live && event_info.live_status == 'published' && (enrollementRecord || guestRecord || app.userinfo.id == event_info.performer.id)">
+                                    <video id="my-video" class="video-js" controls width="640" height="480" [poster]="event_info.banner">
+                                        <source crossorigin="true" [src]="event_info.live_data.video_url" type="application/x-mpegURL" />
+                                    </video>
+                                </div>
+                                <div class="videos-section" [ngClass]="(app.userinfo && (enrollementRecord || guestRecord || app.userinfo.id == event_info.performer.id) && (event_info.live || canPublish)) ? '' : 'd-none'">
+                                    <div class="live-users">Live Users : {{ liveUsers }}</div>
+                                    <div id="marquee" *ngIf="event_info.notification && event_info.notification.length > 0">
+                                        <div id="marquee-item"> {{ event_info.notification }}</div>
+                                    </div>
+                                    <div class="performer-video mb-2" id="performerPlayer"></div>
+                                    <div class="row guest-videos-wrapper" id="guestVideosWrapper">
+                                        <!-- <div class="col-md-4 col-6">
+                                            <div class="guest-video-player" *ngFor="let guest of event_info.guests"></div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="banner text-center" *ngIf="(!event_info.live && event_info.live_status == 'upcoming' && !canPublish) || !app.userinfo || (event_info.live_status == 'published' && !enrollementRecord && !guestRecord && app.userinfo.id != event_info.performer.id) ">
+                                    <img [src]="event_info.banner">
+                                </div>
+                                <div class="vid-info">
+                                    <div class="info-pr d-flex align-items-end justify-content-between pb-1">
+                                        <span>
+                                            <h3 class="m-0 fw-bold">{{ event_info.title }}</h3>
+                                        </span>
+                                        <ul class="pr_links " *ngIf="event_info.upcoming && (start_timer || end_timer)">
+                                            <li *ngIf="start_timer"><i class="bi bi-alarm"></i> &nbsp;<span class="timer"> {{ 'single_event.start_in' | translate : { timer : start_timer } }}</span></li>
+                                            <li *ngIf="end_timer"><i class="bi bi-alarm"></i> &nbsp;<span class="timer">{{ 'single_event.ends_in' | translate :{ timer : end_timer } }}</span></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="abt-mk">
+                                <div class="info-pr-sec mb-3">
+                                    <div class="vcp_inf cr">
+                                        <div class="vc_hd">
+                                            <img [src]="event_info.performer.photo ? event_info.performer.photo :  './assets/images/resources/th3.png'" alt="" />
+                                        </div>
+                                        <div class="vc_info pr">
+                                            <h4>
+                                                <a href="javascript:void(0)" class="fw-bold" title="" [routerLink]="['/channel', event_info.performer.username]">{{ event_info.performer.full_name }}</a>
+                                                <br>
+                                                <small>@{{ event_info.performer.username }}</small>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    <ul class="chan_cantrz" *ngIf="!app.userinfo else LoggedInUserSection">
+                                        <li *ngIf="event_info.live_status == 'upcoming'">
+                                            <button id="event-register" type="button" class="btn btn-success" [routerLink]="['/login']" [queryParams]="{ redirect: 'event/'+event_info.id+'/'+event_info.slug }">{{ 'single_event.attendee_enroll_btn' | translate }}</button>
+                                        </li>
+                                    </ul>
+                                    <ng-template #LoggedInUserSection>
+                                        <ul class="chan_cantrz" *ngIf="app.userinfo.id == event_info.performer.id else AttendeeSection">
+                                            <li *ngIf="enableStream && event_info.live_status == 'upcoming' && !event_info.live">
+                                                <button id="preview" type="button" class="btn btn-primary me-2" (click)="startVideoStream()" *ngIf="!canPublish">{{ 'single_event.preview_btn' | translate }}</button>
+                                                <button id="publish" type="button" class="btn btn-success me-2" (click)="publishVideoStream()" *ngIf="canPublish">{{ 'single_event.publish_btn' | translate }}</button>
+                                                <button id="cancel_preview" type="button" class="btn btn-danger" (click)="cancelPreview()" *ngIf="canPublish">{{ 'single_event.cancel_preview_btn' | translate }}</button>
+                                            </li>
+                                            <li *ngIf="event_info.live">
+                                                <button id="post_to_facebook" type="button" class="btn btn-primary me-2" (click)="fbModal = true" *ngIf="!fbStreaming">{{ 'single_event.post_to_facebook' | translate }}</button>
+                                                <button id="stop_post_to_facebook" type="button" class="btn btn-primary me-2" (click)="stopSocialStreaming('facebook')" *ngIf="fbStreaming">{{ 'single_event.stop_post_to_facebook' | translate }}</button>
+                                                <button id="post_to_youtube" type="button" class="btn btn-primary me-2" (click)="ytModal = true" *ngIf="!ytStreaming">{{ 'single_event.post_to_youtube' | translate }}</button>
+                                                <button id="stop_post_to_youtube" type="button" class="btn btn-primary me-2" (click)="stopSocialStreaming('youtube')" *ngIf="ytStreaming">{{ 'single_event.stop_post_to_youtube' | translate }}</button>
+                                                <button id="leave" type="button" class="btn btn-danger" (click)="endStream()">{{ 'single_event.leave_btn' | translate }}</button>
+                                                <ion-modal [isOpen]="fbModal" class="social_posting_live_stream_modal" (didDismiss)="fbModal = false">
+                                                    <ng-template>
+                                                        <ion-content>
+                                                            <form [formGroup]="fbStreamFrom" (submit)="publishToSocial('facebook')">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">{{ 'single_event.facebook_stream_details' | translate }}</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p></p>
+                                                                    <div class="mb-3">
+                                                                        <label>{{ 'single_event.stream_key' | translate }}</label>
+                                                                        <input type="text" formControlName="stream_key" class="form-control" placeholder="{{ 'single_event.stream_key' | translate }}">
+                                                                        <div class="text-danger" *ngIf="fbStreamFromControls.stream_key.touched && !fbStreamFromControls.stream_key.valid && fbStreamFromControls.stream_key.errors.required">
+                                                                            <small>{{ 'single_event.fb_stream_key_error' | translate }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label>{{ 'single_event.server_url' | translate }}</label>
+                                                                        <input type="text" formControlName="server_url" class="form-control" placeholder="{{ 'single_event.server_url' | translate }}">
+                                                                        <div class="text-danger" *ngIf="fbStreamFromControls.server_url.touched && !fbStreamFromControls.server_url.valid && fbStreamFromControls.server_url.errors.required ">
+                                                                            <small>{{ 'single_event.fb_server_url_error' | translate }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <p>
+                                                                        <a target="_blank" href="https://www.facebook.com/live/create">Instructions</a></p> -->
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-success" [disabled]="!fbStreamFrom.valid">{{ 'single_event.fb_publish_btn' | translate }}</button>
+                                                                    <button type="button" class="btn btn-danger" (click)="fbModal = false">{{ 'cancel_btn' | translate }}</button>
+                                                                </div>
+                                                            </form>
+                                                        </ion-content>
+                                                    </ng-template>
+                                                </ion-modal>
+                                                <ion-modal [isOpen]="ytModal" class="social_posting_live_stream_modal" (didDismiss)="ytModal = false">
+                                                    <ng-template>
+                                                        <ion-content>
+                                                            <form [formGroup]="ytStreamFrom" (submit)="publishToSocial('youtube')">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title">{{ 'single_event.youtube_stream_details' | translate }}</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <p></p>
+                                                                    <div class="mb-3">
+                                                                        <label>{{ 'single_event.stream_key' | translate }}</label>
+                                                                        <input type="text" formControlName="stream_key" class="form-control" placeholder="{{ 'single_event.stream_key' | translate }}">
+                                                                        <div class="text-danger" *ngIf="ytStreamFromControls.stream_key.touched && !ytStreamFromControls.stream_key.valid && ytStreamFromControls.stream_key.errors.required">
+                                                                            <small>{{ 'single_event.yt_stream_key_error' | translate }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="mb-3">
+                                                                        <label>{{ 'single_event.server_url' | translate }}</label>
+                                                                        <input type="text" formControlName="server_url" class="form-control" placeholder="{{ 'single_event.server_url' | translate }}">
+                                                                        <div class="text-danger" *ngIf="ytStreamFromControls.server_url.touched && !ytStreamFromControls.server_url.valid && ytStreamFromControls.server_url.errors.required ">
+                                                                            <small>{{ 'single_event.yt_server_url_error' | translate }}</small>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- <p>
+                                                                        <a target="_blank" href="https://www.facebook.com/live/create">Instructions</a></p> -->
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-success" [disabled]="!ytStreamFrom.valid">{{ 'single_event.yt_publish_btn' | translate }}</button>
+                                                                    <button type="button" class="btn btn-danger" (click)="ytModal = false">{{ 'cancel_btn' | translate }}</button>
+                                                                </div>
+                                                            </form>
+                                                        </ion-content>
+                                                    </ng-template>
+                                                </ion-modal>
+                                            </li>
+                                        </ul>
+                                        <ng-template #AttendeeSection>
+                                            <ul class="chan_cantrz" *ngIf="!guestRecord else guestActions">
+                                                <button type="button" *ngIf="!event_info.is_saved" class="btn btn-info text-white me-2" (click)="saveEvent()">{{ 'single_event.save_btn' | translate }}</button>
+                                                <li *ngIf="event_info.live_status == 'upcoming'">
+                                                    <button id="event-register" type="button" class="btn btn-success" *ngIf="!enrollementRecord" (click)="enrollasAttendee()">{{ 'single_event.attendee_enroll_btn' | translate }}</button>
+                                                    <div class="text-success" *ngIf="enrollementRecord">{{ 'single_event.already_enrolled' | translate }}</div>
+                                                </li>
+                                            </ul>
+                                            <ng-template #guestActions>
+                                                <ul class="chan_cantrz" *ngIf="event_info.live">
+                                                    <li *ngIf="!joinedAsGuest">
+                                                        <button id="preview" type="button" class="btn btn-primary me-2" (click)="startVideoStreamGuest()" *ngIf="!canPublishGuest">{{ 'single_event.join_as_guest_btn' | translate }}</button>
+                                                        <button id="publish" type="button" class="btn btn-success me-2" (click)="publishVideoStreamGuest()" *ngIf="canPublishGuest">{{ 'single_event.publish_btn' | translate }}</button>
+                                                        <button id="cancel_preview" type="button" class="btn btn-danger" (click)="cancelPreviewGuest()" *ngIf="canPublishGuest">{{ 'single_event.cancel_preview_btn' | translate }}</button>
+                                                    </li>
+                                                    <li *ngIf="joinedAsGuest">
+                                                        <button id="leave" type="button" class="btn btn-danger" (click)="endStreamGuest()">{{ 'single_event.leave_btn' | translate }}</button>
+                                                    </li>
+                                                </ul>
+                                            </ng-template>
+                                        </ng-template>
+                                    </ng-template>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="about-ch-sec">
+                                    <div class="abt-rw mb-1">
+                                        <h6 class="d-inline-block">{{ 'single_event.start_time' | translate }} : </h6>
+                                        <p class="d-inline-block">&nbsp; {{ event_info.start_time | date : 'dd/MM/yyyy HH:mm' }}</p>
+                                    </div>
+                                    <div class="abt-rw mb-1">
+                                        <h6 class="d-inline-block">{{ 'single_event.end_time' | translate }} : </h6>
+                                        <p class="d-inline-block">&nbsp;{{ event_info.end_time | date : 'dd/MM/yyyy HH:mm' }}</p>
+                                    </div>
+                                    <div class="abt-rw mb-1">
+                                        <h6 class="d-inline-block">{{ 'single_event.timezone' | translate }} : </h6>
+                                        <p class="d-inline-block">&nbsp;{{ event_info.timezone }}</p>
+                                    </div>
+                                    <div class="abt-rw mb-1">
+                                        <h6 class="d-inline-block">{{ 'single_event.joining_fee' | translate }} : </h6>
+                                        <p class="d-inline-block">&nbsp;{{ event_info.joining_fee_formated }}</p>
+                                    </div>
+                                    <div class="abt-rw mb-3">
+                                        <h6>{{ 'single_event.description' | translate }} : </h6>
+                                        <p>{{ event_info.description }}</p>
+                                    </div>
+                                </div>
+                                <!--about-ch-sec end-->
+                            </div>
+                            <share-buttons theme="circles-dark" [include]="['copy', 'facebook', 'email', 'linkedin', 'pinterest',  'telegram', 'tumblr', 'twitter', 'whatsapp']" [showIcon]="true" [showText]="false" url="event/{{event_info.id}}/{{event_info.slug}}" description="{{event_info.title}}" class="pt-3 mb-3">
+                            </share-buttons>
+                            <div class="cmt-bx">
+                                <div class="clearfix"></div>
+                                <div class="vcp_inf pc" *ngIf="app.userinfo && !event_info.live && event_info.live_status == 'published' && (enrollementRecord || guestRecord || app.userinfo.id === event_info.performer.id)">
+                                    <div class="vc_hd">
+                                        <img [src]="app.userinfo.photo ? app.userinfo.photo : './assets/images/resources/th3.png' " alt="" />
+                                    </div>
+                                    <div class="d-flex">
+                                        <textarea class="form-control border-bottom mx-3" #commentInput placeholder="{{ 'single_event.comment_input_placeholder' | translate  }}" style="background: transparent;"></textarea>
+                                        <button class="btn-default btn-theme align-self-end" #commentSubmit type="button" (click)="addComment(commentInput, commentSubmit)">{{ 'single_event.comment_btn' | translate }}</button>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <!--cmt-bx end-->
+                                <ul class="cmn-lst">
+                                    <li *ngFor="let comment of comments">
+                                        <div class="vcp_inf w-100">
+                                            <div class="vc_hd">
+                                                <img [src]="comment.user.photo ? comment.user.photo : './assets/images/resources/th3.png' " alt="" />
+                                            </div>
+                                            <div class="coments">
+                                                <h2>{{ comment.user.username }} <small class="posted_dt"> {{ comment.created_at | date : 'dd/MM/yyyy HH:mm' }}</small>
+                                                </h2>
+                                                <div [innerHtml]="comment.message"></div>
+                                                <ul class="cmn-i">
+                                                    <li class="reply_btn">
+                                                        <a href="javascript:void(0)" title="" (click)="comment.reply_box = true">
+                                                            <i class="bi bi-reply"></i> {{ 'single_event.reply_btn' | translate }} </a>
+                                                        <span>{{ comment.replies.length }}</span>
+                                                    </li>
+                                                    <div class="mt-3" *ngIf="comment.reply_box">
+                                                        <textarea class="form-control border-bottom" #replyInput placeholder="{{ 'single_event.comment_reply_input_placeholder' | translate  }}" rows="1" style="background: transparent;"></textarea>
+                                                        <div class="mt-2 text-end">
+                                                            <button class="btn-default bg-secondary me-2" type="button" (click)="comment.reply_box = false">{{ 'cancel_btn' | translate }}</button>
+                                                            <button class="btn-default btn-theme" #replySubmit type="button" (click)="addComment(replyInput, replySubmit, comment)">{{ 'single_event.reply_btn' | translate }}</button>
+                                                        </div>
+                                                    </div>
+                                                </ul>
+                                                <ul class="cmn-lst">
+                                                    <li *ngFor="let reply of comment.replies" class="mt-3">
+                                                        <div class="vcp_inf w-100">
+                                                            <div class="vc_hd">
+                                                                <img [src]="reply.user.photo ? reply.user.photo : './assets/images/resources/th3.png' " alt="" />
+                                                            </div>
+                                                            <div class="coments">
+                                                                <h6 class="fw-bold"> {{ reply.user.username }} <small class="posted_dt"> {{ reply.created_at | date : 'dd/MM/yyyy HH:mm' }}</small>
+                                                                </h6>
+                                                                <p>{{ reply.message }}</p>
+                                                                <div class="clearfix"></div>
+                                                            </div>
+                                                            <!--coments end-->
+                                                        </div>
+                                                        <!--vcp_inf end-->
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <!--coments end-->
+                                        </div>
+                                        <!--vcp_inf end-->
+                                    </li>
+                                </ul>
+                                <div class="text-center" *ngIf="commentLoadMoreBtn">
+                                    <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMoreComments()">{{ 'load_more_btn' | translate }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chat-container mb-5" *ngIf="event_info.live">
+                            <!-- <div class="chat-container mb-5"> -->
+                            <div class="chat-box-header">
+                                <h5 class="fw-bold">{{ 'single_event.live_chat_box_heading' | translate }}</h5>
+                            </div>
+                            <div class="chat-messages" #scrollable (scroll)="messageScrolled(scrollable)">
+                                <div class="chat-message-block d-flex" *ngFor="let message of messages">
+                                    <div class="user-icon me-2">
+                                        <img [src]="message.user.photo ? message.user.photo : './assets/images/resources/th3.png' ">
+                                    </div>
+                                    <div class="message"><strong>{{ message.user.username }}</strong>
+                                        <div [innerHtml]="message.message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="chat-input-block" #chatMsgInputWrapper>
+                                <button class="btn btn-dark align-self-end" (click)="initEmojiPicker(leteditor)">
+                                    <i class="bi bi-emoji-smile"></i>
+                                </button>
+                                <div #leteditor class="let-editor chat-input">
+                                    <div id="chat-input-div" contenteditable="true" #chatMsgInput (paste)="filterPasteContent($event)"></div>
+                                </div>
+                                <!-- <textarea type="text" class="chat-input" #chatMsgInput placeholder="{{ 'single_event.live_chat_input_placeholder' | translate }}"
+                                    (keyup)="$event.which == 13 ? sendMessage(chatMsgInput, chatMsgInputWrapper) : textAreaAdjust(chatMsgInput, chatMsgInputWrapper)"></textarea> -->
+                                <button type="button" class="btn btn-dark align-self-end" (click)="sendMessage(chatMsgInput, chatMsgInputWrapper)" style="height: 40px;"><i class="bi bi-send"></i></button>
+                            </div>
+                        </div>
+                        <div class="guests-section mb-5" *ngIf="event_info.live_status == 'upcoming'">
+                            <h6 class="border-bottom fw-bold pb-2 mb-3">{{ 'single_event.guests_list' | translate }} ({{ event_info.guests.length }})</h6>
+                            <ul class="guests-list" *ngIf="event_info.guests.length > 0 else noGuests">
+                                <li *ngFor="let guest of event_info.guests">
+                                    <div class="user-block d-flex mb-3">
+                                        <div class="user-thumb me-3">
+                                            <img class="rounded-circle" [src]="guest.user.photo ? guest.user.photo :  './assets/images/resources/th3.png'" width="50" height="50">
+                                        </div>
+                                        <div class="user-info">
+                                            <h6 class="fw-bold">{{ guest.user.full_name }} <small class="fw-light text-warning" *ngIf="guest.status == '0'">({{ 'single_event.invitation_pending' | translate }})</small><small class="fw-light text-success" *ngIf="guest.status == '1'">({{ 'single_event.invitation_accecpted' | translate }})</small>
+                                            </h6>
+                                            <p>@{{ guest.user.username }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ng-template #noGuests>
+                                <ul class="guests-list">
+                                    <li>
+                                        <p> {{ 'single_event.no_guests_invited' | translate }}</p>
+                                    </li>
+                                </ul>
+                            </ng-template>
+                        </div>
+                        <div class="attendees-section mb-5" *ngIf="event_info.live_status == 'upcoming'">
+                            <h6 class="border-bottom fw-bold pb-2 mb-3">{{ 'single_event.attendees_list' | translate }} ({{ event_info.attendees.length }})</h6>
+                            <ul class="attendees-list" *ngIf="event_info.attendees.length > 0 else noAttendees">
+                                <li *ngFor="let attendee of event_info.attendees">
+                                    <div class="user-block d-flex mb-2">
+                                        <div class="user-thumb me-3">
+                                            <img class="rounded-circle" [src]="attendee.user.photo ? attendee.user.photo :  './assets/images/resources/th3.png'" width="50" height="50">
+                                        </div>
+                                        <div class="user-info">
+                                            <h6 class="fw-bold">{{ attendee.user.full_name }}</h6>
+                                            <p>@{{ attendee.user.username }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ng-template #noAttendees>
+                                <ul class="attendees-list">
+                                    <li>
+                                        <p> {{ 'single_event.no_attendees_enrolled' | translate }}</p>
+                                    </li>
+                                </ul>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="!event_info.live && event_info.live_status == 'published'">
+                            <form [formGroup]="reviewForm" (submit)="addReview()" *ngIf="!review_posted && enrollementRecord || guestRecord">
+                                <h6 class="border-bottom fw-bold pb-2">{{ 'single_event.review_heading' | translate }} </h6>
+                                <div class="cmt-bx mb-4" *ngIf="app.userinfo">
+                                    <div class="review-list pc">
+                                        <div class="d-grid">
+                                            <div class="d-flex mb-3 justify-content-between">
+                                                <div class="user-info d-flex">
+                                                    <div class="vc_hd me-3">
+                                                        <img [src]="app.userinfo.photo ? app.userinfo.photo : './assets/images/resources/th3.png' " alt="" height="50" width="50" />
+                                                    </div>
+                                                    <div class="align-self-center">
+                                                        <h6 class="fw-bold">{{ app.userinfo.full_name }}</h6>
+                                                        <p>@{{app.userinfo.username}}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-2 align-self-end">
+                                                <div class="rating-starts-input d-inline-block mb-1">
+                                                    <i class="bi {{star}} me-2" *ngFor="let star of stars; let i = index;" (click)="setStarsValue(i)"></i>
+                                                </div>
+                                                <div *ngIf="reviewFormControls.stars.invalid" class="text-danger">
+                                                    <div *ngIf="reviewFormControls.stars.errors.server">{{reviewFormControls.stars.errors.server}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <textarea class="form-control" rows="4" placeholder="{{ 'single_event.review_placeholer' | translate  }}" formControlName="review"></textarea>
+                                                <div *ngIf="reviewFormControls.review.invalid" class="text-danger">
+                                                    <div *ngIf="reviewFormControls.review.errors.server">{{reviewFormControls.review.errors.server}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <button class="btn-default btn-theme" type="submit">{{ 'submit_btn' | translate }}</button>
+                                            </div>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                    </div>
+                                </div>
+                            </form>
+                            <h6 class="border-bottom fw-bold pb-2 mb-3"> {{ 'single_event.review_post_count' | translate }} ({{event_info.reviews_count}}) <span class="float-end"> {{ 'single_event.avg_ratings' | translate }} <span class="rating-starts"><i class="bi bi-star-fill"></i>&nbsp;<strong>{{ event_info.rating | number : '1.1-2' }}</strong></span>
+                                </span>
+                            </h6>
+                            <ul class="review-list mt-4" *ngIf="event_info.reviews.length > 0 else noReviews">
+                                <li *ngFor="let review of event_info.reviews">
+                                    <div class="vcp_inf w-100 ">
+                                        <div class="d-flex mb-2">
+                                            <div class="vc_hd me-3">
+                                                <img [src]="review.reviewer.photo ? review.reviewer.photo : './assets/images/resources/th3.png'" alt="" />
+                                            </div>
+                                            <div class="flex-grow-1">
+                                                <h6 class="mb-0 fw-bold">{{ review.reviewer.full_name }}</h6>
+                                                <p>@{{ review.reviewer.username }}</p>
+                                            </div>
+                                            <div>
+                                                <small class="posted_dt mb-2"> {{ review.created_at | date : 'dd/MM/yyyy HH:mm' }}</small>
+                                                <div class="rating-starts mb-0 text-end">
+                                                    <i class="bi me-2" *ngFor="let star of stars; let i = index;" [ngClass]=" i < review.stars ? 'bi-star-fill' : 'bi-star' "></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="">
+                                            <p>{{ review.review }}</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <ng-template #noReviews>
+                                <ul class="review-list mt-1">
+                                    <li>
+                                        <p> {{ 'single_event.no_review_posted' | translate }}</p>
+                                    </li>
+                                </ul>
+                            </ng-template>
+                            <div class="text-center" *ngIf="reviewLoadMoreBtn">
+                                <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMoreReviews()">{{ 'load_more_btn' | translate }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

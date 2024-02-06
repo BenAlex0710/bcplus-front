@@ -1,0 +1,127 @@
+.banner img {
+    width: 100%;
+}
+
+.chat-container {
+    background: #eeecec;
+}
+
+.chat-messages {
+    height: 450px;
+    overflow: auto;
+    padding: 15px;
+
+    .chat-message-block * {
+        word-break: break-all;
+    }
+}
+
+.cmn-lst {
+    .coments * {
+        word-break: break-all;
+    }
+}
+
+.chat-message-block {
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.reply_btn a i {
+    font-size: 20px;
+}
+
+.chat-input-block {
+    border-top: 1px solid #d0d0d0;
+    padding: 15px;
+    display: flex;
+    min-height: 70px;
+    max-height: 130px;
+
+    .chat-input {
+        width: calc(100% - 100px);
+        // height: 40px;
+        // min-height: 40px;
+        max-height: 100px;
+        padding: 10px 0;
+        background: transparent;
+        border-radius: 0px;
+        border: 0px;
+        border-bottom: 1px solid;
+        margin: 0 10px;
+        overflow: scroll;
+    }
+
+    #chat-input-div {
+        &:focus-visible {
+            outline: none;
+        }
+    }
+}
+
+.chat-box-header {
+    padding: 15px;
+    border-bottom: 1px solid #d0d0d0;
+}
+
+.user-icon {
+    min-width: 30px;
+    border-radius: 50%;
+    overflow: hidden;
+    height: 30px;
+    width: 30px;
+}
+
+.videos-section {
+    position: relative;
+    text-align: center;
+
+    .performer-video {
+        max-width: 640px;
+        max-height: 480px;
+        margin: auto;
+        background-color: #000;
+    }
+
+    .guest-videos-wrapper {
+        // width: 90%;
+        max-width: 640px;
+        margin: auto;
+
+        .guest-video-player {
+            background-color: #000;
+            color: #fff;
+        }
+    }
+}
+
+
+
+#marquee {
+    background: #88192b;
+    width: 100%;
+    overflow: hidden;
+    padding: 5px;
+    position: absolute;
+    bottom: 0;
+    z-index: 99;
+}
+
+#marquee-item {
+    color: #fff;
+    font-weight: bold;
+    white-space: nowrap;
+    clear: both;
+    float: left;
+}
+
+.live-users {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #88192b;
+    z-index: 99;
+    color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+}

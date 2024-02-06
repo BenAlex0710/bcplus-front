@@ -1,0 +1,21 @@
+<footer class="footer mt-5">
+    <div class="container">
+        <div class="d-lg-flex text-center justify-content-between flex-wrap align-items-center">
+            <div>
+                <p class="text-white">2022 BC+ by Cosonas</p>
+            </div>
+            <ul class="list-unstyled d-flex justify-content-center flex-wrap" *ngIf="app.pagesToShow">
+                <li *ngFor="let page of app.pagesToShow">
+                    <a href="javascript:void(0)" class="footer_link mx-2" [routerLink]="['/page', page.slug]">{{ page[app.language+'_title'] }}</a>
+                </li>
+            </ul>
+            <div class="footer_link">
+                <div class="d-inline-block"><i class="icon-language float-start me-2"></i>
+                    <ion-select interface="popover" [value]="language" okText="{{ 'ok_btn' | translate }}" cancelText="{{ 'cancel_btn' | translate }}" (ionChange)="app.switchLanguage($event)">
+                        <ion-select-option [value]="lang.key" *ngFor="let lang of app.languageList | keyvalue ">{{ lang.value }}</ion-select-option>
+                    </ion-select>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

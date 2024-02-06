@@ -1,0 +1,112 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'create_event.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+            </div>
+            <form [formGroup]="form" (ngSubmit)="submitForm()">
+                <div class="row">
+                    <div class="col-sm-12 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.title' | translate }} <span class="required">*</span></label>
+                        <input class="form-control border-form-control" formControlName="title" placeholder="{{ 'create_event.input_labels.title' | translate }}" type="text">
+                        <div *ngIf="formControls.title.invalid" class="text-danger">
+                            <div *ngIf="formControls.title.errors.server">{{ formControls.title.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.event_type' | translate }} <span class="required">*</span></label>
+                        <select class="form-control" formControlName="event_type_id" *ngIf="app.settingsOptions">
+                            <option value="" selected disabled>{{ 'create_event.input_labels.event_type' | translate }}</option>
+                            <option *ngFor="let event_type of app.settingsOptions.event_types | keyvalue" [value]="event_type.value.id">{{ event_type.value.name }}</option>
+                        </select>
+                        <div *ngIf="formControls.event_type_id.invalid" class="text-danger">
+                            <div *ngIf="formControls.event_type_id.errors.server">{{ formControls.event_type_id.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.timezone' | translate }} <span class="required">*</span></label>
+                        <!-- <select class="form-control" formControlName="timezone" *ngIf="app.settingsOptions" (change)="setMinTime($event)">
+                            <option value="" selected disabled>{{ 'create_event.input_labels.timezone' | translate }}</option>
+                            <option *ngFor="let timezone of app.settingsOptions.timezones" [value]="timezone.timezone" [attr.data-tzOffset]="timezone.offset">{{ timezone.timezone }}</option>
+                        </select> -->
+                        <app-searchable-select [form]="form" title="Select Timezone" inputName="timezone" [options]="app.settingsOptions.timezones" [selectedOptions]="formControls.timezone.value" *ngIf="app.settingsOptions.timezones" valueIndex="timezone" labelIndex="timezone"></app-searchable-select>
+                        <div *ngIf="formControls.timezone.invalid" class="text-danger">
+                            <div *ngIf="formControls.timezone.errors.server">{{ formControls.timezone.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.start_time' | translate }} <span class="required">*</span></label>
+                        <div class="date-time-input-wrapper">
+                            <input class="form-control border-form-control" formControlName="start_time" placeholder="{{ 'create_event.input_labels.start_time' | translate }}" type="text" #startDateTime (focus)="openDatePicker(startDateTime , 'start_time')">
+                            <div class="formated_date form-control">{{ formControls.start_time.value | date : 'dd/MM/yyyy HH:mm' }}</div>
+                        </div>
+                        <div *ngIf="formControls.start_time.invalid" class="text-danger">
+                            <div *ngIf="formControls.start_time.errors.server">{{ formControls.start_time.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.end_time' | translate }} <span class="required">*</span></label>
+                        <div class="date-time-input-wrapper">
+                            <input type="text" class="form-control border-form-control" formControlName="end_time" placeholder="{{ 'create_event.input_labels.end_time' | translate }} " #endDateTime (focus)="openDatePicker(endDateTime, 'end_time')">
+                            <div class="formated_date form-control">{{ formControls.end_time.value | date : 'dd/MM/yyyy HH:mm' }}</div>
+                        </div>
+                        <div *ngIf="formControls.end_time.invalid" class="text-danger">
+                            <div *ngIf="formControls.end_time.errors.server">{{ formControls.end_time.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.joining_fee' | translate }} <span class="required">*</span></label>
+                        <input type="number" step="0.01" class="form-control border-form-control" formControlName="joining_fee" placeholder="{{ 'create_event.input_labels.joining_fee' | translate }} ">
+                        <div *ngIf="formControls.joining_fee.invalid" class="text-danger">
+                            <div *ngIf="formControls.joining_fee.errors.server">{{ formControls.joining_fee.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.notification' | translate }} <span class="required">*</span></label>
+                        <input type="joining_fee" class="form-control border-form-control" formControlName="notification" placeholder="{{ 'create_event.input_labels.notification' | translate }} ">
+                        <div *ngIf="formControls.notification.invalid" class="text-danger">
+                            <div *ngIf="formControls.notification.errors.server">{{ formControls.notification.errors.server }}</div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-sm-6 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.guests' | translate }} <span class="required">*</span></label>
+                        <ion-select class="form-control" formControlName="guests" multiple="true" [interfaceOptions]="customAlertOptions" cancelText="{{ 'cancel_text' | translate }}" okText="{{ 'ok_text' | translate }}">
+                            <ion-select-option *ngFor="let guest of performers" [value]="guest.id">{{ guest.username }}</ion-select-option>
+                        </ion-select>
+                        <app-searchable-select [form]="form" title="Select Guests" inputName="guests" [options]="performers" [selectedOptions]="formControls.guests.value" *ngIf="performers" multiple="true" valueIndex="id" labelIndex="username"></app-searchable-select>
+                        <div *ngIf="formControls.guests.invalid" class="text-danger">
+                            <div *ngIf="formControls.guests.errors.server">{{ formControls.guests.errors.server }}</div>
+                        </div>
+                    </div> -->
+                    <div class="col-sm-12 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.description' | translate }} <span class="required">*</span></label>
+                        <textarea class="form-control" rows="5" formControlName="description"></textarea>
+                        <div *ngIf="formControls.description.invalid" class="text-danger">
+                            <div *ngIf="formControls.description.errors.server">{{ formControls.description.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 mb-3">
+                        <label class="mb-2">{{ 'create_event.input_labels.banners' | translate }} <small>({{ 'create_event.banners_instruction' | translate }})</small></label>
+                        <div class="file_upload_input_btn mb-2">
+                            <button type="button" class="btn btn-outline-dark"> {{ 'create_event.input_labels.choose_images' | translate }} <input type="file" (change)="showBannerPreview($event, previewImg)">
+                                <input type="hidden" formControlName="banner">
+                            </button>
+                        </div>
+                        <img #previewImg [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/banner-img.jpg'" width="600" height="200">
+                        <div *ngIf="formControls.banner.invalid" class="text-danger">
+                            <div *ngIf="formControls.banner.errors.server">{{ formControls.banner.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 text-right ">
+                        <ion-button type="submit " class="btn btn-theme"> {{ 'create_event.create_btn' | translate }} </ion-button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

@@ -1,0 +1,30 @@
+<textarea type="text" class="form-control border-form-control" [id]="inputName" [value]="selectedOptionsLables" readonly *ngIf="multiple"></textarea>
+<input type="text" class="form-control border-form-control" [id]="inputName" [value]="selectedOptionsLables" readonly *ngIf="!multiple">
+<ion-modal class="searchable-select-modal" [trigger]="inputName" (willPresent)="modalPresent()">
+    <ng-template>
+        <ion-header class="ion-padding">
+            <ion-title> {{title}} </ion-title>
+        </ion-header>
+        <ion-content class="ion-padding">
+            <div class="mb-3">
+                <input type="text" class="search-input" #searchInput placeholder="Search guests" (keyup)="searchOption(searchInput.value)" (keypress)="validateSearchInput($event)">
+            </div>
+            <div class="options">
+                <div *ngFor="let option of options">
+                    <div class="form-check mb-2 ms-2" [ngClass]="option.hide ? 'd-none': '' " *ngIf="multiple">
+                        <input class="form-check-input " type="checkbox" [value]="(option[valueIndex]).toString()" id="optionCheckout_{{(option[valueIndex]).toString()}}" (change)="selectOption($event)" [checked]="selectedOptions.indexOf((option[valueIndex]).toString()) >= 0">
+                        <label class="form-check-label" for="optionCheckout_{{(option[valueIndex]).toString()}}"> {{ option[labelIndex] }} </label>
+                    </div>
+                    <div class="form-check mb-2 ms-2" [ngClass]="option.hide ? 'd-none': '' " *ngIf="!multiple">
+                        <input class="form-check-input " type="radio" [name]="inputName" [value]="(option[valueIndex]).toString()" id="optionCheckout_{{(option[valueIndex]).toString()}}" (change)="selectOption($event)" [checked]="selectedOptions.indexOf((option[valueIndex]).toString()) >= 0">
+                        <label class="form-check-label" for="optionCheckout_{{(option[valueIndex]).toString()}}"> {{ option[labelIndex] }} </label>
+                    </div>
+                </div>
+            </div>
+        </ion-content>
+        <ion-footer class="ion-padding">
+            <button class="btn btn-info me-2" (click)="confirm()">Ok</button>
+            <button class="btn btn-danger" (click)="cancel()">Cancel</button>
+        </ion-footer>
+    </ng-template>
+</ion-modal>

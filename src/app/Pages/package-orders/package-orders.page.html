@@ -1,0 +1,79 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary float-end" [routerLink]="['/packages']">{{ 'package_orders.purchase_package_btn' | translate }}</a>
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'package_orders.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped" *ngIf="orders">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th class="text-center">{{ 'package_orders.order_id' | translate }}</th>
+                                    <th>{{ 'package_orders.name' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.price' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.events' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.remaining_events' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.max_duration' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.max_guests' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.max_attendees' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.storage' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.video_quality' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.validity' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.payment_status' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.start_date' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.expiry_date' | translate }}</th>
+                                    <th class="text-center">{{ 'package_orders.action' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="orders.length > 0 else noPackagePurchased">
+                                <tr *ngFor="let order of orders">
+                                    <td class="align-middle text-center">{{ order.id }}</td>
+                                    <td class="align-middle">{{ order.package_data[language+'_name'] }}</td>
+                                    <td class="align-middle text-center">{{ order.formated_amount }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.events }}</td>
+                                    <td class="align-middle text-center">{{ order.events }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.event_max_duration }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.max_guests }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.max_attendees }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.storage }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.video_quality }}</td>
+                                    <td class="align-middle text-center">{{ order.package_data.validity }}</td>
+                                    <td class="align-middle text-center">
+                                        <span class="badge" [ngClass]="order.payment_status == '0' ? 'bg-warning text-dark' : order.payment_status == '1' ? 'bg-success' : 'bg-danger' ">{{ order.payment_status_label }}</span>
+                                    </td>
+                                    <td class="align-middle text-center">{{ order.start_date }}</td>
+                                    <td class="align-middle text-center">{{ order.expiry_date }}</td>
+                                    <td class="align-middle text-center">
+                                        <div *ngIf="order.payment_status == '1' ">
+                                            <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary" (click)="activatePackage(order.id)" *ngIf="order.status == '0'">{{ 'package_orders.activate_btn' | translate }}</a>
+                                            <span class="badge bg-success" *ngIf="order.status == '1'">{{ 'package_orders.active' | translate }}</span>
+                                            <span class="badge bg-danger" *ngIf="order.status == '2'">{{ 'package_orders.expired' | translate }}</span>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <ng-template #noPackagePurchased>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="15">
+                                            <div class="mb-0"> {{ 'package_orders.no_package_orders_found' | translate }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

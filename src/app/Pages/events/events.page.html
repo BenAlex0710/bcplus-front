@@ -1,0 +1,56 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'events.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-stripped table-bordered" *ngIf="events">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>{{ 'events.title' | translate }}</th>
+                                    <th>{{ 'events.start_time' | translate }}</th>
+                                    <th>{{ 'events.end_time' | translate }}</th>
+                                    <th>{{ 'events.timezone' | translate }}</th>
+                                    <th>{{ 'events.joining_fee' | translate }}</th>
+                                    <th class="text-center">{{ 'events.action' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="events.length > 0 else noEvents">
+                                <tr *ngFor="let event of events">
+                                    <td class="align-middle">{{ event.title }}</td>
+                                    <td class="align-middle">{{ event.start_time | date : 'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="align-middle">{{ event.end_time | date : 'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="align-middle">{{ event.timezone }}</td>
+                                    <td class="align-middle">{{ event.joining_fee_formated }}</td>
+                                    <td class="align-middle text-center">
+                                        <a href="javascript:void(0)" *ngIf="event.live_status == 'upcoming'" class="btn btn-primary btn-sm" [routerLink]="['/edit-event/'+event.id +'/'+event.slug]" title="{{ 'events.edit_event' | translate }}"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-warning btn-sm m-2" title="{{ 'events.invite_guests' | translate }}" (click)="openInviteGuestModal(event)"><i class="bi bi-people"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-success btn-sm" [routerLink]="['/event/'+event.id +'/'+event.slug]" title="{{ 'events.edit_event' | translate }}"><i class="bi bi-eye"></i></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <ng-template #noEvents>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="15">
+                                            <div class="mb-0"> {{ 'events.no_events_found' | translate }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

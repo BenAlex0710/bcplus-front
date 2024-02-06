@@ -1,0 +1,54 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary float-end" [routerLink]="['/package-orders']">{{ 'packages.purchased_packages_btn' | translate }}</a>
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'packages.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-striped" *ngIf="packages">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>{{ 'packages.name' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.price' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.events' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.max_duration' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.max_guests' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.max_attendees' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.storage' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.video_quality' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.validity' | translate }}</th>
+                                    <th class="text-center">{{ 'packages.action' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="packages.length > 0">
+                                <tr *ngFor="let package of packages">
+                                    <td class="align-middle">{{ package.name }}</td>
+                                    <td class="align-middle text-center">{{ package.formated_price }}</td>
+                                    <td class="align-middle text-center">{{ package.events }}</td>
+                                    <td class="align-middle text-center">{{ package.event_max_duration }}</td>
+                                    <td class="align-middle text-center">{{ package.max_guests }}</td>
+                                    <td class="align-middle text-center">{{ package.max_attendees }}</td>
+                                    <td class="align-middle text-center">{{ package.storage }}</td>
+                                    <td class="align-middle text-center">{{ package.video_quality }}</td>
+                                    <td class="align-middle text-center">{{ package.validity }}</td>
+                                    <td class="align-middle text-center" *ngIf="package.trial == '0'">
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-outline-primary" (click)="openStripeCCModal(package)">{{ 'packages.purchase_btn' | translate }}</a>
+                                    </td>
+                                    <td class="align-middle text-center" *ngIf="package.trial == '1'">
+                                        <a href="javascript:void(0)" class="btn btn-sm btn-primary" (click)="activateTrialPackage()">{{ 'packages.ativate_trial_package' | translate }}</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

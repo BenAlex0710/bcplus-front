@@ -1,0 +1,11 @@
+<ion-content>
+    <section class="error-page">
+        <div class="error-content text-center" *ngIf="app.websiteSettings">
+            <img [src]="app.websiteSettings.logo" alt="">
+            <div class="error-code my-3">{{ 'error_page.page_title' | translate }}</div>
+            <div class="error-message mb-3">{{ 'error_page.error_message' | translate }}</div>
+            <button href="javascript:void(0)" class="btn-default btn-theme" [routerLink]="['/index']">{{ 'error_page.home_btn' | translate }}</button>
+        </div>
+    </section>
+    <app-footer></app-footer>
+</ion-content>

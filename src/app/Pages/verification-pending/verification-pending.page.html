@@ -1,0 +1,17 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="form_popup p-0" *ngIf="app.websiteSettings">
+            <div class="hd-lg p-0">
+                <img [src]="app.websiteSettings.logo" alt="">
+                <h5>{{ 'verification_pending.welcome_heading' | translate : { user_fullname : app.userinfo.full_name } }}</h5>
+                <p class="mb-3">{{ 'verification_pending.verification_instructions' | translate }}</p>
+            </div>
+            <div class="d-flex justify-content-center">
+                <ion-button (click)="resendVerificationEmail()" class="btn btn-theme me-2">{{ 'verification_pending.resend_email' | translate }}</ion-button>
+                <ion-button [routerLink]="['/index']" class="btn btn-theme me-2">{{ 'verification_pending.visit_website' | translate }}</ion-button>
+                <ion-button class="btn btn-theme" (click)="app.logout()">{{ 'verification_pending.logout_btn' | translate }}</ion-button>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

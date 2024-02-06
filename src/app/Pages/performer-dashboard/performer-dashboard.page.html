@@ -1,0 +1,70 @@
+<ion-content>
+    <div class="container pt-5">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="main-title">
+                    <h3 class="mb-3">{{ 'dashboard.breadcrumb_title' | translate }}</h3>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="border rounded mb-3 p-2">
+                    <div class="d-md-flex align-items-center" *ngIf="events">
+                        <div style="min-width: max-content;">
+                            <label class="mb-0">{{ 'dashboard.filter_attendees' | translate }}</label>
+                        </div>
+                        <select class="form-select mx-md-3 my-3" #filterAttenddeEvent>
+                            <option value="">{{ 'dashboard.filter_select_event' | translate}}</option>
+                            <option [value]="event.id" *ngFor="let event of events" [selected]="attendees_parms.event == event.id">{{ event.title }}</option>
+                        </select>
+                        <select class="form-select mx-md-3 my-3" #filterAttenddeUser>
+                            <option value="">{{ 'dashboard.filter_select_user' | translate}}</option>
+                            <option [value]="user.id" *ngFor="let user of users" [selected]="attendees_parms.user == user.id">{{ user.username }}</option>
+                        </select>
+                        <div style="min-width: max-content;">
+                            <button type="button" class="btn btn-outline-primary" (click)="filterAttendees(filterAttenddeEvent.value, filterAttenddeUser.value)">{{ 'dashboard.filter_attendees' | translate }}</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-striped" *ngIf="attendees">
+                        <thead class="bg-dark text-white">
+                            <tr>
+                                <th class="text-center">{{ 'dashboard.order_id' | translate }}</th>
+                                <th>{{ 'dashboard.username' | translate }}</th>
+                                <th class="text-center">{{ 'dashboard.amount' | translate }}</th>
+                                <th class="text-center">{{ 'dashboard.event' | translate }}</th>
+                                <th class="text-center">{{ 'dashboard.admin_commssion_amt' | translate }}</th>
+                                <th class="text-center">{{ 'dashboard.payment_status' | translate }}</th>
+                                <th class="text-center">{{ 'dashboard.total_earning' | translate }}</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="attendees.length > 0 else noAttendees">
+                            <tr *ngFor="let order of attendees">
+                                <td class="align-middle text-center">{{ order.id }}</td>
+                                <td class="align-middle">{{ order.user.username }}</td>
+                                <td class="align-middle text-center">{{ order.total_amount }}</td>
+                                <td class="align-middle text-center">{{ order.event.title }}</td>
+                                <td class="align-middle text-center">{{ order.admin_commission }}</td>
+                                <td class="align-middle text-center">{{ order.payment_status_label }}</td>
+                                <td class="align-middle text-center">{{ order.amount }}</td>
+                            </tr>
+                        </tbody>
+                        <ng-template #noAttendees>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="15">
+                                        <div class="mb-0"> {{ 'dashboard.no_attendees_found' | translate }}</div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </ng-template>
+                    </table>
+                </div>
+                <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                    <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

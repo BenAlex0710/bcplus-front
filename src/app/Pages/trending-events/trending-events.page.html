@@ -1,0 +1,25 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="vds-main" *ngIf="events">
+            <div class="vidz-row">
+                <div class="container pt-5">
+                    <h3 class="mb-3">{{ 'trending_page.page_title' | translate }}</h3>
+                    <div class="vidz_list m-0">
+                        <div class="row" *ngIf="events.length > 0 else emptyResults">
+                            <app-event-block class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth" [eventData]="event" *ngFor="let event of events"></app-event-block>
+                        </div>
+                        <ng-template #emptyResults>
+                            <div class="row">
+                                <div class="col-12 text-center fw-bold">{{ 'trending_page.empty_results' | translate }}</div>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="text-center" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

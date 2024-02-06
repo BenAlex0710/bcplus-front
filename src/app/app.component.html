@@ -1,0 +1,294 @@
+<ion-app>
+    <ion-router-outlet></ion-router-outlet>
+    <header>
+        <div class="top_bar">
+            <div class="container">
+                <div class="top_header_content_ d-flex justify-content-between">
+                    <div class="menu_logo_ d-flex align-items-center">
+                        <a href="javascript:void(0)" class="menu" (click)="showSideMenu()" *ngIf="currentUrl != '/index' "><i class="icon-menu"></i></a>
+                        <a href="javascript:void(0)" class="logo" [routerLink]="['/index']" *ngIf="websiteSettings">
+                            <img [src]="websiteSettings.logo" alt="" />
+                        </a>
+                    </div>
+                    <!--menu_logo end-->
+                    <div class="search_form">
+                        <form (submit)="searchEvent('keywords', searchInput.value, false)">
+                            <input type="text" name="keywords" #searchInput placeholder="{{ 'search_bar_placeholder' | translate }}" [value]="searchKeywords" />
+                            <button type="submit"><i class="icon-search text-dark"></i></button>
+                        </form>
+                    </div>
+                    <div class="justify-self-end d-flex align-items-center ">
+                        <ul class="controls-lv" *ngIf="userinfo">
+                            <li class="user-log" (click)="showAccountMenu()">
+                                <div class="account_menu_overlay" [ngClass]="{ 'active' : accountMenu }" (click)=" $event.stopPropagation(); accountMenu = false"></div>
+                                <div class="user-ac-img">
+                                    <img [src]="userinfo && userinfo.photo ? userinfo.photo : './assets/images/resources/user-img.png' " alt="" width="60" />
+                                    <span class="ms-2">{{ userinfo.username }}</span>
+                                </div>
+                                <div class="account-menu" [ngClass]="{'d-block' : accountMenu}" (click)="$event.stopPropagation();">
+                                    <h4>{{ userinfo.username }} <span class="usr-status">PRO</span></h4>
+                                    <div class="sd_menu">
+                                        <ul class="mm_menu">
+                                            <li>
+                                                <span><i class="bi bi-person-lines-fill"></i></span>
+                                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/account']">{{ 'account' | translate }}</a>
+                                            </li>
+                                            <li>
+                                                <span><i class="bi bi-key"></i></span>
+                                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/change-password']">{{ 'change_password' | translate }}</a>
+                                            </li>
+                                            <li>
+                                                <span><i class="bi bi-box-arrow-right"></i></span>
+                                                <a href="javascript:void(0)" class="ps-2" (click)="logout()">{{ 'sign_out_btn' | translate }}</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <!--sd_menu end-->
+                                    <!-- <div class="sd_menu scnd">
+                                        <ul class="mm_menu">
+                                            <li>
+                                                <span><i class="icon-language"></i></span>
+                                                <a href="javascript:void(0)" id="languageMenu">{{ 'languages' | translate }}</a>
+                                            </li>
+                                        </ul>
+                                    </div> -->
+                                    <ion-item>
+                                        <ion-label><span><i class="icon-language"></i></span> {{ 'languages' | translate }}</ion-label>
+                                        <ion-select [interfaceOptions]="languageAlertOptions" [value]="language" okText="{{ 'ok_btn' | translate }}" cancelText="{{ 'cancel_btn' | translate }}" (ionChange)="switchLanguage($event)">
+                                            <ion-select-option [value]="lang.key" *ngFor="let lang of languageList | keyvalue ">{{ lang.value }}</ion-select-option>
+                                        </ion-select>
+                                    </ion-item>
+                                </div>
+                            </li>
+                            <li *ngIf="userinfo.role == '2'">
+                                <a href="javascript:void(0)" class="btn-default btn-theme" [routerLink]="['/go-live']">{{ 'go_live_btn' | translate }}</a> &nbsp; <a href="javascript:void(0)" class="btn-default btn-theme" [routerLink]="['/create-event']">{{ 'create_event_btn' | translate }}</a>
+                            </li>
+                            <li class="mobile-search-btn">
+                                <a href="javascript:void(0)" class="btn btn-theme" (click)="toggleMobileSearchForm()"><i class="icon-search"></i></a>
+                            </li>
+                        </ul>
+                        <ul class="controls-lv" *ngIf="!userinfo">
+                            <li>
+                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/login']">{{ 'sign_in_btn' | translate }}</a>
+                            </li>
+                            <li>
+                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/register']">{{ 'sign_up_btn' | translate }}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <!--top_header_content end-->
+            </div>
+        </div>
+        <div class="mobile-search-form" *ngIf="mobileSearch">
+            <form (submit)="searchEvent('keywords', mSearchInput.value, false)">
+                <input type="text" name="keywords" #mSearchInput placeholder="{{ 'search_bar_placeholder' | translate }}" [value]="searchKeywords" />
+                <button type="submit"><i class="bi bi-arrow-right text-dark"></i></button>
+            </form>
+        </div>
+        <!-- <div class="btm_bar">
+                <div class="container">
+                    <div class="btm_bar_content">
+                        <nav>
+                            <ul>
+                                <li>
+                                    <a href="javascript:void(0)">Pages</a>
+                                    <div class="mega-menu">
+                                        <ul>
+                                            <li><a href="javascript:void(0)">Homepage</a></li>
+                                            <li><a href="single_video_page.html">Single Video Page</a></li>
+                                            <li><a href="Single_Video_Simplified_Page.html">Single Video Simplified Page</a></li>
+                                            <li><a href="single_video_fullwidth_page.html">Singel Video Full Width Page</a></li>
+                                            <li><a href="single_video_playlist.html">Single Video Playlist Page</a></li>
+                                            <li><a href="Upload_Video.html">Upload Video Page</a></li>
+                                            <li><a href="Upload_Edit.html">Upload Video Edit Page</a></li>
+                                            <li><a href="Browse_Channels.html">Browse channels page</a></li>
+                                            <li><a href="Searched_Videos_Page.html">Searched videos page</a></li>
+                                        </ul>
+                                        <ul>
+                                            <li>
+                                                <a href="javascript:void(0)">Single channel<span class="icon-arrow_below"></span></a>
+                                                <ul>
+                                                    <li><a href="Single_Channel_Home.html">Single Channel Home page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Single_Channel_Videos.html">Single Channel videos page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Single_Channel_Playlist.html">single channel playlist page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Single_Channel_Channels.html">single channel channels page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Single_Channel_About.html">single channel about page</a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="Single_Channel_Products.html">single channel products page</a>
+                                                    </li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="History_Page.html">History page</a></li>
+                                            <li><a href="Browse_Categories.html">Browse Categories Page</a></li>
+                                            <li><a href="Updates_From_Subs.html">Updates from subscription page</a></li>
+                                            <li><a href="login.html">login page</a></li>
+                                            <li><a href="signup.html">signup page</a></li>
+                                            <li><a href="User_Account_Page.html">User account page</a></li>
+                                        </ul>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </li>
+                                <li><a href="Browse_Categories.html">Categories</a></li>
+                                <li><a href="Browse_Channels.html">Channels</a></li>
+                                <li><a href="javascript:void(0)">Trending</a></li>
+                                <li><a href="Single_Channel_Home.html">LIVE</a></li>
+                                <li><a href="javascript:void(0)">Movies</a></li>
+                            </ul>
+                        </nav>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div> -->
+    </header>
+    <div class="side_menu_overlay" [ngClass]="{ 'active' : sideMenu }" (click)="sideMenu = false">
+    </div>
+    <div class="side_menu" [ngClass]="{ 'active' : sideMenu }" style="top:90px;">
+        <div class="sd_menu">
+            <ul class="mm_menu">
+                <li>
+                    <span><i class="bi bi-house-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/index']">{{ 'sidemenu.home' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi-calendar3-event"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" (click)="searchEvent('timing', 'upcoming')">{{ 'sidemenu.upcoming_events' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="icon-fire"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/trending-events']">{{ 'sidemenu.trending_events' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-receipt-cutoff"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/recommended-events']">{{ 'sidemenu.recommended_events' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-receipt-cutoff"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/event-invitations']">{{ 'sidemenu.event_invitations' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sd_menu" *ngIf="userinfo && userinfo.role == '2'">
+            <ul class="mm_menu">
+                <li>
+                    <span><i class="bi bi-person-video"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/guests-list']">{{ 'sidemenu.guests' | translate }}</a>
+                </li>
+                <!-- <li>
+                    <span><i class="bi bi-speedometer"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/dashboard']">{{ 'sidemenu.dashboard' | translate }}</a>
+                </li> -->
+                <li *ngIf="userinfo && userinfo.role == '2'">
+                    <span><i class="bi bi-star-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/packages']">{{ 'sidemenu.packages' | translate }}</a>
+                </li>
+                <li *ngIf="userinfo && userinfo.role == '2'">
+                    <span><i class="bi bi-list-stars"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/package-orders']">{{ 'sidemenu.package_orders' | translate }}</a>
+                </li>
+                <!-- <li>
+                    <span><i class="bi bi-receipt-cutoff"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/event-invitations']">{{ 'sidemenu.event_invitations' | translate }}</a>
+                </li> -->
+                <li>
+                    <span><i class="bi bi-people"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/attendees-list']">{{ 'sidemenu.attendees' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-inbox-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/inbox']">{{ 'sidemenu.inbox' | translate }}</a>
+                </li>
+                <!-- <li>
+                    <span><i class="icon-subscriptions"></i></span>
+                    <a href="javascript:void(0)" class="ps-2">{{ 'sidemenu.subscriptions' | translate }}</a>
+                </li> -->
+            </ul>
+        </div>
+        <div class="sd_menu" *ngIf="userinfo && userinfo.role == '2'">
+            <h3><span><i class="bi bi-calendar3-event me-2"></i></span> {{ 'sidemenu.events' | translate }}</h3>
+            <ul class="mm_menu">
+                <li>
+                    <a href="javascript:void(0)" class="p-0" [routerLink]="['/create-event']">{{ 'sidemenu.create_event' | translate }}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="p-0" [routerLink]="['/events']">{{ 'sidemenu.your_events' | translate }}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="p-0" [routerLink]="['/saved-events']">{{ 'sidemenu.saved_events' | translate }}</a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="p-0" (click)="searchEvent('timing', 'past')">{{ 'sidemenu.past_events' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sd_menu">
+            <h3><span><i class="bi bi-file-earmark-text-fill me-2"></i></span> {{ 'sidemenu.pages' | translate }}</h3>
+            <ul class="mm_menu">
+                <li *ngFor="let page of pagesToShow">
+                    <a href="javascript:void(0)" class="p-0" [routerLink]="['/page', page.slug]">{{ page[language+'_title'] }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sd_menu" *ngIf="userinfo">
+            <ul class="mm_menu">
+                <li>
+                    <span><i class="bi bi-person-lines-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/account']">{{ 'account' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-key"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/change-password']">{{ 'change_password' | translate }}</a>
+                </li>
+                <!-- <li>
+                    <span><i class="bi bi-flag"></i></span>
+                    <a href="javascript:void(0)" class="ps-2">Report history</a>
+                </li> -->
+                <li>
+                    <span><i class="bi bi-box-arrow-right"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" (click)="logout()">{{ 'sign_out_btn' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sd_menu" *ngIf="!userinfo">
+            <ul class="mm_menu">
+                <li>
+                    <span><i class="bi bi-box-arrow-in-left"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/login']">{{ 'sign_in_btn' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-person-plus"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/register']">{{ 'sign_up_btn' | translate }}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="sd_menu bb-0">
+            <ul class="social_links">
+                <li>
+                    <a href="javascript:void(0)" class="px-2">
+                        <i class="bi bi-facebook"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="px-2">
+                        <i class="bi bi-twitter"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript:void(0)" class="px-2">
+                        <i class="bi bi-instagram"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="dd_menu"></div>
+    </div>
+</ion-app>

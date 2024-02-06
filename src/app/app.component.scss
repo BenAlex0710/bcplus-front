@@ -1,0 +1,40 @@
+.account_menu_overlay {
+    position: fixed;
+    background: transparent;
+    // background: #000000b5;
+    width: 0%;
+    height: 0%;
+    z-index: 9;
+    top: 0;
+    left: 0;
+
+    &.active {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+.side_menu_overlay {
+    position: absolute;
+    background: transparent;
+    width: 0%;
+    height: 0%;
+    z-index: 99;
+
+    &.active {
+        width: 100%;
+        height: 100%;
+    }
+}
+
+header {
+    z-index: 99;
+    background: #ffffff;
+}
+
+/* footer {
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+} */

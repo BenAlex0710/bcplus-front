@@ -1,0 +1,60 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'event_invitations.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="table-responsive">
+                        <table class="table table-stripped table-bordered" *ngIf="event_invitations">
+                            <thead class="bg-dark text-white">
+                                <tr>
+                                    <th>{{ 'event_invitations.title' | translate }}</th>
+                                    <th>{{ 'event_invitations.host' | translate }}</th>
+                                    <th>{{ 'event_invitations.start_time' | translate }}</th>
+                                    <th>{{ 'event_invitations.end_time' | translate }}</th>
+                                    <th>{{ 'event_invitations.timezone' | translate }}</th>
+                                    <th class="text-center">{{ 'event_invitations.action' | translate }}</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="event_invitations.length > 0 else noInvitations">
+                                <tr *ngFor="let invitation of event_invitations">
+                                    <td class="align-middle">{{ invitation.event.title }}</td>
+                                    <td class="align-middle">{{ invitation.event.performer.full_name }} (@{{invitation.event.performer.username}})</td>
+                                    <td class="align-middle">{{ invitation.event.start_time | date : 'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="align-middle">{{ invitation.event.end_time | date : 'dd/MM/yyyy HH:mm' }}</td>
+                                    <td class="align-middle">{{ invitation.event.timezone }}</td>
+                                    <td class="align-middle text-center">
+                                        <span [ngClass]="invitation.status == '1' ? 'text-success' : 'text-danger'" *ngIf="invitation.status != '0' else actions">
+                                            <strong [innerHTML]="(invitation.status == '1' ? 'event_invitations.accepted' : 'event_invitations.rejected') | translate"></strong>
+                                        </span>
+                                        <ng-template #actions>
+                                            <a href="javascript:void(0)" class="btn btn-success btn-sm" title="{{ 'event_invitations.accept' | translate }}" (click)="acceptInvitation(invitation)"><i class="bi bi-check2-square"></i></a>&nbsp;
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm" title="{{ 'event_invitations.reject' | translate }}" (click)="rejectInvitation(invitation)"><i class="bi bi-x-square"></i></a>
+                                        </ng-template>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <ng-template #noInvitations>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center" colspan="15">
+                                            <div class="mb-0"> {{ 'event_invitations.no_invitations_found' | translate }}</div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </ng-template>
+                        </table>
+                    </div>
+                    <div class="text-center mt-3" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

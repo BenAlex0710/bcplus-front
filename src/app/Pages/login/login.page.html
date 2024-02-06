@@ -1,0 +1,96 @@
+<ion-content>
+    <div *ngIf="activeScreen == 'login'">
+        <!-- <section class="banner-section p120">
+            <div class="container">
+                <div class="banner-text">
+                    <h2>{{ 'login.page_title' | translate }}</h2>
+                    <p>{{ 'login.welcome_heading' | translate }}</p>
+                </div>
+            </div>
+        </section> -->
+        <section class="form_popup" *ngIf="app.websiteSettings">
+            <div class="hd-lg">
+                <span class="mb-3">{{ 'login.welcome_heading' | translate }}</span>
+                <img [src]="app.websiteSettings.logo" alt="">
+            </div>
+            <div class="user-account-pr">
+                <form [formGroup]="form" (submit)="submitForm()">
+                    <div class="input-sec">
+                        <!-- <label>{{ 'login.input_labels.email' | translate }}</label> -->
+                        <input type="email" class="form-control" formControlName="email" placeholder="{{ 'login.input_labels.email' | translate }}">
+                        <div *ngIf="formControls.email.invalid" class="text-danger">
+                            <div *ngIf="formControls.email.errors.server">{{formControls.email.errors.server}}</div>
+                        </div>
+                    </div>
+                    <div class="input-sec">
+                        <!-- <label>{{ 'login.input_labels.password' | translate }}</label> -->
+                        <input type="password" class="form-control" formControlName="password" placeholder="{{ 'login.input_labels.password' | translate }}">
+                        <div *ngIf="formControls.password.invalid" class="text-danger">
+                            <div *ngIf="formControls.password.errors.server">{{ formControls.password.errors.server }}</div>
+                        </div>
+                    </div>
+                    <div class="input-sec mb-0">
+                        <button class="btn-theme" type="submit">{{ 'sign_in_btn' | translate }}</button>
+                    </div>
+                </form>
+                <a tabindex="-1" class="fg_btn" href="javascript:void(0)" [routerLink]="['/forgotpassword']">{{ 'login.forgot_password' | translate }}</a>
+                <div class="signup-divider">
+                    <span>OR</span>
+                </div>
+                <div class="social-icons text-center d-flex">
+                    <button class="btn btn-facebook mx-2 m-0 w-50" (click)="signinWithFacebook()">
+                        <i class="bi bi-facebook"></i> &nbsp;Facebook
+                        <!-- <ng-template #facebookScriptLoader>
+                            <ion-spinner class="ms-2" name="dots"></ion-spinner>
+                        </ng-template> -->
+                    </button>
+                    <button class="btn btn-google mx-2 m-0 w-50" (click)="signinWithGoogle()">
+                        <i class="bi bi-google"></i> &nbsp;Google
+                        <!-- <ng-template #googleScriptLoader>
+                            <ion-spinner class="ms-2" name="dots"></ion-spinner>
+                        </ng-template> -->
+                    </button>
+                    <!-- <ion-button class="btn btn-outline-primary mx-2" (click)="signinWithTwitter()"><i class="fab fa-twitter"></i></ion-button> -->
+                </div>
+                <div class="fr-ps">
+                    <h1> {{ 'login.dont_have_account' | translate }} <a href="javascript:void(0)" [routerLink]="['/register']" class="show_signup">{{ 'sign_up_btn' | translate }}</a>
+                    </h1>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div *ngIf="activeScreen == 'forgot_password'">
+        <!-- <section class="banner-section p120">
+            <div class="container">
+                <div class="banner-text">
+                    <h2>{{ 'login.page_title' | translate }}</h2>
+                    <p>{{ 'login.welcome_heading' | translate }}</p>
+                </div>
+            </div>
+        </section> -->
+        <section class="form_popup">
+            <div class="user-account-pr">
+                <form>
+                    <div class="hd-lg mb-5" *ngIf="app.websiteSettings">
+                        <img [src]="app.websiteSettings.logo" alt="">
+                        <span>{{ 'login.forgot_pass.heading' | translate }}</span>
+                        <p>{{ 'login.forgot_pass.instruction' | translate }}</p>
+                    </div>
+                    <div class="input-sec">
+                        <!-- <label>{{ 'login.input_labels.email' | translate }}</label> -->
+                        <input type="email" class="form-control" #forgotEmail placeholder="{{ 'login.input_labels.email' | translate }}">
+                        <div #forgotPassMsg></div>
+                    </div>
+                    <div class="mt-4 d-grid">
+                        <button type="button" class="btn-theme" (click)="resetPassword(forgotEmail, forgotPassMsg)">{{ 'send_password_btn' | translate }}</button>
+                    </div>
+                    <div class="fr-ps">
+                        <h1> <a href="javascript:void(0)" class="show_signup" (click)="activeScreen = 'login'">{{ 'login.back_to_login' | translate }}</a>
+                        </h1>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

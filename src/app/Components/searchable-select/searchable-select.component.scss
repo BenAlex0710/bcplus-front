@@ -1,0 +1,23 @@
+.search-input {
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+ion-modal {
+    &.searchable-select-modal {
+        &::part(content) {
+            --width: 300px;
+            --max-width: 90%;
+            --height: 410px;
+            --max-height: 90%;
+        }
+    }
+
+    .options {
+        height: 180px;
+        overflow: scroll;
+    }
+}

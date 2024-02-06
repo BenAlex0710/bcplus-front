@@ -1,0 +1,54 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="banner-section-" style="max-width: 2000px; margin: auto;">
+            <div class="container-">
+                <!-- <div class="banner-text">
+                    <h2>{{ 'home_page.banner_title' | translate }}</h2>
+                    <a href="javascript:void(0)">{{ 'home_page.banner_signup_btn_title' | translate }}</a>
+                </div> -->
+                <swiper [config]="config">
+                    <ng-container *ngFor="let slide of slides">
+                        <ng-template swiperSlide *ngIf="current_language == slide.language">
+                            <div class="home-slide text-center" [style.background-image]="'url(' +slide.image_url +')'">
+                                <!-- <img [src]="slide.image_url"> -->
+                                <div class="overlay-text">
+                                    <h2 class="mb-3">{{ slide.title}}</h2>
+                                    <h3 class="mb-3">{{ slide.subtitle}}</h3>
+                                    <div>
+                                        <button class="btn btn-theme" *ngIf="slide.button_url != null && slide.button_url != ''">{{slide.button_label}}</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </swiper>
+            </div>
+        </section>
+        <div class="container pt-5">
+            <div class="vidz_sec" *ngIf="upcoming_events && upcoming_events.length > 0">
+                <div class="d-flex justify-content-between mb-4">
+                    <h3>{{ 'home_page.upcoming_events' | translate }}</h3>
+                    <a href="javascript:void(0)" [routerLink]="['/search']" [queryParams]="{ timing: 'upcoming' }"> {{ 'see_all' | translate }}</a>
+                </div>
+                <div class="vidz_list">
+                    <div class="row">
+                        <app-event-block class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth" [eventData]="event" *ngFor="let event of upcoming_events"></app-event-block>
+                    </div>
+                </div>
+            </div>
+            <div class="vidz_sec">
+                <div class="d-flex justify-content-between mb-4">
+                    <h3>{{ 'home_page.popular_channels' | translate }}</h3>
+                    <a href="javascript:void(0)">See all</a>
+                </div>
+                <div class="vidz_list">
+                    <div class="row">
+                        <app-channel-block class="col-lg-2 col-md-4 col-sm-4 col-6" [channelData]="channel" *ngFor="let channel of popular_channels"></app-channel-block>
+                    </div>
+                </div>
+                <!--vidz_list end-->
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

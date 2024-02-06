@@ -1,0 +1,191 @@
+{
+    "app_title": "BC + News (zh)",
+    "sign_in_btn": "Sign In (zh)",
+    "send_password_btn": "Send New Password (zh)",
+    "sign_up_btn": "Sign Up (zh)",
+    "sign_out_btn": "Sign Out (zh)",
+    "update_btn": "Update (zh)",
+    "ok_btn": "Ok (zh)",
+    "cancel_btn": "Cancel (zh)",
+    "load_more_btn": "Load More (zh)",
+    "create_event_btn": "Create Event (zh)",
+    "account": "Account (zh)",
+    "change_password": "Change Password (zh)",
+    "languages": "Languages (zh)",
+    "upcoming": "Upcoming (zh)",
+    "about_us": "About Us (zh)",
+    "help": "Help (zh)",
+    "invalid_image_error": "Invalid Image File. (zh)",
+    "invalid_image_size_error": "File size should not be greater then {{max_size}}MB (zh)",
+    "see_all": "See All (zh)",
+    "event_block": {
+        "verified": "Verified (zh)",
+        "live_at": "Live At"
+    },
+    "register": {
+        "page_title": "Register (zh)",
+        "welcome_heading": "Welcome to BC + News (zh)",
+        "welcome_text": "It is a long established fact that a reader will be distracted by the readable. (zh)",
+        "input_labels": {
+            "email": "Email Address (zh)",
+            "confirm_email": "Confirm Email (zh)",
+            "first_name": "First Name (zh)",
+            "last_name": "Last Name (zh)",
+            "password": "Password"
+        },
+        "already_have_account": "Already have an Account?"
+    },
+    "login": {
+        "page_title": "Login (zh)",
+        "welcome_heading": "Welcome back to BC + News (zh)",
+        "welcome_text": "It is a long established fact that a reader will be distracted by the readable. (zh)",
+        "input_labels": {
+            "email": "Email Address (zh)",
+            "password": "Password"
+        },
+        "dont_have_account": "Don't have an account? (zh)",
+        "forgot_password": "Forgot your password? (zh)",
+        "back_to_login": "Back to login again. click to  (zh)",
+        "forgot_pass": {
+            "heading": "Reset your account password. (zh)",
+            "instruction": "Please enter your registered email, password reset link will be sent to your registered email."
+        }
+    },
+    "sidemenu": {
+        "home": "Home (zh)",
+        "packages": "Packages (zh)",
+        "guests": "Guests (zh)",
+        "attendees": "Attendees (zh)",
+        "inbox": "Inbox (zh)",
+        "trending_events": "Trending Events (zh)",
+        "subscriptions": "Subscriptions (zh)",
+        "events": "Events (zh)",
+        "create_event": "Create Event (zh)",
+        "your_events": "Your Events (zh)",
+        "recommended_events": "Recommended for You (zh)",
+        "upcoming_events": "Upcoming Events (zh)",
+        "saved_events": "Saved Events (zh)",
+        "past_events": "Past Events (zh)",
+        "pages": "Pages (zh)",
+        "about_us": "About Us"
+    },
+    "verification_pending": {
+        "page_title": "Verification Pending (zh)",
+        "welcome_heading": "Hello {{user_fullname}} (zh)",
+        "verification_instructions": "your account verification is still pending, please contact support if your account verification is pending form last 3 bussiness days. (zh)",
+        "visit_website": "Visit Website (zh)",
+        "logout_btn": "Logout"
+    },
+    "account_page": {
+        "page_title": "Account Settings (zh)",
+        "breadcrumb_title": "Account Settings (zh)",
+        "input_labels": {
+            "first_name": "First Name (zh)",
+            "last_name": "Last Name (zh)",
+            "headline": "Headline (zh)",
+            "bio": "Bio (zh)",
+            "email": "Email (zh)",
+            "photo": "Photo (zh)",
+            "banner": "Banner (zh)",
+            "username": "Username (zh)",
+            "social_profiles": "Social Profiles (zh)",
+            "google": "Google Profile Url (zh)",
+            "facebook": "Facebook Profile Url (zh)",
+            "become_perfomer": "Become Performer (zh)",
+            "organization_name": "Organization Name (zh)",
+            "organization_email": "Organization Email (zh)",
+            "address": "Address (zh)",
+            "address_line1": "Address Line 1 (zh)",
+            "address_line2": "Address Line 2 (zh)",
+            "city": "City (zh)",
+            "state": "State (zh)",
+            "country": "Country (zh)",
+            "zip": "Zip"
+        },
+        "update_btn": "Update (zh)",
+        "choose_image_btn": "Choose Image (zh)",
+        "choose_banner_btn": "Choose Banner (zh)",
+        "photo_instruction": "For best image resolution please select 1:1 ratio and max size 200px"
+
+    },
+    "change_password_page": {
+        "page_title": "Change Password (zh)",
+        "welcome_heading": "Please generate a strong password with combinations of charaters, numbers and symbols. (zh)",
+        "input_labels": {
+            "new_password": "New Password (zh)",
+            "confirm_password": "Confirm Password (zh)",
+            "password": "Password"
+        }
+    },
+    "packages": {
+        "page_title": "Packages (zh)",
+        "breadcrumb_title": "Packages"
+    },
+    "create_event": {
+        "page_title": "Create New Event (zh)",
+        "breadcrumb_title": "Create New Event (zh)",
+        "input_labels": {
+            "title": "Event Title (zh)",
+            "start_time": "Start Time (zh)",
+            "end_time": "End Time (zh)",
+            "event_type": "Event Type (zh)",
+            "timezone": "Timezone (zh)",
+            "banners": "Banners (zh)",
+            "joining_fee": "Joining fee (zh)",
+            "choose_images": "Choose Banner Images"
+        },
+        "banners_instruction": "max file size 2MB, for best fit please maintain aspect ratio 3:1 (zh)",
+        "create_btn": "Create"
+    },
+    "events": {
+        "page_title": "Your Events (zh)",
+        "breadcrumb_title": "Your Events (zh)",
+        "title": "Event Title (zh)",
+        "start_time": "Start Time (zh)",
+        "end_time": "End Time (zh)",
+        "timezone": "Timezone (zh)",
+        "joining_fee": "Joining fee (zh)",
+        "action": "Action (zh)",
+        "edit_event": "Edit Event"
+    },
+    "edit_event": {
+        "page_title": "Edit Event (zh)",
+        "breadcrumb_title": "Edit Event ({{event_title}}) (zh)",
+        "input_labels": {
+            "title": "Event Title (zh)",
+            "start_time": "Start Time (zh)",
+            "end_time": "End Time (zh)",
+            "event_type": "Event Type (zh)",
+            "timezone": "Timezone (zh)",
+            "banners": "Banners (zh)",
+            "joining_fee": "Joining fee (zh)",
+            "choose_images": "Choose Banner Images"
+        },
+        "banners_instruction": "max file size 2MB, for best fit please maintain aspect ratio 3:1 (zh)",
+        "update_btn": "Update"
+    },
+    "single_event": {
+        "start_time": "Start Time (zh)",
+        "end_time": "End Time (zh)",
+        "stream_btn": "Stream (zh)",
+        "publish_btn": "Publish (zh)",
+        "join_btn": "Join (zh)",
+        "leave_btn": "Leave (zh)",
+        "attendee_enroll_btn": "Enroll To Attend Event (zh)",
+        "start_in": "Start In: {{timer}} (zh)",
+        "ends_in": "Ends In: {{timer}} (zh)",
+        "live_chat_input_placeholder": "Please enter your message here (zh)",
+        "comment_input_placeholder": "Add a public comment (zh)",
+        "comment_reply_input_placeholder": "Add your reply (zh)",
+        "comment_btn": "Comment (zh)",
+        "live_chat_box_heading": "Live Chat (zh)",
+        "reply_btn": "Reply (zh)",
+        "timezone": "Timezone"
+    },
+    "home_page": {
+        "page_title": "Home (zh)",
+        "upcoming_events": "Upcoming Events (zh)",
+        "banner_title": "Create your event and Go Live with your friends (zh)",
+        "banner_signup_btn_title": "Create Account"
+    }
+}

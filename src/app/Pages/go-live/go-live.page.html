@@ -1,0 +1,92 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="mn-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="alert alert-danger" *ngIf="!agora.cameraAvailable && agora.cameraAvailable !== undefined"> {{ 'single_event.camera_not_available_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="agora.cameraAvailable && !agora.cameraPermission && agora.cameraPermission !== undefined"> {{ 'single_event.camera_permission_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="!agora.microphoneAvailable && agora.microphoneAvailable !== undefined"> {{ 'single_event.microphone_not_available_error' | translate }} </div>
+                        <div class="alert alert-danger" *ngIf="agora.microphoneAvailable && !agora.microphonePermission && agora.microphonePermission !== undefined"> {{ 'single_event.microphone_permission_error' | translate }} </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="mn-vid-sc single_video">
+                            <div class="vid-1">
+                                <div class="videos-section" [ngClass]="!performer || live_status ? '' : 'd-none'">
+                                    <div class="live-users">Live Users : {{ liveUsers }}</div>
+                                    <div class="performer-video mb-2" id="performerPlayer"></div>
+                                </div>
+                                <div class="banner" *ngIf="!live_status && performer">
+                                    <div class="live-stream-placeholder" [style.background-image]="'url('+performer.photo+')'">
+                                        <div><span class="text-warning">{{ performer.full_name }}</span>&nbsp; is not live now.</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-center" *ngIf="!performer">
+                                <button id="publish" *ngIf="agora.cameraAvailable && agora.cameraPermission && agora.microphoneAvailable && agora.microphonePermission && !live_status" type="button" class="btn btn-success me-2" (click)="publishVideoStream()">{{ 'single_event.publish_btn' | translate }}</button>
+                                <button id="leave" *ngIf="live_status" type="button" class="btn btn-danger" (click)="endStream()">{{ 'single_event.leave_btn' | translate }}</button>
+                            </div>
+                            <div class="abt-mk" *ngIf="performer">
+                                <div class="d-flex align-items-center">
+                                    <div class="vc_hd">
+                                        <img [src]="performer.photo ? performer.photo :  './assets/images/resources/th3.png'" alt="" />
+                                    </div>
+                                    <div class="vc_info">
+                                        <h4>
+                                            <a href="javascript:void(0)" class="fw-bold" title="" [routerLink]="['/channel', performer.username]">{{ performer.full_name }}</a>
+                                            <br>
+                                            <small>@{{ performer.username }}</small>
+                                        </h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <share-buttons *ngIf="live_status" theme="circles-dark" [include]="['copy', 'facebook', 'email', 'linkedin', 'pinterest',  'telegram', 'tumblr', 'twitter', 'whatsapp']" [showIcon]="true" [showText]="false" url="https://bcplusnews.com/channel/{{app.userinfo.username}}/live" class="pt-3 mb-3">
+                            </share-buttons>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="chat-container mb-5">
+                            <!-- <div class="chat-container mb-5"> -->
+                            <div class="chat-box-header">
+                                <h5 class="fw-bold">{{ 'single_event.live_chat_box_heading' | translate }}</h5>
+                            </div>
+                            <div class="chat-messages" #scrollable (scroll)="messageScrolled(scrollable)">
+                                <div class="chat-message-block d-flex" *ngFor="let message of messages">
+                                    <div class="user-icon me-2">
+                                        <img [src]="message.user.photo ? message.user.photo : './assets/images/resources/th3.png' ">
+                                    </div>
+                                    <div class="message"><strong>{{ message.user.username }}</strong>
+                                        <div [innerHtml]="message.message"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="live_status else disabledChatInputBlock" class="chat-input-block" #chatMsgInputWrapper>
+                                <button class="btn btn-dark align-self-end" (click)="initEmojiPicker(leteditor)">
+                                    <i class="bi bi-emoji-smile"></i>
+                                </button>
+                                <div #leteditor class="let-editor chat-input">
+                                    <div id="chat-input-div" contenteditable="true" #chatMsgInput (paste)="filterPasteContent($event)"></div>
+                                </div>
+                                <button type="button" class="btn btn-dark align-self-end" (click)="sendMessage(chatMsgInput, chatMsgInputWrapper)" style="height: 40px;"><i class="bi bi-send"></i></button>
+                            </div>
+                            <ng-template #disabledChatInputBlock>
+                                <div class="chat-input-block" #chatMsgInputWrapper>
+                                    <button class="btn btn-dark align-self-end" disabled>
+                                        <i class="bi bi-emoji-smile"></i>
+                                    </button>
+                                    <div #leteditor class="let-editor chat-input">
+                                        <div id="chat-input-div" #chatMsgInput (paste)="filterPasteContent($event)"></div>
+                                    </div>
+                                    <!-- <textarea type="text" class="chat-input" #chatMsgInput placeholder="{{ 'single_event.live_chat_input_placeholder' | translate }}"
+                                        (keyup)="$event.which == 13 ? sendMessage(chatMsgInput, chatMsgInputWrapper) : textAreaAdjust(chatMsgInput, chatMsgInputWrapper)"></textarea> -->
+                                    <button type="button" class="btn btn-dark align-self-end" disabled style="height: 40px;"><i class="bi bi-send"></i></button>
+                                </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

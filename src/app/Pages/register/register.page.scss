@@ -1,0 +1,22 @@
+.signup-divider {
+    text-align: center;
+    margin: 20px 0;
+    position: relative;
+    span {
+        background: #fff;
+        display: inline-block;
+        z-index: 99999;
+        position: relative;
+        padding: 0 7px;
+    }
+}
+
+.signup-divider::after {
+    content: "";
+    background: #888;
+    height: 1px;
+    width: 100%;
+    display: block;
+    top: 9px;
+    position: absolute;
+}

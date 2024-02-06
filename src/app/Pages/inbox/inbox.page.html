@@ -1,0 +1,40 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ 'inbox_page.breadcrumb_title' | translate }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="chat-area">
+                        <div class="messages-container" #scollableElement (scroll)="loadMore(scollableElement)">
+                            <div class="text-center">
+                                <ion-spinner *ngIf="loadOlderspinner" name="lines"></ion-spinner>
+                            </div>
+                            <div class="message-block d-flex mb-3" [ngClass]="{'inverse' : message.from == app.userinfo.id }" *ngFor="let message of messages">
+                                <div class="photo">
+                                    <img [src]="message.from == app.userinfo.id ? app.userinfo.photo : '../../../assets/images/Favicon.png' ">
+                                </div>
+                                <div class="text-block">
+                                    <div class="message-text">
+                                        {{ message.message }}
+                                    </div>
+                                    <span class="message-time"> {{ message.created_at |  date : 'dd/MM/yyyy HH:mm' }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-footer">
+                            <div class="d-flex" #chatMsgInputWrapper>
+                                <textarea #chatMsgInput class="chat-input flex-grow-1 p-2" [placeholder]="'inbox_page.chat_input_placeholder' | translate" (keyup.enter)="sendMessage(chatMsgInput, chatMsgInputWrapper)" (keyup)="textAreaAdjust(chatMsgInput, chatMsgInputWrapper)"></textarea>
+                                <button class="btn btn-theme align-self-end" type="button" [disabled]="chatMsgInput.value.trim()=='' " (click)="sendMessage(chatMsgInput, chatMsgInputWrapper) "><i class="bi bi-send"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

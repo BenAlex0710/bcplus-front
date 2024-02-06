@@ -1,0 +1,19 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <div class="container pt-5" *ngIf="pageData">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="main-title">
+                        <h3 class="mb-3">{{ pageData.title }}</h3>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="" [innerHtml]="pageData.description">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

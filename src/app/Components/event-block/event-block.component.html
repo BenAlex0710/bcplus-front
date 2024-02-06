@@ -1,0 +1,20 @@
+<div class="videoo p-2" *ngIf="eventData">
+    <div class="vid_thumbainl" [style.background-image]=" 'url(' +eventData.banner+ ')' ">
+        <a href="javascript:void(0)" [routerLink]="['/event/'+eventData.id, eventData.slug]">
+            <span class="vid-time">{{ eventData.duration }}</span>
+            <span class="upcoming" *ngIf="eventData.upcoming">{{ 'upcoming' | translate }}</span>
+            <!-- <span class="watch_later"><i class="icon-watch_later_fill"></i></span> -->
+        </a>
+    </div>
+    <div class="video_info p-0">
+        <h3>
+            <a href="javascript:void(0)" [routerLink]="['/event/'+eventData.id, eventData.slug]">{{ eventData.title }}</a>
+        </h3>
+        <h4 *ngIf="eventData.performer">
+            <a href="javascript:void(0)" title="">{{ eventData.performer.username }}</a>
+            <span class="verify_ic"><i class="icon-tick"></i></span>
+        </h4>
+        <span>{{ 'event_block.live_at' | translate }}<small class="posted_dt">{{ eventData.start_time }} ({{ eventData.timezone }})</small></span>
+        <span *ngIf="eventData.description">{{ (eventData.description).substring('0', '65') }}...</span>
+    </div>
+</div>

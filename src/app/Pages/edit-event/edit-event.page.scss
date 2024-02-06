@@ -1,0 +1,9 @@
+ion-select {
+    &.form-control {
+        padding: 8px 15px;
+    }
+    &::part(icon) {
+        opacity: 0;
+        display: none;
+    }
+}

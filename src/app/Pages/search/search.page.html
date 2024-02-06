@@ -1,0 +1,49 @@
+<ion-content>
+    <div style="min-height: calc(100vh - 212px);">
+        <section class="filter-sec">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h6 class="fl-head pb-1 mb-3"><i class="icon-filter"></i> {{ 'search_page.filter' | translate }}</h6>
+                    </div>
+                    <div class="col-sm-6 col-12 full_wdth mb-2 mb-lg-0">
+                        <select class="form-control" #filterTiming (change)="filterByTiming(filterTiming.value)" autocomplete="off">
+                            <option value="">{{ 'search_page.filter_input_labels.timing' | translate }}</option>
+                            <option value="upcoming" [selected]="params.timing == 'upcoming'">{{ 'search_page.timing.upcoming' | translate }}</option>
+                            <option value="today" [selected]="params.timing == 'today'">{{ 'search_page.timing.today' | translate }}</option>
+                            <option value="this-week" [selected]="params.timing == 'this-week'">{{ 'search_page.timing.this_week' | translate }}</option>
+                            <!-- <option value="missed">{{ 'search_page.timing.missed' | translate }}</option> -->
+                            <option value="past" [selected]="params.timing == 'past'">{{ 'search_page.timing.past' | translate }}</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-6 col-12 full_wdth mb-2 mb-lg-0">
+                        <select class="form-control" #filterEventType *ngIf="app.settingsOptions" (change)="filterByEventType(filterEventType.value)">
+                            <option value="">{{ 'search_page.filter_input_labels.event_type' | translate }}</option>
+                            <option *ngFor="let event_type of app.settingsOptions.event_types | keyvalue" [value]="event_type.value.id">{{ event_type.value.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="vds-main" *ngIf="events">
+            <div class="vidz-row">
+                <div class="container">
+                    <div class="vidz_list m-0">
+                        <div class="row" *ngIf="events.length > 0 else emptyResults">
+                            <app-event-block class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth" [eventData]="event" *ngFor="let event of events"></app-event-block>
+                        </div>
+                        <ng-template #emptyResults>
+                            <div class="row">
+                                <div class="col-12 text-center fw-bold">{{ 'search_page.empty_results' | translate }}</div>
+                            </div>
+                        </ng-template>
+                    </div>
+                    <div class="text-center" *ngIf="loadMoreBtn">
+                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMore()">{{ 'load_more_btn' | translate }}</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <app-footer></app-footer>
+</ion-content>

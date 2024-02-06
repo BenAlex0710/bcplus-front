@@ -1,0 +1,528 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+
+/* Core CSS required for Ionic components to work properly */
+
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+/* theme css */
+
+@import "assets/css/animate.css";
+@import "assets/css/bootstrap.min.css";
+@import "assets/css/fontello.css";
+@import "assets/css/fontello-codes.css";
+// @import "assets/css/thumbs-embedded.css";
+@import "assets/css/style.css";
+@import "assets/css/responsive.css";
+@import "assets/css/color.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";
+
+@import "~flatpickr/dist/flatpickr.min.css";
+@import "../node_modules/ngx-sharebuttons/themes/circles.scss";
+@import "../node_modules/ngx-sharebuttons/themes/modern.scss";
+@import "../node_modules/video.js/dist/video-js.min.css";
+
+@import 'swiper/scss';
+@import 'swiper/scss/navigation';
+@import 'swiper/scss/pagination';
+
+ion-button.btn {
+    --background: none;
+    --box-shadow: none;
+    padding: 0;
+    text-transform: capitalize;
+}
+
+#content-wrapper {
+    min-height: 65vh;
+}
+
+ion-content {
+    --padding-top: 90px;
+    // --padding-bottom: 150px;
+}
+
+/* .v-center {
+    min-height: calc(100vh - 232px);
+    display: flex;
+    align-items: center;
+}
+
+app-footer {
+    padding: 70px;
+    width: 100%;
+    display: block;
+
+    footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+    }
+} */
+
+.btn-theme {
+    background: #800022 !important;
+    color: #fff !important;
+
+    &:hover {
+        background: #800022 !important;
+        color: #fff !important;
+    }
+}
+
+.btn-google {
+    background: #b53c2d !important;
+    color: #fff !important;
+}
+
+.btn-facebook {
+    background: #385999 !important;
+    color: #fff !important;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 .25rem rgba(128, 0, 34, 0.5);
+}
+
+.registerPageSlider {
+    --swiper-pagination-bullet-size: 16px;
+    --swiper-pagination-color: linear-gradient(135deg, #ff516b 0%, #826cfd 100%);
+}
+
+.date-time-input-wrapper {
+    position: relative;
+
+    input {
+        opacity: 0 !important;
+        z-index: 999;
+        position: relative;
+    }
+
+    .formated_date {
+        position: absolute;
+        top: 0px;
+        left: 0;
+        padding: 8px 15px;
+        z-index: 99;
+    }
+}
+
+.lets-loader {
+    .spinner-grow {
+        width: 4rem;
+        height: 4rem;
+    }
+
+    --ion-backdrop-color: #000;
+    --ion-backdrop-opacity: 0.7;
+
+    .loading-wrapper {
+        --background: transparent !important;
+        box-shadow: none !important;
+    }
+
+    #preloader {
+        background-color: transparent !important;
+    }
+}
+
+.lets-alert-confirm {
+    .alert-wrapper {
+        background-color: transparent;
+        box-shadow: none;
+        --max-width: 90%;
+        --width: 400px;
+
+        .alert-head {
+            border-bottom: 0px;
+            border-top-left-radius: 7px;
+            background-color: #3A363F;
+            border-top-right-radius: 7px;
+            padding: 20px 15px 0px;
+
+            .alert-title {
+                color: #fff;
+                text-align: center;
+                font-size: 14px;
+                line-height: 1.5;
+            }
+        }
+
+        .alert-message {
+            background-color: #3a363f;
+            border-bottom-left-radius: 7px;
+            color: #fff;
+            border-bottom-right-radius: 7px;
+            border: 2px solid var(--lets-color-hover);
+            border-top: 0px;
+            text-align: center;
+            font-family: var(--lets-font-source-han-san-tw);
+            font-size: 8px;
+            padding: 0 15px 20px;
+            line-height: 2;
+
+            p {
+                margin: 10px 0 0;
+            }
+        }
+
+        .alert-button-group {
+            padding: 0;
+            flex-direction: column;
+
+            .alert-btn {
+                margin-top: 15px !important;
+                text-transform: unset;
+
+                &.btn-secondary {
+                    background: #5c636a;
+                    color: #fff;
+                }
+
+                .alert-button-inner {
+                    display: block;
+                    text-align: center;
+                    font-size: 16px;
+                    padding: 6px;
+                }
+            }
+        }
+    }
+
+    &.without-border {
+
+        .alert-head,
+        .alert-message {
+            border: unset;
+            background-color: transparent;
+        }
+    }
+}
+
+.stripe-cc-form {
+    --width: 350px;
+    --height: 420px;
+    --backdrop-opacity: 0.7 !important;
+    --max-width: 90%;
+    --max-height: 90%;
+
+    ion-content {
+        &::part(scroll) {
+            padding: 0;
+        }
+    }
+}
+
+.invite-guests-modal {
+    ion-content {
+        &::part(scroll) {
+            padding: 0;
+        }
+    }
+}
+
+
+
+/* .form-control * {
+    height: 100% !important;
+} */
+
+.file_upload_input_btn {
+    position: relative;
+
+    button {
+        width: 150px;
+        overflow: hidden;
+        position: relative;
+    }
+
+    input[type="file"] {
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 9;
+        height: 100%;
+    }
+}
+
+.fade:not(.show) {
+    display: none;
+}
+
+#stream-player-wrapper {
+    text-align: center;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    .single-video {
+        background: #000;
+        height: 100%;
+    }
+}
+
+.player {
+    display: inline-block;
+    vertical-align: middle;
+    width: 100%;
+    height: 100%;
+}
+
+.form-control,
+.form-select {
+    &:not(textarea) {
+        height: 38px;
+    }
+
+    color: #383838;
+    padding-left: 10px;
+    background-color: #e2ebef;
+    border-radius: 5px;
+    border: none;
+    padding: 0 15px;
+    width: 100%;
+}
+
+.language-modal {
+    --height: 300px;
+    --width: 300px;
+
+    ion-content {
+        --padding-top: 0;
+        --padding-bottom: 0;
+    }
+}
+
+.rating-starts-input {
+    font-size: 20px;
+    color: #fbc113;
+}
+
+.rating-starts {
+    color: #fbc113;
+}
+
+.review-list {
+    .vc_hd {
+        height: 40px;
+        width: 40px !important;
+
+        >img {
+            height: 40px;
+            width: 40px !important;
+        }
+    }
+}
+
+.letsToast-web {
+    --end: 20px;
+    --start: unset;
+    --ion-safe-area-top: 80px;
+
+    &::part(container)::before {
+        display: inline-block;
+        font-family: bootstrap-icons !important;
+        font-style: normal;
+        font-weight: normal !important;
+        font-feature-settings: normal;
+        font-variant: normal;
+        text-transform: none;
+        line-height: 1;
+        vertical-align: -.125em;
+        font-size: 30px;
+    }
+
+    &.error {
+        --background: var(--bs-red);
+
+        &::part(button) {
+            background-color: var(--bs-red);
+            border: 4px solid var(--bs-red);
+        }
+
+        &::part(container)::before {
+            content: "\f623";
+            display: inline-block;
+            font-family: bootstrap-icons !important;
+            font-style: normal;
+            font-weight: normal !important;
+            font-feature-settings: normal;
+            font-variant: normal;
+            text-transform: none;
+            line-height: 1;
+            vertical-align: -.125em;
+            font-size: 30px;
+        }
+    }
+
+    &.success {
+        &::part(button) {
+            background-color: var(--bs-green);
+            border: 4px solid var(--bs-green);
+        }
+
+        --background: var(--bs-green);
+
+        &::part(container)::before {
+            content: "\f270";
+        }
+    }
+
+    &.info {
+        &::part(button) {
+            background-color: var(--bs-primary);
+            border: 4px solid var(--bs-primary);
+        }
+
+        --background: var(--bs-primary);
+
+        &::part(container)::before {
+            content: "\F431";
+        }
+    }
+
+    &::part(container) {
+        contain: unset;
+        padding-left: 12px;
+        max-width: 300px;
+
+        &::before {
+            width: 30px;
+            height: 30px;
+            background-repeat: no-repeat;
+            margin-right: -6px;
+        }
+    }
+
+    &::part(header) {
+        text-transform: capitalize;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    &::part(button) {
+        color: #fff !important;
+        padding: 0;
+        position: absolute !important;
+        top: -10px;
+        right: -10px;
+        border-radius: 50%;
+        height: 28px;
+        width: 28px;
+        display: block;
+        outline: 2px solid #04040421;
+    }
+}
+
+.social_posting_live_stream_modal {
+    --height: 350px;
+    --width: 400px;
+
+    ion-content {
+        --padding-top: 0;
+        --padding-bottom: 0;
+    }
+}
+
+.mobile-search-btn {
+    display: none !important;
+}
+
+.mobile-search-form {
+    position: relative;
+    padding: 10px;
+    background: #050505;
+    display: none;
+
+    form {
+        position: relative;
+
+        input {
+            width: 100%;
+            border-radius: 30px;
+            color: #6e6f70;
+            font-size: 16px;
+            height: 38px;
+            line-height: 38px;
+            padding: 0 15px;
+            background-color: #e2ebef;
+            border: 0;
+        }
+
+        button {
+            position: absolute;
+            top: 50%;
+            right: 12px;
+            background-color: inherit;
+            border: 0;
+            transform: translateY(-50%);
+        }
+    }
+}
+
+.let_moji {
+    width: 15px;
+    margin: 0 2px;
+}
+
+.let-editor {
+    // min-height: 196px;
+    // height: unset;
+
+    .emojipicker {
+        // position: absolute;
+        width: 24px;
+        height: 24px;
+        // bottom: 10px;
+        // left: 10px;
+        cursor: pointer;
+    }
+
+    * {
+        white-space: pre-wrap;
+    }
+}
+
+@media (max-width: 991px) {
+    .mobile-search-form {
+        display: block;
+    }
+
+    .mobile-search-btn {
+        display: block !important;
+    }
+}
+
+@media (max-width: 640px) {
+    // .player {
+    //     width: 320px;
+    //     height: 240px;
+    // }
+}
