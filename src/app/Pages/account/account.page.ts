@@ -4,6 +4,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { AppComponent } from 'src/app/app.component';
 import { CommonService } from 'src/app/Services/common.service';
 import { RestService } from 'src/app/Services/rest.service';
+import { ImageCroppedEvent, LoadedImage } from 'ngx-image-cropper';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     selector: 'app-account',
@@ -11,6 +13,9 @@ import { RestService } from 'src/app/Services/rest.service';
     styleUrls: ['./account.page.scss'],
 })
 export class AccountPage implements OnInit {
+
+    imageChangedEvent: any = '';
+    croppedImage: any = '';
 
     userinfo;
     form: FormGroup;
@@ -23,7 +28,8 @@ export class AccountPage implements OnInit {
         private formBuilder: FormBuilder,
         private translate: TranslateService,
         private commonService: CommonService,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        private sanitizer: DomSanitizer
     ) {
         this.form = this.formBuilder.group({
             first_name: [''],
@@ -156,6 +162,24 @@ export class AccountPage implements OnInit {
                 };
             }
         }
+    }
+
+    fileChangeEvent(event: any): void {
+        this.imageChangedEvent = event;
+    }
+    imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+      this.form.get('banner').setValue(this.sanitizer.bypassSecurityTrustUrl(event.objectUrl))
+      // event.blob can be used to upload the cropped image
+    }
+    imageLoaded(image: LoadedImage) {
+        // show cropper
+    }
+    cropperReady() {
+        // cropper ready
+    }
+    loadImageFailed() {
+        // show message
     }
 
     isVideo(file: string): boolean {

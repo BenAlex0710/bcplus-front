@@ -9,6 +9,7 @@ import { AccountPageRoutingModule } from './account-routing.module';
 import { AccountPage } from './account.page';
 import { TranslateModule } from '@ngx-translate/core';
 import { CustomComponentsModule } from 'src/app/Components/custom-components.module';
+import {ImageCropperModule} from "ngx-image-cropper"
 
 @NgModule({
     imports: [
@@ -18,7 +19,8 @@ import { CustomComponentsModule } from 'src/app/Components/custom-components.mod
         ReactiveFormsModule,
         TranslateModule,
         CustomComponentsModule,
-        AccountPageRoutingModule
+        AccountPageRoutingModule,
+        ImageCropperModule
     ],
     declarations: [AccountPage]
 })

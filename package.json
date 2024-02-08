@@ -31,6 +31,7 @@
         "date-fns": "^2.29.3",
         "flatpickr": "^4.6.13",
         "ionicons": "^6.0.3",
+        "ngx-image-cropper": "^7.2.1",
         "ngx-sharebuttons": "^11.0.0",
         "ngx-stripe": "^15.4.4",
         "rxjs": "~7.5.0",

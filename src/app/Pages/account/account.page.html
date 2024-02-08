@@ -117,15 +117,25 @@
                     <label class="mb-2">{{ 'account_page.input_labels.banner' | translate }} </label>
                     <div class="file_upload_input_btn mb-2">
                         <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_banner_btn' | translate }}
-                            <input type="file" (change)="showBannerPreview($event)">
+                            <input type="file" (change)="fileChangeEvent($event)" />
                             <input type="hidden" formControlName="banner">
                         </button>
+                        <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
                     </div>
                     <div [ngStyle]="{'display': !isVideo(userinfo?.banner) ? 'none' : 'initial'}">
                         <video #previewVideoBanner [src]="userinfo?.banner" height="150" controls></video>
                     </div>
                     <div [ngStyle]="{'display': isVideo(userinfo?.banner) ? 'none' : 'initial'}">
-                        <img #previewImgBanner [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/user-img.png'" height="150">
                     </div>
                 </div>
                 <div class="col-sm-12 mb-3">
