@@ -1,6 +1,6 @@
 <ion-content *ngIf="performer">
     <div style="min-height: calc(100vh - 212px);">
-        <section class="banner-section p120"
+        <!-- <section class="banner-section p120"
                  [ngStyle]="{'background': isVideo(performer.banner) ? 'none' : 'url(' + performer.banner + ') no-repeat',
                      'position': 'relative',
                      'background-width': '100%',
@@ -16,15 +16,20 @@
               <source [src]="performer.banner" type="video/mp4">
               Your browser does not support the video tag.
             </video>
-        </section>
+        </section> -->
         <section class="videso_section">
             <div class="info-pr-sec">
                 <div class="container">
+                    <div class="col-12 " [ngStyle]="{'height': '400px', 'position':'relative','marginBottom': '12%'}">
+                        <img #previewImgBanner [src]="(performer && performer.banner) ? performer.banner : './assets/images/resources/user-img.png'" [ngStyle]="{'height':'100%',width:'100%','borderRadius':'10px'}">
+                        <img #previewImg [src]="(performer && performer.photo) ? performer.photo : './assets/images/resources/user-img.png'" class="profile-center" width="60" height="60">
+                        
+                    </div>
                     <div class="vcp_inf cr">
-                        <span class="vc_hd">
+                        <!-- <span class="vc_hd">
                             <img [src]="performer.photo" alt="" />
-                        </span>
-                        <div class="vc_info pr">
+                        </span> -->
+                        <div class="vc_info" [ngStyle]="{'paddingLeft': '0px'}">
                             <!-- <h4> ScereBro <span class="verify_ic"><i class="icon-tick"></i></span> -->
                             <h6 class="fw-bold"> {{ performer.full_name }} <span class="verify_ic"><i class="icon-tick"></i></span>
                             </h6>

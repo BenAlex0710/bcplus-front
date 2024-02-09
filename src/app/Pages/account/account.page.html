@@ -9,6 +9,78 @@
         </div>
         <form [formGroup]="form" (ngSubmit)="submitForm()">
             <div class="row">
+                <div class="col-12 " [ngStyle]="{'height': '400px', 'position':'relative','marginBottom': '12%'}">
+                <img #previewImgBanner [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/user-img.png'" [ngStyle]="{'display': isVideo(userinfo?.banner) ? 'none' : 'initial','height':'100%',width:'100%','borderRadius':'10px'}">
+                <video #previewVideoBanner [src]="userinfo?.banner" autoplay [ngStyle]="{'display': !isVideo(userinfo?.banner) ? 'none' : 'initial','height':'100%',width:'100%','borderRadius':'10px'}" controls></video>
+                <div class="file_upload_input_btn_cover mb-2">
+                    <button type="button" class="btn btn-outline-dark  btn-sm"> 
+                        <!-- {{ 'account_page.choose_banner_btn' | translate }} -->
+                        <i class="icon-pencil"></i>
+
+                        <input type="file" (change)="showBannerPreview($event, previewImgBanner)" />
+                        <input type="hidden" formControlName="banner">
+                    </button>
+                    
+                    <!-- <image-cropper
+                    [imageChangedEvent]="imageChangedEvent"
+                    [maintainAspectRatio]="true"
+                    [aspectRatio]="2.875"
+                    format="png"
+                    (imageCropped)="imageCropped($event)"
+                    (imageLoaded)="imageLoaded($event)"
+                    (cropperReady)="cropperReady()"
+                    (loadImageFailed)="loadImageFailed()"
+                    ></image-cropper> -->
+                </div>
+                <img #previewImg [src]="(userinfo && userinfo.photo) ? userinfo.photo : './assets/images/resources/user-img.png'" class="profile-center" width="60" height="60">
+                <div class="file_upload_input_btn_profile mb-2">
+                    <button type="button" class="btn btn-outline-dark btn-sm"> 
+                        <!-- {{ 'account_page.choose_image_btn' | translate }} -->
+                        <i class="icon-pencil"></i>
+                        <input type="file" (change)="showPhotoPreview($event, previewImg)">
+                        <input type="hidden" formControlName="photo">
+                    </button>
+                </div>
+                
+                </div>
+                <!-- <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.photo' | translate }} <small>({{ 'account_page.photo_instruction' | translate }})</small></label>
+                    <div class="file_upload_input_btn mb-2">
+                        <button type="button" class="btn btn-outline-dark "> 
+                            {{ 'account_page.choose_image_btn' | translate }}
+                            <i class="icon-pencil text-dark"></i>
+                            <input type="file" (change)="showPhotoPreview($event, previewImg)">
+                            <input type="hidden" formControlName="photo">
+                        </button>
+                    </div>
+                    <img #previewImg [src]="(userinfo && userinfo.photo) ? userinfo.photo : './assets/images/resources/user-img.png'" width="60" height="60">
+                </div>
+                <div class="col-sm-12 mb-3">
+                    <label class="mb-2">{{ 'account_page.input_labels.banner' | translate }} </label>
+                    <div class="file_upload_input_btn mb-2">
+                        <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_banner_btn' | translate }}
+                            <input type="file" (change)="fileChangeEvent($event)" />
+                            <input type="hidden" formControlName="banner">
+                        </button>
+                        <image-cropper
+    [imageChangedEvent]="imageChangedEvent"
+    [maintainAspectRatio]="true"
+    [aspectRatio]="4 / 3"
+    format="png"
+    (imageCropped)="imageCropped($event)"
+    (imageLoaded)="imageLoaded($event)"
+    (cropperReady)="cropperReady()"
+    (loadImageFailed)="loadImageFailed()"
+></image-cropper>
+
+                    </div>
+                    <div [ngStyle]="{'display': !isVideo(userinfo?.banner) ? 'none' : 'initial'}">
+                        <video #previewVideoBanner [src]="userinfo?.banner" height="150" controls></video>
+                    </div>
+                    <div [ngStyle]="{'display': isVideo(userinfo?.banner) ? 'none' : 'initial'}">
+                        <img #previewImgBanner [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/user-img.png'" height="150">
+                    </div>
+                </div> -->
                 <div class="col-sm-6 mb-3">
                     <label class="mb-2">{{ 'account_page.input_labels.first_name' | translate }} <span class="required">*</span></label>
                     <input class="form-control border-form-control" formControlName="first_name" placeholder="{{ 'account_page.input_labels.first_name' | translate }}" type="text">
@@ -103,41 +175,7 @@
                         <div *ngIf="formControls.whatsapp_url.errors.server">{{ formControls.whatsapp_url.errors.server }}</div>
                     </div>
                 </div>
-                <div class="col-sm-12 mb-3">
-                    <label class="mb-2">{{ 'account_page.input_labels.photo' | translate }} <small>({{ 'account_page.photo_instruction' | translate }})</small></label>
-                    <div class="file_upload_input_btn mb-2">
-                        <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_image_btn' | translate }}
-                            <input type="file" (change)="showPhotoPreview($event, previewImg)">
-                            <input type="hidden" formControlName="photo">
-                        </button>
-                    </div>
-                    <img #previewImg [src]="(userinfo && userinfo.photo) ? userinfo.photo : './assets/images/resources/user-img.png'" width="60" height="60">
-                </div>
-                <div class="col-sm-12 mb-3">
-                    <label class="mb-2">{{ 'account_page.input_labels.banner' | translate }} </label>
-                    <div class="file_upload_input_btn mb-2">
-                        <button type="button" class="btn btn-outline-dark"> {{ 'account_page.choose_banner_btn' | translate }}
-                            <input type="file" (change)="fileChangeEvent($event)" />
-                            <input type="hidden" formControlName="banner">
-                        </button>
-                        <image-cropper
-    [imageChangedEvent]="imageChangedEvent"
-    [maintainAspectRatio]="true"
-    [aspectRatio]="4 / 3"
-    format="png"
-    (imageCropped)="imageCropped($event)"
-    (imageLoaded)="imageLoaded($event)"
-    (cropperReady)="cropperReady()"
-    (loadImageFailed)="loadImageFailed()"
-></image-cropper>
 
-                    </div>
-                    <div [ngStyle]="{'display': !isVideo(userinfo?.banner) ? 'none' : 'initial'}">
-                        <video #previewVideoBanner [src]="userinfo?.banner" height="150" controls></video>
-                    </div>
-                    <div [ngStyle]="{'display': isVideo(userinfo?.banner) ? 'none' : 'initial'}">
-                    </div>
-                </div>
                 <div class="col-sm-12 mb-3">
                     <ion-item class="become-performer-checkbox" [ngClass]="{ 'd-none' : userinfo && userinfo.role == '2'} ">
                         <ion-checkbox #becomePerformer formControlName="become_perfomer" [checked]="userinfo && userinfo.role == '2' "></ion-checkbox>

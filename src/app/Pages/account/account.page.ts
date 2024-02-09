@@ -145,8 +145,8 @@ export class AccountPage implements OnInit {
 
                 reader.onload = (e) => {
                     const videoUrl = e.target.result.toString();
-                    this.renderer.setStyle(this.previewVideoBanner.nativeElement.parentElement, 'display', 'initial');
-                    this.renderer.setStyle(this.previewImgBanner.nativeElement.parentElement, 'display', 'none');
+                    this.renderer.setStyle(this.previewVideoBanner.nativeElement, 'display', 'initial');
+                    this.renderer.setStyle(this.previewImgBanner.nativeElement, 'display', 'none');
                     this.previewVideoBanner.nativeElement.src = videoUrl;
                     this.form.get('banner').setValue(e.target.result);
                 }
@@ -155,8 +155,8 @@ export class AccountPage implements OnInit {
                 reader.readAsDataURL(file);
 
                 reader.onload = (e) => {
-                    this.renderer.setStyle(this.previewVideoBanner.nativeElement.parentElement, 'display', 'none');
-                    this.renderer.setStyle(this.previewImgBanner.nativeElement.parentElement, 'display', 'initial');
+                    this.renderer.setStyle(this.previewVideoBanner.nativeElement, 'display', 'none');
+                    this.renderer.setStyle(this.previewImgBanner.nativeElement, 'display', 'initial');
                     this.previewImgBanner.nativeElement.src = e.target.result.toString();
                     this.form.get('banner').setValue(e.target.result);
                 };
@@ -186,7 +186,7 @@ export class AccountPage implements OnInit {
         if (!file) {
             return false;
         }
-        return file.endsWith('.mp4');
+        return file.endsWith('.mp4') || file.endsWith('.webm');
     }
 
     ionViewWillEnter() {
