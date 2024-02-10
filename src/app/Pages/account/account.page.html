@@ -17,21 +17,24 @@
                         <!-- {{ 'account_page.choose_banner_btn' | translate }} -->
                         <i class="icon-pencil"></i>
 
-                        <input type="file" (change)="showBannerPreview($event, previewImgBanner)" />
+                        <input type="file" (change)="fileChangeEvent($event)" />
                         <input type="hidden" formControlName="banner">
                     </button>
                     
-                    <!-- <image-cropper
-                    [imageChangedEvent]="imageChangedEvent"
-                    [maintainAspectRatio]="true"
-                    [aspectRatio]="2.875"
-                    format="png"
-                    (imageCropped)="imageCropped($event)"
-                    (imageLoaded)="imageLoaded($event)"
-                    (cropperReady)="cropperReady()"
-                    (loadImageFailed)="loadImageFailed()"
-                    ></image-cropper> -->
                 </div>
+                <image-cropper
+                #previewImageCropper
+                *ngIf="showImageCropper"
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="2.875"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded($event)"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+                [ngStyle]="{'position': 'absolute','top': '0%','zIndex':0}"
+                ></image-cropper>
                 <img #previewImg [src]="(userinfo && userinfo.photo) ? userinfo.photo : './assets/images/resources/user-img.png'" class="profile-center" width="60" height="60">
                 <div class="file_upload_input_btn_profile mb-2">
                     <button type="button" class="btn btn-outline-dark btn-sm"> 

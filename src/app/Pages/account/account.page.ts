@@ -21,7 +21,8 @@ export class AccountPage implements OnInit {
     form: FormGroup;
     @ViewChild('previewVideoBanner') previewVideoBanner: ElementRef;
     @ViewChild('previewImgBanner') previewImgBanner: ElementRef;
-
+    @ViewChild('previewImageCropper') previewImageCropper: ElementRef;
+    showImageCropper: boolean = false;
     constructor(
         public app: AppComponent,
         private rest: RestService,
@@ -29,7 +30,7 @@ export class AccountPage implements OnInit {
         private translate: TranslateService,
         private commonService: CommonService,
         private renderer: Renderer2,
-        private sanitizer: DomSanitizer
+        private sanitizer: DomSanitizer,
     ) {
         this.form = this.formBuilder.group({
             first_name: [''],
@@ -163,13 +164,69 @@ export class AccountPage implements OnInit {
             }
         }
     }
-
+    async urlToBlob(url: string): Promise<String> {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const blob = await response.blob();
+        return new Promise<string>((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+              if (typeof reader.result === 'string') {
+                resolve(reader.result.split(',')[1]); // Extract base64 part
+              } else {
+                reject(new Error('Failed to read data URL'));
+              }
+            };
+            reader.onerror = () => {
+              reject(reader.error);
+            };
+            reader.readAsDataURL(blob);
+          });
+      }
     fileChangeEvent(event: any): void {
-        this.imageChangedEvent = event;
+        if (event.target.files.length) {
+            const file = event.target.files[0];
+
+            if (this.isVideo(file.name)) {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+
+                reader.onload = (e) => {
+                    const videoUrl = e.target.result.toString();
+                    this.renderer.setStyle(this.previewVideoBanner.nativeElement, 'display', 'initial');
+                    this.renderer.setStyle(this.previewImgBanner.nativeElement, 'display', 'none');
+                    this.previewVideoBanner.nativeElement.src = videoUrl;
+                    this.form.get('banner').setValue(e.target.result);
+                }
+            } else {
+                    // console.log(this.previewImageCropper, 'display', 'initial');
+                this.showImageCropper = true;
+                this.renderer.setStyle(this.previewVideoBanner.nativeElement, 'display', 'none');
+                this.renderer.setStyle(this.previewImgBanner.nativeElement, 'display', 'none');
+                // this.renderer.setStyle(this.previewImageCropper, 'display', 'initial');
+                this.imageChangedEvent = event;
+            }
+        }
+        
     }
     imageCropped(event: ImageCroppedEvent) {
-      this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
-      this.form.get('banner').setValue(this.sanitizer.bypassSecurityTrustUrl(event.objectUrl))
+        this.croppedImage = this.sanitizer.bypassSecurityTrustUrl(event.objectUrl);
+        this.showImageCropper = true;
+        this.renderer.setStyle(this.previewVideoBanner.nativeElement, 'display', 'none');
+        this.renderer.setStyle(this.previewImgBanner.nativeElement, 'display', 'none');
+        // this.renderer.setStyle(this.previewImageCropper.nativeElement, 'display', 'initial');
+        this.urlToBlob(event.objectUrl)
+            .then(blob => {
+                // Do something with the blob
+                console.log('Blob:', blob);
+                this.previewImgBanner.nativeElement.src = blob
+                this.form.get('banner').setValue(blob)
+            })
+            .catch(error => {
+                console.error('Error converting URL to Blob:', error);
+            });
       // event.blob can be used to upload the cropped image
     }
     imageLoaded(image: LoadedImage) {
