@@ -6,6 +6,8 @@ const addUser = ({ id, user_id, room }) => {
     // room = room.trim().toLowerCase();
 
     // Validate the data
+    console.log(user_id)
+
     if (!user_id || !room) {
         return {
             error: "user_id and room are required!"
@@ -47,6 +49,7 @@ const getUser = id => {
 
 const getUsersInRoom = room => {
     // room = room.trim().toLowerCase();
+    console.log(user)
     return users.filter(user => user.room === room);
 };
 

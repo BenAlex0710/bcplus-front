@@ -1,4 +1,6 @@
 const generateMessage = (username, message, type) => {
+    console.log(message)
+
     return {
         username,
         message,
