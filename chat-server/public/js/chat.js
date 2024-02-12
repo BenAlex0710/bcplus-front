@@ -38,8 +38,8 @@ const autoscroll = () => {
     }
 };
 
-socket.on("message", message => {
-    console.log(message);
+socket.on("newMessage", message => {
+    console.log("newMessage");
     const html = Mustache.render(messageTemplate, {
         username: message.username,
         message: message.message,
@@ -72,14 +72,14 @@ socket.on("roomData", ({ room, users }) => {
 socket.on("rejoin", (message) => {
     console.log(message);
 
-    socket.emit("join", { username, room }, error => {
+    socket.emit("joinEvent", { username, room }, error => {
         if (error) {
             alert(error);
             location.href = "/";
         }
     });
 
-    socket.emit("sendMessage", message, error => {
+    socket.emit("sendChatMessage", message, error => {
         // $messageFormButton.removeAttribute("disabled");
         $messageFormInput.value = "";
         $messageFormInput.focus();
@@ -103,7 +103,7 @@ $messageForm.addEventListener("submit", e => {
     };
     console.log(message);
 
-    socket.emit("sendMessage", message, error => {
+    socket.emit("sendChatMessage", message, error => {
         // $messageFormButton.removeAttribute("disabled");
         $messageFormInput.value = "";
         $messageFormInput.focus();
@@ -173,7 +173,7 @@ socket.on("disconnect", () => {
     console.log(socket.id); // undefined
 });
 
-socket.emit("join", { username, room }, error => {
+socket.emit("joinEvent", { username, room }, error => {
     if (error) {
         alert(error);
         location.href = "/";

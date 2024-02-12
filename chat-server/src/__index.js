@@ -11,8 +11,8 @@ const { addUser, removeUser, getUser, getUsersInRoom } = require("./utils/users"
 
 const app = express();
 const server = http.createServer({
-    key: fs.readFileSync('/../../../etc/letsencrypt/live/bcplusnews.com/privkey.pem'),
-    cert: fs.readFileSync('/../../../etc/letsencrypt/live/bcplusnews.com/fullchain.pem')
+    key: fs.readFileSync('/../ssl/server-key.pem'),
+    cert: fs.readFileSync('/../ssl/server-cert.pem')
 }, app);
 const io = socketio(server, {
     cors: { origin: "*", methods: ["GET", "POST"] }
