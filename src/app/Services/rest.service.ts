@@ -529,6 +529,28 @@ export class RestService {
                 catchError(this.handleError('Add Event Review'))
             );
     }
+    getfriendrequestList(user_id): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.get('friend-list/' + user_id)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('Get friend request List'))
+            );
+    }
+    checkFriendStatus(user_id,friend_id): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.get(`check-friend-request/${user_id}/${friend_id}`)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('check Friend Status'))
+            );
+    }
 
     getPerformerReviewList(username, params): Observable<any> {
         let url = this.commanService.setParams('performer/' + username + '/get-reviews', params);
@@ -617,7 +639,28 @@ export class RestService {
                 catchError(this.handleError('get Conversation'))
             );
     }
-
+    sendFriendRequest( data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('send-friend-request/', data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('Add Event Review'))
+            );
+    }
+    acceptFriendRequest(id, data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('accept-friend-request/'+id, data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('Add Event Review'))
+            );
+    }
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             this.commanService.hideLoader();

@@ -95,6 +95,11 @@ const routes: Routes = [
         canActivate: [AuthGuard, PerformerOnlyGuard]
     },
     {
+        path: 'friend-list',
+        loadChildren: () => import('./Pages/friend-list/friend-list.module').then(m => m.FriendListPageModule),
+        // canActivate: [AuthGuard, PerformerOnlyGuard]
+    },
+    {
         path: 'go-live',
         loadChildren: () => import('./Pages/go-live/go-live.module').then(m => m.GoLivePageModule),
         canActivate: [AuthGuard, PerformerOnlyGuard]

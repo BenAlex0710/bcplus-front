@@ -41,7 +41,12 @@
                             <a href="javascript:void(0)" title="" class="donate"> <i class="bi bi-star-fill"></i>&nbsp;<strong>{{ performer.rating | number : '1.1-2' }}</strong> {{ 'single_channel.avg_ratings' | translate }}</a>
                         </li>
                         <li>
-                            <a href="javascript:void(0)" title="" class="btn-default btn-theme"> {{ 'single_channel.reviews' | translate }} <strong>({{ performer.reviews_count }})</strong></a>
+                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="!friendRequestPending && !friendRequestAccepted" (click)="addFriend()"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.add_friend' | translate }}</a>
+                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="friendRequestPending && !friendRequestAccepted"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.pending_friend_request' | translate }}</a>
+                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="!friendRequestPending && friendRequestAccepted"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.accepted_friend_request' | translate }}</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" title="" class="btn-default btn-theme" onclick=""> {{ 'single_channel.reviews' | translate }} <strong>({{ performer.reviews_count }})</strong></a>
                         </li>
                     </ul>
                     <div class="clearfix"></div>

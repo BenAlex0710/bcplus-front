@@ -2374,7 +2374,10 @@ svg:hover path {
     background-color: #26e491;
     color: #fff;
 }
-
+.add_friend_button {
+    background-color: #000000;
+    color: #fff;
+}
 .subscribe {
     background-color: #272626;
     color: #fff;

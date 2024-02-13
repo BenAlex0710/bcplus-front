@@ -236,7 +236,7 @@ export class GoLivePage implements OnInit {
     }
 
     sendMessage(chatMsgInput, chatMsgInputWrapper) {
-        // console.log(chatMsgInput.innerHTML);
+        console.log(chatMsgInput.innerHTML);
         // return;
         let message = chatMsgInput.innerHTML.trim();
         if (message == '') {
@@ -263,10 +263,11 @@ export class GoLivePage implements OnInit {
             message: message,
             parent_comment_id: 0
         }
-
-        this.rest.insertEventComment(this.event_id, data).subscribe((res) => {
+        
+        this.rest.insertEventComment(this.event_id || 91, data).subscribe((res) => {
             if (res.status) {
-                message_data.id = res.data.message_id;
+                console.log(res)
+                message_data.id = res.data.comment.id;
                 this.socketService.sendChatMessage(message_data);
             } else {
                 this.messages.pop();
@@ -286,7 +287,7 @@ export class GoLivePage implements OnInit {
         // console.log(chatMsgInput);
         // return;
         let height = chatMsgInput.scrollHeight;
-        if (chatMsgInput.InnerHtml.length == "0") {
+        if (chatMsgInput.InnerHtml?.length == "0") {
             height = 40;
             // chatMsgInput.scrollHeight = height;
         }
@@ -336,6 +337,7 @@ export class GoLivePage implements OnInit {
     }
 
     subscribeMessage() {
+        console.log("workkkklls")
         this.messageSubscriptions = this.socketService.onNewMessage().subscribe((message: any) => {
             // message.user = message.username;
             // delete message.username;

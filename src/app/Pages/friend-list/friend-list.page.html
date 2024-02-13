@@ -1,0 +1,69 @@
+<ion-content>
+  <div style="min-height: calc(100vh - 212px)">
+    <div class="container pt-5">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="main-title">
+            <h3 class="mb-3">
+              {{ 'friend_list_page.breadcrumb_title' | translate }}
+            </h3>
+          </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead class="bg-dark text-white">
+                <tr>
+                  <th class="">{{ 'friend_list_page.email' | translate }}</th>
+                  <th>{{ 'friend_list_page.username' | translate }}</th>
+                  <th>{{ 'friend_list_page.status' | translate }}</th>
+                  <th class="text-center">
+                    {{ 'friend_list_page.action' | translate }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody *ngIf="Friendlist.length > 0">
+                <tr *ngFor="let friend of Friendlist">
+                  <td class="align-middle">{{ friend.user_info.email }}</td>
+                  <td class="align-middle">{{ friend.user_info.username }}</td>
+                  <td class="align-middle">{{ friend.status }}</td>
+                  <td class="align-middle text-center acceptbutton">
+                    <a
+                      href="javascript:void(0)"
+                      title=""
+                      class="donate add_friend_button"
+                      *ngIf="friend.status === 'pending'"
+                      (click)="acceptFriendRequest(friend.id)"
+                    >
+                      {{ 'single_channel.accept_friend_request' | translate }}</a
+                    >
+                  </td>
+                </tr>
+              </tbody>
+              <ng-template #noAttendees>
+                <tbody>
+                  <tr>
+                    <td class="text-center" colspan="15">
+                      <div class="mb-0">
+                        {{ 'friend_list_page.no_guests_found' | translate }}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </ng-template>
+            </table>
+          </div>
+          <div class="text-center mt-3" *ngIf="loadMoreBtn">
+            <a
+              href="javascript:void(0)"
+              class="btn btn-dark"
+              (click)="loadMore()"
+              >{{ 'load_more_btn' | translate }}</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</ion-content>

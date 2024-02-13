@@ -87,7 +87,7 @@ export class InboxPage implements OnInit {
                 }
             } else {
                 this.commonService.showToast(res.message, false);
-                this.router.navigate(['/error']);
+                // this.router.navigate(['/error']);
             }
         });
     }
