@@ -130,6 +130,8 @@ export class InboxPage implements OnInit {
             if(this.messages.length){
                 console.log(res)
             this.room=res.messages[0].room_id
+            }else{
+            this.room= obj.friend_id + obj.user_id
             }
             this.socketService.joinEvent({
                 user_id: this.app.userinfo.id.toString(),
