@@ -205,7 +205,15 @@
                 </li>
                 <li>
                     <span><i class="bi bi-inbox-fill"></i></span>
-                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/inbox']">{{ 'sidemenu.inbox' | translate }}</a>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/inbox/admin']">{{ 'sidemenu.inbox' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-person-plus-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/friend-list']">{{ 'sidemenu.friend_requests' | translate }}</a>
+                </li>
+                <li>
+                    <span><i class="bi bi-person-fill"></i></span>
+                    <a href="javascript:void(0)" class="ps-2" [routerLink]="['/all-friend-list']">{{ 'sidemenu.all_friend_requests' | translate }}</a>
                 </li>
                 <!-- <li>
                     <span><i class="icon-subscriptions"></i></span>

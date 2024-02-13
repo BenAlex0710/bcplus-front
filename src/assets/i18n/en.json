@@ -76,7 +76,9 @@
         "saved_events": "Saved Events",
         "past_events": "Past Events",
         "pages": "Pages",
-        "about_us": "About Us"
+        "about_us": "About Us",
+        "friend_requests": "Friend Requests",
+        "all_friend_requests": "All Friend"
     },
     "verification_pending": {
         "page_title": "Verification Pending",
@@ -407,7 +409,7 @@
         "empty_results": "No events found"
     },
     "inbox_page": {
-        "page_title": "Chat With Admin",
+        "page_title": "Chat With",
         "breadcrumb_title": "Chat With Admin",
         "chat_input_placeholder": "Please write your quries to admin from here"
     },
@@ -459,6 +461,23 @@
         "email": "Email",
         "status": "Status",
         "action": "Action",
+        "delete_invitation_popup": {
+            "header" : "Are You sure ?",
+            "message" :"Do you want to delete this invitation ?"
+        },
+        "status_labels" : {
+            "0" : "Pending",
+            "1" : "Accepted"
+        }
+    },
+    "all_friend_list_page": {
+        "page_title": "All Friends ",
+        "breadcrumb_title": "All Friends",
+        "username": "Username",
+        "email": "Email",
+        "status": "Status",
+        "action": "Action",
+        "message": "Message",
         "delete_invitation_popup": {
             "header" : "Are You sure ?",
             "message" :"Do you want to delete this invitation ?"

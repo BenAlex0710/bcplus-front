@@ -661,6 +661,29 @@ export class RestService {
                 catchError(this.handleError('Add Event Review'))
             );
     }
+    sendUserMessage(data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('create/message', data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('send User Message'))
+            );
+    }
+    getUserConversations(params,obj): Observable<any> {
+        this.commanService.showLoader();
+        let url = this.commanService.setParams(`user-message/${obj.friend_id}/${obj.user_id}`, params);
+        return this.http.get(url)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('get Conversation'))
+            );
+    }
     private handleError<T>(operation = 'operation', result?: T) {
         return (error: any): Observable<T> => {
             this.commanService.hideLoader();

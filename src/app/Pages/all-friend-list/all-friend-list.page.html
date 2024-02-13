@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <div class="main-title">
             <h3 class="mb-3">
-              {{ 'friend_list_page.breadcrumb_title' | translate }}
+              {{ 'all_friend_list_page.breadcrumb_title' | translate }}
             </h3>
           </div>
         </div>
@@ -14,28 +14,28 @@
             <table class="table table-striped">
               <thead class="bg-dark text-white">
                 <tr>
-                  <th class="">{{ 'friend_list_page.email' | translate }}</th>
-                  <th>{{ 'friend_list_page.username' | translate }}</th>
-                  <th>{{ 'friend_list_page.status' | translate }}</th>
+                  <th class="">{{ 'all_friend_list_page.email' | translate }}</th>
+                  <th>{{ 'all_friend_list_page.username' | translate }}</th>
+                  <th>{{ 'all_friend_list_page.status' | translate }}</th>
                   <th class="text-center">
-                    {{ 'friend_list_page.action' | translate }}
+                    {{ 'all_friend_list_page.action' | translate }}
                   </th>
                 </tr>
               </thead>
               <tbody *ngIf="Friendlist.length > 0">
                 <tr *ngFor="let friend of Friendlist" >
-                  <td class="align-middle" *ngIf="friend.status === 'pending'">{{ friend.user_info.email }}</td>
-                  <td class="align-middle" *ngIf="friend.status === 'pending'">{{ friend.user_info.username }}</td>
-                  <td class="align-middle" *ngIf="friend.status === 'pending'">{{ friend.status }}</td>
-                  <td class="align-middle text-center acceptbutton" *ngIf="friend.status === 'pending'">
+                  <td class="align-middle" *ngIf="friend.status === 'accepted'">{{ friend.user_info.email }}</td>
+                  <td class="align-middle" *ngIf="friend.status === 'accepted'">{{ friend.user_info.username }}</td>
+                  <td class="align-middle" *ngIf="friend.status === 'accepted'">{{ friend.status }}</td>
+                  <td class="align-middle text-center acceptbutton" *ngIf="friend.status === 'accepted'">
                     <a
                       href="javascript:void(0)"
                       title=""
+                      [routerLink]="['/inbox', friend.user_id]"
                       class="donate add_friend_button"
-                      *ngIf="friend.status === 'pending'"
-                      (click)="acceptFriendRequest(friend.id)"
+                      *ngIf="friend.status === 'accepted'"
                     >
-                      {{ 'single_channel.accept_friend_request' | translate }}</a
+                      {{ 'all_friend_list_page.message' | translate }}</a
                     >
                   </td>
                 </tr>

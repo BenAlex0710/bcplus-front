@@ -80,9 +80,9 @@ const routes: Routes = [
         canActivate: [AuthGuard, PerformerOnlyGuard]
     },
     {
-        path: 'inbox',
+        path: 'inbox/:user_id',
         loadChildren: () => import('./Pages/inbox/inbox.module').then(m => m.InboxPageModule),
-        canActivate: [AuthGuard, PerformerOnlyGuard]
+        // canActivate: [AuthGuard, PerformerOnlyGuard]
     },
     {
         path: 'saved-events',
@@ -97,6 +97,11 @@ const routes: Routes = [
     {
         path: 'friend-list',
         loadChildren: () => import('./Pages/friend-list/friend-list.module').then(m => m.FriendListPageModule),
+        // canActivate: [AuthGuard, PerformerOnlyGuard]
+    },
+    {
+        path: 'all-friend-list',
+        loadChildren: () => import('./Pages/all-friend-list/all-friend-list.module').then(m => m.AllFriendListPageModule),
         // canActivate: [AuthGuard, PerformerOnlyGuard]
     },
     {

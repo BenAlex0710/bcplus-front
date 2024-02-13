@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="main-title">
-                        <h3 class="mb-3">{{ 'inbox_page.breadcrumb_title' | translate }}</h3>
+                        <h3 class="mb-3">{{ 'inbox_page.page_title' | translate }} {{ chatwith }}</h3>
                     </div>
                 </div>
                 <div class="col-sm-12">
@@ -13,9 +13,9 @@
                             <div class="text-center">
                                 <ion-spinner *ngIf="loadOlderspinner" name="lines"></ion-spinner>
                             </div>
-                            <div class="message-block d-flex mb-3" [ngClass]="{'inverse' : message.from == app.userinfo.id }" *ngFor="let message of messages">
+                            <div class="message-block d-flex mb-3" [ngClass]="{'inverse' : message.sender == app.userinfo.id }" *ngFor="let message of messages">
                                 <div class="photo">
-                                    <img [src]="message.from == app.userinfo.id ? app.userinfo.photo : '../../../assets/images/Favicon.png' ">
+                                    <img [src]="message.sender == app.userinfo.id ? app.userinfo.photo : '../../../assets/images/Favicon.png' ">
                                 </div>
                                 <div class="text-block">
                                     <div class="message-text">

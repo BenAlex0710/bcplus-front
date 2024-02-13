@@ -52,11 +52,11 @@ io.on("connection", (socket) => {
       socket.broadcast.to(user.room).emit("newUserJoinedEvent", user);
       callback(user);
     }
-  });
+  }); 
 
   socket.on("sendChatMessage", (data, callback) => {
     console.log("data",data.room)
-    socket.broadcast.emit("newMessage", data);
+    socket.broadcast.to(data.room).emit("newMessage", data);
     // socket.broadcast.emit("newMessage", data);
     callback();
   });
