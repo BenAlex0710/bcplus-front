@@ -13,22 +13,32 @@
                             <div class="text-center">
                                 <ion-spinner *ngIf="loadOlderspinner" name="lines"></ion-spinner>
                             </div>
-                            <div class="message-block d-flex mb-3" [ngClass]="{'inverse' : message.sender == app.userinfo.id }" *ngFor="let message of messages">
+                            <div class="message-block d-flex mb-3"
+                                [ngClass]="{'inverse' : message.sender == app.userinfo.id }"
+                                *ngFor="let message of messages">
                                 <div class="photo">
-                                    <img [src]="message.sender == app.userinfo.id ? app.userinfo.photo : '../../../assets/images/Favicon.png' ">
+                                    <img
+                                        [src]="message.sender == app.userinfo.id ? app.userinfo.photo : '../../../assets/images/Favicon.png' ">
                                 </div>
                                 <div class="text-block">
                                     <div class="message-text">
                                         {{ message.message }}
                                     </div>
-                                    <span class="message-time"> {{ message.created_at |  date : 'dd/MM/yyyy HH:mm' }}</span>
+                                    <span class="message-time"> {{ message.created_at | date : 'dd/MM/yyyy HH:mm'
+                                        }}</span>
                                 </div>
                             </div>
                         </div>
                         <div class="chat-footer">
                             <div class="d-flex" #chatMsgInputWrapper>
-                                <textarea #chatMsgInput class="chat-input flex-grow-1 p-2" [placeholder]="'inbox_page.chat_input_placeholder' | translate" (keyup.enter)="sendMessage(chatMsgInput, chatMsgInputWrapper)" (keyup)="textAreaAdjust(chatMsgInput, chatMsgInputWrapper)"></textarea>
-                                <button class="btn btn-theme align-self-end" type="button" [disabled]="chatMsgInput.value.trim()=='' " (click)="sendMessage(chatMsgInput, chatMsgInputWrapper) "><i class="bi bi-send"></i></button>
+                                <textarea #chatMsgInput class="chat-input flex-grow-1 p-2"
+                                    [placeholder]="'inbox_page.chat_input_placeholder' | translate"
+                                    (keyup.enter)="sendMessage(chatMsgInput, chatMsgInputWrapper)"
+                                    (keyup)="textAreaAdjust(chatMsgInput, chatMsgInputWrapper)"></textarea>
+                                <button class="btn btn-theme align-self-end" type="button"
+                                    [disabled]="chatMsgInput.value.trim()=='' "
+                                    (click)="sendMessage(chatMsgInput, chatMsgInputWrapper) "><i
+                                        class="bi bi-send"></i></button>
                             </div>
                         </div>
                     </div>
@@ -37,21 +47,54 @@
         </div>
         <div class="container-fluid main-container-width-with-header" style="margin-top: 62px">
             <div class="row">
-              <div class="col-md-6">
-          
-                <!-- Video & screen share container -->
-                <span>PeerId: {{peerId}}</span>
-                <div style="width: 400px; height: 300px; border: 2px solid" id="remote-video"></div>
-          
-                <br>
-                <div style="margin-top: 20px;">
-                  <input type="text" placeholder="Peer Id" [(ngModel)]='peerIdShare'/>
-                  <button class="button" (click)="connectWithPeer()">Call Peer</button>
-                  <button class="button" (click)="screenShare()">Screen share</button>
+                <div class="col-md-6">
+
+                    <!-- Video & screen share container -->
+                    <span>PeerId: {{peerId}}</span>
+                    <!-- <div style="width: 400px; height: 300px; border: 2px solid" id="remote-video"></div> -->
+
+                    <br>
+                    <div style="margin-top: 20px;">
+                        <input type="text" placeholder="Peer Id" [(ngModel)]='peerIdShare' />
+                        <button class="button" (click)="connectWithPeer()">Call Peer</button>
+                        <button class="button" *ngIf="acceptCall" (click)="acceptCallFn()">Accept call</button>
+                        <button class="button" *ngIf="acceptCall" (click)="DeclineCallFn()">Decline call</button>
+                        <button class="button" (click)="screenShare()">Screen share</button>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
+        </div>
+    </div>
+    <div *ngIf="acceptCall" class="container-call">
+        <div class="navigation">
+            <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240130154852/ddd-min.png" alt="Logo">
+            <!-- Icons here -->
+
+        </div>
+        <div class="main-content">
+            <!-- Main content goes here -->
+            <div class="image-container">
+                <div class="image" *ngIf="waiting"> <img
+                        src="../../../assets/images/Favicon.png"></div>
+                    <div *ngIf="!waiting" style="width: 400px; height: 300px; border: 2px solid" id="remote-video"></div>
+
+            </div>
+            <div class="icons main-icons" >
+                <img src="https://media.geeksforgeeks.org/wp-content/uploads/20240130162531/call.png" height="10"
+                    class="call-icon" (click)="DeclineCallFn()" alt="Icon 3">
+                    <span (click)="acceptCallFn()" *ngIf="accepted">
+                        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="50px" height="50px" viewBox="0,0,256,256"><g fill="#39d82d" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M11.55078,47c-0.5625,0 -1.30469,-0.14453 -2.09375,-0.71094c-0.0625,-0.04687 -6.45703,-4.72656 -6.45703,-7.28906l0.00781,-0.15234c0.29688,-6.05078 4.86719,-13.53516 13.58594,-22.25391c8.71484,-8.71484 16.19922,-13.28516 22.25,-13.58594l0.10156,-0.00391c0.02734,0 0.05469,-0.00391 0.08203,-0.00391c2.61719,0 7.21484,6.39453 7.26172,6.45703c1.18359,1.66016 0.75391,3.51563 -0.32031,4.28125c-0.69922,0.52734 -8.08984,5.36719 -8.99219,5.90625c-0.96875,0.55469 -2.29687,0.44922 -3.48047,-0.26172c-0.70312,-0.38281 -2.89453,-1.63672 -3.91016,-2.22266c-0.90625,0.625 -3.125,2.30469 -6.58203,5.82813c-3.46875,3.46484 -5.18359,5.69141 -5.83594,6.60547c0.58984,1.02344 1.83984,3.21094 2.23438,3.9375c0.70703,1.29297 0.78906,2.62891 0.21875,3.48438c-0.50781,0.84766 -5.4375,8.33203 -5.88281,8.94922c-0.39844,0.5625 -1.07812,0.93359 -1.85547,1.01563c-0.10156,0.01172 -0.21094,0.01953 -0.33203,0.01953z"></path></g></g></svg>
+                    </span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <!-- Sidebar content goes here -->
+            <h3>People Joined</h3>
+            <ul>
+                <li><img src="../../../assets/images/Favicon.png" alt="Post 1">
+                    People 1</li>
+            </ul>
+        </div>
     </div>
     <app-footer></app-footer>
 </ion-content>

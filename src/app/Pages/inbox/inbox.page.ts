@@ -16,6 +16,9 @@ export class InboxPage implements OnInit {
   peer;
   messages;
   chatwith = 'Admin';
+  acceptCall = false;
+  waiting = false;
+  callerObj;
   params = {
     page: 1,
   };
@@ -23,9 +26,10 @@ export class InboxPage implements OnInit {
   room;
   loadOlderspinner: boolean;
   loadMoreStatus = true;
+  accepted = true;
   messageSubscriptions;
   lazyStream;
-  peerList=[];
+  peerList = [];
   currentPeer;
   constructor(
     // private peer: Peer,
@@ -35,7 +39,7 @@ export class InboxPage implements OnInit {
     private commonService: CommonService,
     private socketService: SocketService,
     private activatedRoute: ActivatedRoute
-  ) {}
+  ) { }
 
   sendMessage(chatMsgInput, chatMsgInputWrapper) {
     // console.log(chatMsgInput.value);
@@ -186,7 +190,51 @@ export class InboxPage implements OnInit {
     this.params.page = 1;
     this.loadMoreStatus = true;
   }
+  acceptCallFn() {
+    navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    }).then((stream) => {
+      this.lazyStream = stream;
 
+      this.callerObj.answer(stream);
+      this.callerObj.on('stream', (remoteStream) => {
+        if (!this.peerList.includes(this.callerObj.peer)) {
+          this.acceptCall = true
+          this.waiting = false
+    this.accepted = true
+
+          this.streamRemoteVideo(remoteStream);
+          this.currentPeer = this.callerObj.peerConnection;
+          this.peerList.push(this.callerObj.peer);
+        }
+      });
+
+    }).catch(err => {
+      console.log(err + 'Unable to get media');
+    });
+  }
+  handlePeerDisconnect() {
+    // manually close the peer connections
+    for (let conns in this.peer.connections) {
+      this.peer.connections[conns].forEach((conn, index, array) => {
+        console.log(`closing ${conn.connectionId} peerConnection (${index + 1}/${array.length})`, conn.peerConnection);
+        conn.peerConnection.close();
+
+        // close it using peerjs methods
+        if (conn.close)
+          conn.close();
+      });
+    }
+  }
+  DeclineCallFn() {
+    console.log(this.callerObj)
+    this.callerObj.close();
+    this.acceptCall = false
+    this.waiting=false
+    this.accepted = false
+    // document.getElementsByClassName('video')[0].remove()
+  }
   private getPeerId = () => {
     //Generate unique Peer Id for establishing connection
     this.peer = new Peer();
@@ -194,7 +242,7 @@ export class InboxPage implements OnInit {
     conn.on("open", (id) => {
       console.log({ id });
       this.peerId = id;
-        // conn.send("hi!");
+      // conn.send("hi!");
     });
     // this.peer.on('open', (id) => {
     //   this.peerId = id;
@@ -203,28 +251,28 @@ export class InboxPage implements OnInit {
     // });
 
     // Peer event to accept incoming calls
+
     this.peer.on('call', (call) => {
-      navigator.mediaDevices.getUserMedia({
-        video: true,
-        // audio: true
-      }).then((stream) => {
-        this.lazyStream = stream;
+      this.acceptCall = true
+      this.waiting = true
 
-        call.answer(stream);
-        call.on('stream', (remoteStream) => {
-          if (!this.peerList.includes(call.peer)) {
-            this.streamRemoteVideo(remoteStream);
-            this.currentPeer = call.peerConnection;
-            this.peerList.push(call.peer);
-          }
-        });
-
-      }).catch(err => {
-        console.log(err + 'Unable to get media');
+      this.callerObj = call
+      call.on('close', () => {
+        console.log("conn close event");
+        // this.handlePeerDisconnect();
       });
     });
+    this.peer.on('connection', connn => {
+      conn.on('close', () => {
+        console.log("conn close event");
+        this.handlePeerDisconnect();
+      });
+    })
   };
-  connectWithPeer(){
+  connectWithPeer() {
+    this.acceptCall = true
+    this.waiting = true
+    this.accepted = true
     this.callPeer(this.peerIdShare)
   }
   private callPeer(id: string): void {
@@ -237,6 +285,9 @@ export class InboxPage implements OnInit {
       const call = this.peer.call(id, stream);
       call.on('stream', (remoteStream) => {
         if (!this.peerList.includes(call.peer)) {
+          this.acceptCall = true
+          this.waiting = false
+
           this.streamRemoteVideo(remoteStream);
           this.currentPeer = call.peerConnection;
           this.peerList.push(call.peer);
@@ -248,7 +299,8 @@ export class InboxPage implements OnInit {
   }
   private streamRemoteVideo(stream) {
     const video = document.createElement('video');
-    video.classList.add('video');
+    video.classList.add('video')
+
     video.srcObject = stream;
     video.play();
 
