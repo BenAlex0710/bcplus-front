@@ -31,6 +31,17 @@ export class SocketService {
         });
     }
 
+    public sendPeerId(data, callback) {
+        this.socket.emit("sendPeerId", data, error => {
+            callback(data, error);
+        });
+    }
+    public sendPeerIdOnCall(data, callback) {
+        this.socket.emit("sendPeerIdOnCall", data, error => {
+            callback(data, error);
+        });
+    }
+
     public leaveEvent(data, callback) {
         this.socket.emit("leaveEvent", data, error => {
             // console.log(data, error);
@@ -82,7 +93,18 @@ export class SocketService {
             this.socket.on('newMessage', (data: any) => observer.next(data));
         });
     }
-
+    public onFriendPeerId(): Observable<any> {
+        return new Observable<any>(observer => {
+            console.log("friendPeerId runnn")
+            this.socket.on('friendPeerId', (data: any) => observer.next(data));
+        });
+    }
+    public requestForPeerId(): Observable<any> {
+        return new Observable<any>(observer => {
+            console.log("requestForPeerId runnn")
+            this.socket.on('requestForPeerId', (data: any) => observer.next(data));
+        });
+    }
     public onEvent(event): Observable<any> {
         return new Observable<Event>(observer => {
             this.socket.on(event, (data: any) => observer.next(data));

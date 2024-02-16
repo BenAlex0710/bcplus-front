@@ -1,221 +1,252 @@
 .chat-area {
-    position: relative;
-    height: calc(100vh - 350px);
+  position: relative;
+  height: calc(100vh - 350px);
+  overflow: scroll;
+  background: #e2ebef;
+  padding: 10px;
+  border-radius: 15px;
+
+  .messages-container {
     overflow: scroll;
-    background: #e2ebef;
-    padding: 10px;
-    border-radius: 15px;
-    
-    .messages-container {
-        overflow: scroll;
-        height: 100%;
-        padding-bottom: 55px;
-        .message-block {
-            .text-block {
-                max-width: calc(100% - 150px);
-                position: relative;
-                &::before {
-                    content: "";
-                    width: 30px;
-                    height: 0;
-                    position: absolute;
-                    left: -10px;
-                    top: 0;
-                    border-top: 20px solid #800022;
-                    border-left: 20px solid #24824d00;
-                    z-index: 9;
-                }
-            }
-            .photo {
-                min-width: 50px;
-                min-height: 50px;
-                border-radius: 10px;
-                background: #fff;
-                width: 50px;
-                height: 50px;
-                overflow: hidden;
-                margin-right: 15px;
-            }
-            .message-text {
-                background: #800022;
-                color: #fff;
-                padding: 10px;
-                border-radius: 15px;
-                font-size: 14px;
-                z-index: 99;
-                position: relative;
-            }
-            .message-time {
-                font-size: 10px;
-                float: left;
-            }
-            &.inverse {
-                flex-direction: row-reverse;
-                .photo {
-                    margin-right: 0 !important;
-                    margin-left: 15px;
-                }
-                .message-text {
-                    background: #020202;
-                }
-                .message-time {
-                    font-size: 10px;
-                    float: none;
-                }
-                .text-block {
-                    &::before {
-                        content: "";
-                        position: absolute;
-                        right: -10px;
-                        border-top: 20px solid #020202;
-                        border-right: 20px solid #24824d00;
-                        left: unset;
-                    }
-                }
-            }
-        }
-    }
-    .chat-footer {
-        padding: 10px;
-        background: #e2ebef;
-        position: absolute;
-        width: 100%;
-        left: 0;
-        bottom: 0px;
-        z-index: 99999;
-        .chat-input {
-            background: transparent;
-            border-radius: 5px;
-            margin-right: 10px;
-            box-shadow: none;
-            border: 1px solid #212529;
-            height: 40px;
-        }
-    }
-}
-.video{
     height: 100%;
-    width: 100%;
-}
-.container-call{
-    display: flex;
-    .navigation {
-        width: 9%;
-        background-color: rgb(17, 41, 73);
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+    padding-bottom: 55px;
+    .message-block {
+      .text-block {
+        max-width: calc(100% - 150px);
+        position: relative;
+        &::before {
+          content: "";
+          width: 30px;
+          height: 0;
+          position: absolute;
+          left: -10px;
+          top: 0;
+          border-top: 20px solid #800022;
+          border-left: 20px solid #24824d00;
+          z-index: 9;
+        }
+      }
+      .photo {
+        min-width: 50px;
+        min-height: 50px;
         border-radius: 10px;
-    }
-     
-    .navigation img {
-        width: 80px;
-        /* Adjust the width as needed */
-        height: 80px;
-        margin-bottom: 10px;
-    }
-     
-    .icons img {
-        width: 30px;
-        /* Adjust the width as needed */
-        height: auto;
-        margin-right: 10px;
-        border: 2px solid transparent;
-        /* Add border */
-        border-radius: 50%;
-        /* Add border radius */
-        transition: border-color 0.3s;
-        /* Add transition effect */
-        display: block;
-        margin: 10px;
-        cursor: pointer;
-        opacity: 0.5;
-        border-radius: 10px;
-        transition: opacity 0.5s, background 0.5s;
-     
-    }
-     
-    .icons img:hover {
-     
-        opacity: 1;
-        background: #3388cc;
-        /* Change border color on hover */
-    }
-     
-    .active-icon {
-        opacity: 1;
-        background: #3388cc;
-    }
-     
-    .main-content {
-        width: 65%;
-        padding: 10px;
-        background-color: #5e5959;
-        border-radius: 10px;
-        margin-left: 10px;
-        margin-right: 10px;
-    }
-     
-    .image-container {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-gap: 10px;
-    }
-     
-    .image img {
-        width: 90%;
-        border-radius: 10px;
-        cursor: pointer;
-        height: 70%;
-    }
-     
-    .main-icons {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-     
-    .main-icons .call-icon {
-        width: 60px;
-    }
-     
-    .sidebar {
-        width: 25%;
-        background-color: rgb(17, 41, 73);
-        padding: 20px;
-        border-radius: 10px;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        /* Align items center */
-    }
-     
-    .sidebar h3 {
-        margin-bottom: 10px;
-        color: white;
-    }
-     
-    .sidebar ul {
-        list-style-type: none;
-        padding: 0;
-        margin-right: 100px;
-    }
-     
-    .sidebar ul li {
-        margin-bottom: 10px;
-        color: white;
-        display: flex;
-        align-items: center;
-        /* Align items center */
-    }
-     
-    .sidebar ul li img {
-        margin-right: 10px;
-        height: 50px;
+        background: #fff;
         width: 50px;
+        height: 50px;
+        overflow: hidden;
+        margin-right: 15px;
+      }
+      .message-text {
+        background: #800022;
+        color: #fff;
+        padding: 10px;
+        border-radius: 15px;
+        font-size: 14px;
+        z-index: 99;
+        position: relative;
+      }
+      .message-time {
+        font-size: 10px;
+        float: left;
+      }
+      &.inverse {
+        flex-direction: row-reverse;
+        .photo {
+          margin-right: 0 !important;
+          margin-left: 15px;
+        }
+        .message-text {
+          background: #020202;
+        }
+        .message-time {
+          font-size: 10px;
+          float: none;
+        }
+        .text-block {
+          &::before {
+            content: "";
+            position: absolute;
+            right: -10px;
+            border-top: 20px solid #020202;
+            border-right: 20px solid #24824d00;
+            left: unset;
+          }
+        }
+      }
     }
-    .greenBtn{
-        background-color: rgb(7, 199, 7);
+  }
+  .chat-footer {
+    padding: 10px;
+    background: #e2ebef;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    bottom: 0px;
+    z-index: 99999;
+    .chat-input {
+      background: transparent;
+      border-radius: 5px;
+      margin-right: 10px;
+      box-shadow: none;
+      border: 1px solid #212529;
+      height: 40px;
     }
+  }
+}
+.main-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  span {
+    display: flex;
+    i {
+      font-size: 24px;
+      // height: 30px;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+  }
+}
+.remote-video {
+  video {
+    height: 100% !important;
+    width: 100% !important;
+  }
+}
+.container-call {
+  display: flex;
+  position: absolute;
+  top: 10vh;
+  z-index: 1000000000000000000000000000000000;
+  width: 100%;
+  height: 82vh;
+  .navigation {
+    width: 9%;
+    background-color: #800022 !important;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+  }
+
+  .navigation img {
+    width: 80px;
+    /* Adjust the width as needed */
+    height: 80px;
+    margin-bottom: 10px;
+  }
+
+  .icons img {
+    width: 30px;
+    /* Adjust the width as needed */
+    height: auto;
+    margin-right: 10px;
+    border: 2px solid transparent;
+    /* Add border */
+    border-radius: 50%;
+    /* Add border radius */
+    transition: border-color 0.3s;
+    /* Add transition effect */
+    display: block;
+    margin: 10px;
+    cursor: pointer;
+    opacity: 0.5;
+    border-radius: 10px;
+    transition: opacity 0.5s, background 0.5s;
+  }
+
+  .icons img:hover {
+    opacity: 1;
+    background: #3388cc;
+    /* Change border color on hover */
+  }
+
+  .active-icon {
+    opacity: 1;
+    background: #3388cc;
+  }
+
+  .main-content {
+    width: 65%;
+    padding: 10px;
+    background-color: #5e5959;
+    border-radius: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .image-container {
+    width: 100%;
+    height: 89%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    .image {
+      display: flex;
+      align-items: center;
+      align-self: center;
+      justify-content: center;
+    }
+  }
+
+  .image img {
+    // width: 90%;
+    border-radius: 10px;
+    cursor: pointer;
+    height: 80%;
+    border-radius: 100%;
+    border: 2px solid;
+    background: black;
+  }
+
+  .main-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .main-icons .call-icon {
+    width: 60px;
+  }
+
+  .sidebar {
+    width: 25%;
+    background-color: #800022 !important;
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Align items center */
+  }
+
+  .sidebar h3 {
+    margin-bottom: 10px;
+    color: white;
+  }
+
+  .sidebar ul {
+    list-style-type: none;
+    padding: 0;
+    margin-right: 100px;
+  }
+
+  .sidebar ul li {
+    margin-bottom: 10px;
+    color: white;
+    display: flex;
+    align-items: center;
+    /* Align items center */
+  }
+
+  .sidebar ul li img {
+    margin-right: 10px;
+    height: 50px;
+    width: 50px;
+  }
+  .greenBtn {
+    background-color: rgb(7, 199, 7);
+  }
 }

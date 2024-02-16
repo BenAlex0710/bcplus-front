@@ -31,6 +31,7 @@ export class InboxPage implements OnInit {
   lazyStream;
   peerList = [];
   currentPeer;
+  videoCall = false
   constructor(
     // private peer: Peer,
     public app: AppComponent,
@@ -143,9 +144,11 @@ export class InboxPage implements OnInit {
         {
           user_id: this.app.userinfo.id.toString(),
           room: this.room || obj.friend_id + obj.user_id,
+          peerID: this.peerId,
         },
         (data, error) => {
           console.log(data);
+
           this.subscribeMessage();
         }
       );
@@ -167,6 +170,38 @@ export class InboxPage implements OnInit {
         this.autoScroll();
       });
   }
+  getFriendPeerId() {
+    this.socketService
+      .onFriendPeerId()
+      .subscribe((message: any) => {
+        // message.user = message.username;
+        // delete message.username;
+        console.log('friendPeerId', message);
+
+        if (message.room != this.room) {
+          return;
+        }
+        // return;
+        this.peerIdShare = message.peerID
+        this.videoCall = message.videoCall
+        this.callPeer(message.peerID,message.videoCall)
+        this.autoScroll();
+      });
+  }
+  getFriendPeerIdOnCall() {
+    this.socketService
+      .requestForPeerId()
+      .subscribe((message: any) => {
+
+        if (message.room != this.room) {
+          return;
+        }
+        this.videoCall = message.videoCall
+        
+        // return;
+        this.getRequestonCall(message)
+      });
+  }
   loadMore(ele) {
     if (ele.scrollTop == 0 && this.loadMoreStatus) {
       this.params.page++;
@@ -175,6 +210,8 @@ export class InboxPage implements OnInit {
   }
 
   ionViewWillEnter() {
+
+    this.getFriendPeerId()
     this.app.setPageTitle('inbox_page.page_title');
     let user_id = this.activatedRoute.snapshot.paramMap.get('user_id');
     if (user_id === 'admin') {
@@ -202,9 +239,11 @@ export class InboxPage implements OnInit {
         if (!this.peerList.includes(this.callerObj.peer)) {
           this.acceptCall = true
           this.waiting = false
-    this.accepted = true
+          this.accepted = true
 
-          this.streamRemoteVideo(remoteStream);
+          if(this.videoCall){
+            this.streamRemoteVideo(remoteStream);
+          }
           this.currentPeer = this.callerObj.peerConnection;
           this.peerList.push(this.callerObj.peer);
         }
@@ -229,11 +268,24 @@ export class InboxPage implements OnInit {
   }
   DeclineCallFn() {
     console.log(this.callerObj)
-    this.callerObj.close();
     this.acceptCall = false
     this.waiting=false
     this.accepted = false
+    this.callerObj.close();
     // document.getElementsByClassName('video')[0].remove()
+  }
+  getRequestonCall = (message)=>{
+    this.socketService.sendPeerId(
+      {
+        user_id: this.app.userinfo.id.toString(),
+        room: this.room,
+        peerID: this.peerId,
+        videoCall : message.videoCall
+      },
+      (data, error) => {
+        
+      }
+    );
   }
   private getPeerId = () => {
     //Generate unique Peer Id for establishing connection
@@ -243,18 +295,15 @@ export class InboxPage implements OnInit {
       console.log({ id });
       this.peerId = id;
       // conn.send("hi!");
+      // this.getRequestonCall()
     });
-    // this.peer.on('open', (id) => {
-    //   this.peerId = id;
-    //   console.log({ id });
-    //   //   this.createURLToConnect(id);
-    // });
-
     // Peer event to accept incoming calls
 
     this.peer.on('call', (call) => {
+      console.log("kdjsakjdklsajkld")
       this.acceptCall = true
       this.waiting = true
+      this.accepted = false
 
       this.callerObj = call
       call.on('close', () => {
@@ -269,15 +318,27 @@ export class InboxPage implements OnInit {
       });
     })
   };
-  connectWithPeer() {
+  connectWithPeer(video) {
     this.acceptCall = true
     this.waiting = true
     this.accepted = true
-    this.callPeer(this.peerIdShare)
+    this.videoCall = video
+    this.socketService.sendPeerIdOnCall(
+      {
+        user_id: this.app.userinfo.id.toString(),
+        room: this.room,
+        peerID:this.peerId,
+        videoCall: video
+      },
+      (data, error) => {
+        
+      })
+    
   }
-  private callPeer(id: string): void {
+  private callPeer(id: string,video: boolean): void {
+    console.log({id},"for calll")
     navigator.mediaDevices.getUserMedia({
-      video: true,
+      video: video,
       audio: true
     }).then((stream) => {
       this.lazyStream = stream;
@@ -287,8 +348,9 @@ export class InboxPage implements OnInit {
         if (!this.peerList.includes(call.peer)) {
           this.acceptCall = true
           this.waiting = false
-
-          this.streamRemoteVideo(remoteStream);
+          if(this.videoCall){
+            this.streamRemoteVideo(remoteStream);
+          }
           this.currentPeer = call.peerConnection;
           this.peerList.push(call.peer);
         }
@@ -308,5 +370,7 @@ export class InboxPage implements OnInit {
   }
   ngOnInit() {
     this.getPeerId();
+
+    this.getFriendPeerIdOnCall()
   }
 }
