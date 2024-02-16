@@ -55,14 +55,22 @@ io.on("connection", (socket) => {
   }); 
 
   socket.on("sendChatMessage", (data, callback) => {
-    console.log("data",data.room)
     socket.broadcast.to(data.room).emit("newMessage", data);
     // socket.broadcast.emit("newMessage", data);
     callback();
   });
+  socket.on("sendPeerId", (data, callback) => {
+    console.log("send call is",data.peerID)
+    socket.broadcast.to(data.room).emit("friendPeerId", data);
+    callback();
+  });
+  socket.on("sendPeerIdOnCall", (data, callback) => {
+    console.log("request For call id....",)
 
+    socket.broadcast.to(data.room).emit("requestForPeerId", data);
+    callback();
+  });
   socket.on("leaveEvent", (data) => {
-    socket.leave(data.room);
     const user = removeUser(socket.id);
     // console.log('leaveEvent', user);
     if (user) {
