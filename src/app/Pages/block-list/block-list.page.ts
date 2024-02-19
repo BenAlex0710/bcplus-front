@@ -3,11 +3,11 @@ import { AppComponent } from 'src/app/app.component';
 import { RestService } from 'src/app/Services/rest.service';
 
 @Component({
-    selector: 'app-all-friend-list',
-    templateUrl: './all-friend-list.page.html',
-    styleUrls: ['./all-friend-list.page.scss'],
+    selector: 'app-block-list',
+    templateUrl: './block-list.page.html',
+    styleUrls: ['./block-list.page.scss'],
 })
-export class AllFirendListPage implements OnInit {
+export class BlockListPage implements OnInit {
 
     Friendlist = [];
     param = {
@@ -29,7 +29,7 @@ export class AllFirendListPage implements OnInit {
     }
 
     getDashboardData() {
-        this.rest.getfriendrequestList(this.app.userinfo.id).subscribe((res) => {
+        this.rest.getBlockList(this.app.userinfo.id).subscribe((res) => {
             console.log(res)
             // if (!this.Friendlist.length) {
                 console.log(res.friends)

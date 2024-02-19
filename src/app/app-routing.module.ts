@@ -105,6 +105,11 @@ const routes: Routes = [
         // canActivate: [AuthGuard, PerformerOnlyGuard]
     },
     {
+        path: 'block-list',
+        loadChildren: () => import('./Pages/block-list/block-list.module').then(m => m.BlockListPageModule),
+        // canActivate: [AuthGuard, PerformerOnlyGuard]
+    },
+    {
         path: 'go-live',
         loadChildren: () => import('./Pages/go-live/go-live.module').then(m => m.GoLivePageModule),
         canActivate: [AuthGuard, PerformerOnlyGuard]

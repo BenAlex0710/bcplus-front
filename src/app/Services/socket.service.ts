@@ -85,7 +85,11 @@ export class SocketService {
             }
         });
     }
-
+    public sendEndCallRequest(data: any,callback): void {
+        this.socket.emit("receiveEndCallRequest", data, (user) => {
+            callback(user)
+        });
+    }
 
     public onNewMessage(): Observable<any> {
         return new Observable<any>(observer => {
@@ -97,6 +101,12 @@ export class SocketService {
         return new Observable<any>(observer => {
             console.log("friendPeerId runnn")
             this.socket.on('friendPeerId', (data: any) => observer.next(data));
+        });
+    }
+    public requestForendCall(): Observable<any> {
+        return new Observable<any>(observer => {
+            console.log("requestForendCall runnn")
+            this.socket.on('requestForendCall', (data: any) => observer.next(data));
         });
     }
     public requestForPeerId(): Observable<any> {

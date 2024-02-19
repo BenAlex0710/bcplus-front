@@ -540,6 +540,17 @@ export class RestService {
                 catchError(this.handleError('Get friend request List'))
             );
     }
+    getBlockList(user_id): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.get('get-blocked-user/' + user_id)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('Get friend request List'))
+            );
+    }
     checkFriendStatus(user_id,friend_id): Observable<any> {
         this.commanService.showLoader();
         return this.http.get(`check-friend-request/${user_id}/${friend_id}`)

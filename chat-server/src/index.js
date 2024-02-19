@@ -70,6 +70,11 @@ io.on("connection", (socket) => {
     socket.broadcast.to(data.room).emit("requestForPeerId", data);
     callback();
   });
+  socket.on("receiveEndCallRequest", (data, callback) => {
+
+    socket.broadcast.to(data.room).emit("requestForendCall", data);
+    callback();
+  });
   socket.on("leaveEvent", (data) => {
     const user = removeUser(socket.id);
     // console.log('leaveEvent', user);

@@ -5,7 +5,7 @@
         <div class="col-sm-12">
           <div class="main-title">
             <h3 class="mb-3">
-              {{ 'all_friend_list_page.breadcrumb_title' | translate }}
+              {{ 'block_list_page.breadcrumb_title' | translate }}
             </h3>
           </div>
         </div>
@@ -14,12 +14,12 @@
             <table class="table table-striped">
               <thead class="bg-dark text-white">
                 <tr>
-                  <th class="">{{ 'all_friend_list_page.email' | translate }}</th>
-                  <th>{{ 'all_friend_list_page.username' | translate }}</th>
-                  <th>{{ 'all_friend_list_page.role' | translate }}</th>
-                  <th class="text-center">
-                    {{ 'all_friend_list_page.action' | translate }}
-                  </th>
+                  <th class="">{{ 'block_list_page.email' | translate }}</th>
+                  <th>{{ 'block_list_page.username' | translate }}</th>
+                  <th>{{ 'block_list_page.role' | translate }}</th>
+                  <!-- <th class="text-center">
+                    {{ 'block_list_page.action' | translate }}
+                  </th> -->
                 </tr>
               </thead>
               <tbody *ngIf="Friendlist.length > 0">
@@ -27,7 +27,7 @@
                   <td class="align-middle">{{ friend.email }}</td>
                   <td class="align-middle">{{ friend.username }}</td>
                   <td class="align-middle">{{ friend.role_label}}</td>
-                  <td class="align-middle text-center acceptbutton">
+                  <!-- <td class="align-middle text-center acceptbutton">
                     <a
                       href="javascript:void(0)"
                       title=""
@@ -35,9 +35,9 @@
                       class="donate add_friend_button"
                     
                     >
-                      {{ 'all_friend_list_page.message' | translate }}</a
+                      {{ 'block_list_page.message' | translate }}</a
                     >
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
