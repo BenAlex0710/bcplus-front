@@ -5,8 +5,8 @@ import { Observable } from 'rxjs';
 import * as socketIo from 'socket.io-client';
 
 // const SERVER_URL = 'http://54.165.53.79:5555';
-// const SERVER_URL = 'https://bcplusnews.com:5555';
-const SERVER_URL = 'http://localhost:5555';
+const SERVER_URL = 'https://bcplusnews.com:5555';
+// const SERVER_URL = 'http://localhost:5555';
 
 @Injectable({
     providedIn: 'root'
