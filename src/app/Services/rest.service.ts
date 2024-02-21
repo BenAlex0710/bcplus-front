@@ -531,6 +531,17 @@ export class RestService {
     }
     getfriendrequestList(user_id): Observable<any> {
         this.commanService.showLoader();
+        return this.http.get('friend-pending-list/' + user_id)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('Get friend request List'))
+            );
+    }
+    getfriendList(user_id): Observable<any> {
+        this.commanService.showLoader();
         return this.http.get('friend-list/' + user_id)
             .pipe(
                 tap((res) => {

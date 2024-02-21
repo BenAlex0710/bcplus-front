@@ -29,7 +29,7 @@ export class AllFirendListPage implements OnInit {
     }
 
     getDashboardData() {
-        this.rest.getfriendrequestList(this.app.userinfo.id).subscribe((res) => {
+        this.rest.getfriendList(this.app.userinfo.id).subscribe((res) => {
             console.log(res)
             // if (!this.Friendlist.length) {
                 console.log(res.friends)
