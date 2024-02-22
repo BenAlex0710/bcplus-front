@@ -19,10 +19,10 @@ const TOKEN_KEY = 'ACCESS_TOKEN';
 @Injectable()
 export class HttpConfigInterceptor implements HttpInterceptor {
 
-    // protected url = 'https://bcplusnews.com/bcadmin/api/';
+    protected url = 'https://bcplusnews.com/bcadmin/api/';
     // protected url = 'http://54.165.53.79/bcadmin/api/';
     // protected url = 'http://bcplusnews.lr/api/';
-    protected url = 'http://192.168.0.106:8000/api/';
+    // protected url = 'http://192.168.0.106:8000/api/';
 
     protected debug = false;
     protected appLanguage;
