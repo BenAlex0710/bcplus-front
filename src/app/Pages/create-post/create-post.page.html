@@ -1,0 +1,49 @@
+<ion-content>
+  <div style="min-height: calc(100vh - 212px)">
+    <div class="container pt-5">
+      <div class="row justify-content-center">
+        <div class="create-post_conatiner col-sm-8">
+          <h1>Create Post</h1>
+          <form name="createPostForm" ng-submit="">
+            <label for="postTitle">Title</label>
+            <input
+              type="text"
+              id="postTitle"
+              #postTitle
+              class="input"
+              ng-model="post.title"
+              required
+            />
+            <br />
+            <label for="postContent">Content</label>
+            <textarea
+              id="postContent"
+              #postContent
+              ng-model="post.content"
+              rows="4"
+              cols="50"
+              required
+            ></textarea>
+            <br />
+            <label for="postImage">Image / Video</label>
+            <input
+              type="file"
+              id="postImage"
+              ngf-select
+              #postImage
+              ng-model="post.image"
+              name="file"
+              accept="image/*"
+              ngf-max-size="2MB"
+            />
+            <br />
+            <button type="submit" (click)="submitPost(postTitle,postContent,postImage)" class="btn btn-primary">
+              Post
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</ion-content>

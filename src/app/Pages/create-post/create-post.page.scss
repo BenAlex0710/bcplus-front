@@ -1,0 +1,40 @@
+// h1 {
+//   text-align: center;
+// }
+
+.create-post_conatiner{
+
+  box-shadow: -8px -12px 26px 0px rgba(201,201,201,1);
+  -webkit-box-shadow: -8px -12px 26px 0px rgba(201,201,201,1);
+  -moz-box-shadow: -8px -12px 26px 0px rgba(201,201,201,1);
+  border-radius: 10px;
+  padding: 40px 20px;
+ 
+  form {
+    display: inline-block;
+    margin-top: 20px;
+    width: 100%;
+
+  }
+  
+  label {
+    display: block;
+    margin-top: 20px;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  .input{
+    height: 40px;
+  }
+  .input, textarea {
+    width: 100%;
+    margin-top: 7px;
+    border-radius: 4px;
+    padding-left: 10px;
+    border: 1px solid;
+  }
+  
+  button {
+    margin-top: 10px;
+  }
+}

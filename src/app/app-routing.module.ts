@@ -30,6 +30,16 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
+        path: 'createPost',
+        loadChildren: () => import('./Pages/create-post/create-post.module').then(m => m.CreatePostPageModule),
+        canActivate: [AuthGuard]
+    },
+    {
+        path: 'allPost',
+        loadChildren: () => import('./Pages/all-post/all-post.module').then(m => m.AllPostPageModule),
+        canActivate: [AuthGuard]
+    },
+    {
         path: 'verification-pending',
         loadChildren: () => import('./Pages/verification-pending/verification-pending.module').then(m => m.VerificationPendingPageModule),
         // canActivate: [AuthGuard]
