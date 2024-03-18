@@ -4,12 +4,12 @@
       <div class="row justify-content-center">
         <div class="create-post_conatiner col-sm-8">
           <h1>Create Post</h1>
-          <form name="createPostForm" ng-submit="">
+          <form name="createPostForm" [formGroup]="form" (ngSubmit)="submitForm()">
             <label for="postTitle">Title</label>
             <input
               type="text"
               id="postTitle"
-              #postTitle
+              #title
               class="input"
               ng-model="post.title"
               required
@@ -18,7 +18,7 @@
             <label for="postContent">Content</label>
             <textarea
               id="postContent"
-              #postContent
+              #content
               ng-model="post.content"
               rows="4"
               cols="50"
@@ -30,14 +30,14 @@
               type="file"
               id="postImage"
               ngf-select
-              #postImage
+              #post_media
               ng-model="post.image"
               name="file"
               accept="image/*"
               ngf-max-size="2MB"
             />
             <br />
-            <button type="submit" (click)="submitPost(postTitle,postContent,postImage)" class="btn btn-primary">
+            <button type="submit"  class="btn btn-primary">
               Post
             </button>
           </form>

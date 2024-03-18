@@ -9,31 +9,22 @@ import { RestService } from 'src/app/Services/rest.service';
 })
 export class AllPostPage implements OnInit {
 
-
+postList=[]
     constructor(
         public app: AppComponent,
         private rest: RestService,
     ) { }
 
 
-    submitPost = (postTitle,postContent,postImage)=> {
-        // if (this.createPostForm.$valid) {
-            console.log({
-                    // url: 'https://your-api-endpoint.com/upload',
-                    // data: { title: this.post.title, content: this.post.content },
-                    file: postImage.files[0],
-                    postTitle:postTitle.value,
-                    postContent:postContent.value,
-                })
-            // $upload.upload({
-            //     url: 'https://your-api-endpoint.com/upload',
-            //     data: { title: this.post.title, content: this.post.content },
-            //     file: file
-            // }).then(function(response) {
-            //     console.log('Post created:', response.data);
-            //     // Add code here to save the post to your database
-            // });
-        // }
+    getposts = ()=> {
+        this.rest.getuserposts({user_id:this.app.userinfo.id}).subscribe((res) => {
+            console.log(res)
+            // if (!this.Friendlist.length) {
+                // console.log(res.)
+                
+                this.postList = res;
+            // } 
+        })
     };
 
 
@@ -41,6 +32,7 @@ export class AllPostPage implements OnInit {
 
     ionViewWillEnter() {
         this.app.setPageTitle('friend_list_page.page_title');
+        this.getposts()
     }
 
     ionViewWillLeave() {

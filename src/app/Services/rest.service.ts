@@ -694,6 +694,28 @@ export class RestService {
                 catchError(this.handleError('send User Message'))
             );
     }
+    createpost(data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('create/post', data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('send User Message'))
+            );
+    }
+    getuserposts(obj): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.get(`getpost/${obj.user_id}`)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('get Conversation'))
+            );
+    }
     getUserConversations(params,obj): Observable<any> {
         this.commanService.showLoader();
         let url = this.commanService.setParams(`user-message/${obj.friend_id}/${obj.user_id}`, params);

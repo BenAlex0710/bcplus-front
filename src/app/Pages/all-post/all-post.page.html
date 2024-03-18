@@ -4,7 +4,7 @@
       <div class="row justify-content-center">
         <div class="create-post_conatiner col-sm-8">
           <h1>All Post</h1>
-          <app-post-card class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth" [postData]="True" ></app-post-card>
+          <app-post-card class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth" [postData]="post" *ngFor="let post of postList" ></app-post-card>
         </div>
       </div>
     </div>
