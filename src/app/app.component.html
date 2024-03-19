@@ -42,8 +42,8 @@
                                                 <a href="javascript:void(0)" class="ps-2" [routerLink]="['/createPost']">{{ 'create_post' | translate }}</a>
                                             </li>
                                             <li>
-                                                <span><i class="bi bi-pencil"></i></span>
-                                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/allPost']">{{ 'all_post' | translate }}</a>
+                                                <span><i class="bi bi-file-earmark-post"></i></span>
+                                                <a href="javascript:void(0)" class="ps-2" [routerLink]="['/allPost/'+userinfo.id]">{{ 'all_post' | translate }}</a>
                                             </li>
                                             <li>
                                                 <span><i class="bi bi-box-arrow-right"></i></span>

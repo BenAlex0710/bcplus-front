@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
     selector: 'app-post-card',
@@ -7,10 +8,15 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class PostCardComponent implements OnInit {
     @Input('postData') postData: any;
-
-    constructor() { }
-
+    @Input('userData') userData: any;
+    @Input('like_post') like_post: any;
+    @Input('comment_post') comment_post: any;
+    postDate;
+    constructor(    
+        public app: AppComponent,
+    ) { }
     ngOnInit() {
-        console.log(this.postData);
+        // console.log(this.app.userinfo , this.postData);
+        this.postDate = new Date(this.postData.created_at).toDateString()
     }
 }

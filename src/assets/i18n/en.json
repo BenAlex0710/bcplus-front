@@ -346,7 +346,8 @@
         "accept_friend_request": "Accept Request",
         "tab_about": "About",
         "tab_events": "Events",
-        "tab_reviews": "Reviews"
+        "tab_reviews": "Reviews",
+        "tab_posts": "Posts"
     },
     "error_page": {
         "page_title": "Opps... We are sorry",

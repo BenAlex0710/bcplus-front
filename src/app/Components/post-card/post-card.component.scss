@@ -61,6 +61,7 @@
     background-size: 73px 540px;
     background-repeat: no-repeat;
     display: inline-block;
+    margin-left: 5px;
   }
   
   #app .header .right-info {
@@ -75,13 +76,18 @@
   
   /* Content */
   
-  #app .content {
+  #app .title {
     font-size: 20px;
-    font-weight: 300;
+    // font-weight: 300;
     line-height: 20px;
     margin: 12px 12px 7px;
   }
-  
+  #app .content {
+    // font-size: 20px;
+    // font-weight: 300;
+    line-height: 20px;
+    margin: 12px 12px 7px;
+  }
   #app .video-link {
     text-decoration: none;
   }
@@ -267,10 +273,17 @@
     flex: auto;
     line-height: 16px;
     padding: 7px 12px;
+    width: 80%;
+    .d-flex{
+      width: 100%;
+      i{
+        cursor: pointer;
+      }
+    }
   }
   
   #app .my-comment-wrapper .my-comment .my-comment-placeholder input[type=text] {
-    width: 410px;
+    width: 95%;
     outline: none;
     border: 0 solid transparent;
     background: transparent;
@@ -352,6 +365,23 @@
   }
   
   #app .people-comment-wrapper .people-comment .comment-reactions .icons.like-icon {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 2px 0 white;
+    overflow: hidden;
+    background-image: url("https://i.imgur.com/KNd9mL2.png");
+    background-repeat: no-repeat;
+    background-size: 49px 660px;
+    background-position: 0 -526px;
+    cursor: pointer;
+    height: 16px;
+    width: 16px;
+    line-height: 16px;
+    display: inline-block;
+    margin-left: -2px;
+    margin-right: 2px;
+  }
+  .icons.like-icon {
     background: #fff;
     border-radius: 12px;
     box-shadow: 2px 0 white;

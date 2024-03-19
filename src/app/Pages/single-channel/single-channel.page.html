@@ -1,6 +1,6 @@
 <ion-content *ngIf="performer">
-    <div style="min-height: calc(100vh - 212px);">
-        <!-- <section class="banner-section p120"
+  <div style="min-height: calc(100vh - 212px)">
+    <!-- <section class="banner-section p120"
                  [ngStyle]="{'background': isVideo(performer.banner) ? 'none' : 'url(' + performer.banner + ') no-repeat',
                      'position': 'relative',
                      'background-width': '100%',
@@ -17,98 +17,237 @@
               Your browser does not support the video tag.
             </video>
         </section> -->
-        <section class="videso_section">
-            <div class="info-pr-sec">
-                <div class="container">
-                    <div class="col-12 " [ngStyle]="{'height': '400px', 'position':'relative','marginBottom': '12%'}">
-                        <img #previewImgBanner [src]="(performer && performer.banner) ? performer.banner : './assets/images/resources/user-img.png'" [ngStyle]="{'height':'100%',width:'100%','borderRadius':'10px'}">
-                        <img #previewImg [src]="(performer && performer.photo) ? performer.photo : './assets/images/resources/user-img.png'" class="profile-center" width="60" height="60">
-                        
-                    </div>
-                    <div class="vcp_inf cr">
-                        <!-- <span class="vc_hd">
+    <section class="videso_section">
+      <div class="info-pr-sec">
+        <div class="container">
+          <div
+            class="col-12"
+            [ngStyle]="{'height': '400px', 'position':'relative','marginBottom': '12%'}"
+          >
+            <img
+              #previewImgBanner
+              [src]="(performer && performer.banner) ? performer.banner : './assets/images/resources/user-img.png'"
+              [ngStyle]="{'height':'100%',width:'100%','borderRadius':'10px'}"
+            />
+            <img
+              #previewImg
+              [src]="(performer && performer.photo) ? performer.photo : './assets/images/resources/user-img.png'"
+              class="profile-center"
+              width="60"
+              height="60"
+            />
+          </div>
+          <div class="vcp_inf cr">
+            <!-- <span class="vc_hd">
                             <img [src]="performer.photo" alt="" />
                         </span> -->
-                        <div class="vc_info" [ngStyle]="{'paddingLeft': '0px'}">
-                            <!-- <h4> ScereBro <span class="verify_ic"><i class="icon-tick"></i></span> -->
-                            <h6 class="fw-bold"> {{ performer.full_name }} <span class="verify_ic"><i class="icon-tick"></i></span>
-                            </h6>
-                            <span> @{{ performer.username }} </span>
-                        </div>
+            <div class="vc_info" [ngStyle]="{'paddingLeft': '0px'}">
+              <!-- <h4> ScereBro <span class="verify_ic"><i class="icon-tick"></i></span> -->
+              <h6 class="fw-bold">
+                {{ performer.full_name }}
+                <span class="verify_ic"><i class="icon-tick"></i></span>
+              </h6>
+              <span> @{{ performer.username }} </span>
+            </div>
+          </div>
+          <ul class="chan_cantrz">
+            <li>
+              <a href="javascript:void(0)" title="" class="donate">
+                <i class="bi bi-star-fill"></i>&nbsp;<strong
+                  >{{ performer.rating | number : '1.1-2' }}</strong
+                >
+                {{ 'single_channel.avg_ratings' | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0)"
+                title=""
+                class="donate add_friend_button"
+                *ngIf="!friendRequestPending && !friendRequestAccepted"
+                (click)="addFriend()"
+              >
+                <i class="bi bi-person-plus-fill"></i>&nbsp; {{
+                'single_channel.add_friend' | translate }}</a
+              >
+              <a
+                href="javascript:void(0)"
+                title=""
+                class="donate add_friend_button"
+                *ngIf="friendRequestPending && !friendRequestAccepted"
+              >
+                <i class="bi bi-person-plus-fill"></i>&nbsp; {{
+                'single_channel.pending_friend_request' | translate }}</a
+              >
+              <a
+                href="javascript:void(0)"
+                title=""
+                class="donate add_friend_button"
+                *ngIf="!friendRequestPending && friendRequestAccepted"
+              >
+                <i class="bi bi-person-plus-fill"></i>&nbsp; {{
+                'single_channel.accepted_friend_request' | translate }}</a
+              >
+            </li>
+            <li>
+              <a
+                href="javascript:void(0)"
+                title=""
+                class="btn-default btn-theme"
+                onclick=""
+              >
+                {{ 'single_channel.reviews' | translate }}
+                <strong>({{ performer.reviews_count }})</strong></a
+              >
+            </li>
+          </ul>
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="history-lst tbY">
+        <div class="container">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="javascript:void(0)"
+                (click)="activeTab = 'about'"
+                [ngClass]="{ 'active' : activeTab == 'about' }"
+                >{{ 'single_channel.tab_about' | translate }}</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="javascript:void(0)"
+                (click)="activeTab = 'events'"
+                [ngClass]="{ 'active' : activeTab == 'events' }"
+                >{{ 'single_channel.tab_events' | translate }}</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="javascript:void(0)"
+                (click)="activeTab = 'reviews'"
+                [ngClass]="{ 'active' : activeTab == 'reviews' }"
+                >{{ 'single_channel.tab_reviews' | translate }}</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                href="javascript:void(0)"
+                (click)="activeTab = 'posts'"
+                [ngClass]="{ 'active' : activeTab == 'posts' }"
+                >{{ 'single_channel.tab_posts' | translate }}</a
+              >
+            </li>
+          </ul>
+          <!--nav-tabs end-->
+          <div class="clearfix"></div>
+        </div>
+      </div>
+
+      <div class="tab-content p-0">
+        <div
+          class="tab-pane fade show active"
+          id="about_tab"
+          *ngIf="activeTab == 'about'"
+        >
+          <div class="about_tab_content">
+            <div class="container">
+              <div class="description">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <div class="decp_cotnet">
+                      <h2 class="ab-fd">
+                        {{ 'single_channel.bio' | translate }}
+                      </h2>
+                      <p>{{ performer.bio }}</p>
                     </div>
-                    <ul class="chan_cantrz">
+                    <!--abt-founder end-->
+                    <div class="link-pr">
+                      <h2 class="ab-fd">
+                        {{ 'single_channel.social_profiles' | translate }}
+                      </h2>
+                      <ul class="csl-link-1">
                         <li>
-                            <a href="javascript:void(0)" title="" class="donate"> <i class="bi bi-star-fill"></i>&nbsp;<strong>{{ performer.rating | number : '1.1-2' }}</strong> {{ 'single_channel.avg_ratings' | translate }}</a>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.facebook_url ? performer.social_profiles.facebook_url : 'javascript:void(0)'"
+                            >Facebook</a
+                          >
                         </li>
                         <li>
-                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="!friendRequestPending && !friendRequestAccepted" (click)="addFriend()"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.add_friend' | translate }}</a>
-                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="friendRequestPending && !friendRequestAccepted"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.pending_friend_request' | translate }}</a>
-                            <a href="javascript:void(0)" title="" class="donate add_friend_button" *ngIf="!friendRequestPending && friendRequestAccepted"> <i class="bi bi-person-plus-fill"></i>&nbsp; {{ 'single_channel.accepted_friend_request' | translate }}</a>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.google_url ? performer.social_profiles.google_url : 'javascript:void(0)'"
+                            >Google</a
+                          >
                         </li>
                         <li>
-                            <a href="javascript:void(0)" title="" class="btn-default btn-theme" onclick=""> {{ 'single_channel.reviews' | translate }} <strong>({{ performer.reviews_count }})</strong></a>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.instagram_url ? performer.social_profiles.instagram_url : 'javascript:void(0)'"
+                            >Instagram</a
+                          >
                         </li>
-                    </ul>
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-
-            <div class="history-lst tbY">
-                <div class="container">
-                    <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" (click)="activeTab = 'about'" [ngClass]="{ 'active' : activeTab == 'about' }">{{ 'single_channel.tab_about' | translate }}</a>
+                        <li>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.linkedin_url ? performer.social_profiles.linkedin_url : 'javascript:void(0)'"
+                            >Linkedin</a
+                          >
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" (click)="activeTab = 'events'" [ngClass]="{ 'active' : activeTab == 'events' }">{{ 'single_channel.tab_events' | translate }}</a>
+                        <li>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.snapchat_url ? performer.social_profiles.snapchat_url : 'javascript:void(0)'"
+                            >Snapchat</a
+                          >
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="javascript:void(0)" (click)="activeTab = 'reviews'" [ngClass]="{ 'active' : activeTab == 'reviews' }">{{ 'single_channel.tab_reviews' | translate }}</a>
+                        <li>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.tiktok_url ? performer.social_profiles.tiktok_url : 'javascript:void(0)'"
+                            >Tiktok</a
+                          >
                         </li>
-                    </ul>
-                    <!--nav-tabs end-->
-                    <div class="clearfix"></div>
-                </div>
-            </div>
-
-            <div class="tab-content p-0">
-                <div class="tab-pane fade show active" id="about_tab" *ngIf="activeTab == 'about'">
-                    <div class="about_tab_content">
-                        <div class="container">
-                            <div class="description">
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <div class="decp_cotnet">
-                                            <h2 class="ab-fd">{{ 'single_channel.bio' | translate }}</h2>
-                                            <p>{{ performer.bio }}</p>
-                                        </div>
-                                        <!--abt-founder end-->
-                                        <div class="link-pr">
-                                            <h2 class="ab-fd">{{ 'single_channel.social_profiles' | translate }}</h2>
-                                            <ul class="csl-link-1">
-                                                <li><a title="" [href]="performer.social_profiles.facebook_url ? performer.social_profiles.facebook_url : 'javascript:void(0)'">Facebook</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.google_url ? performer.social_profiles.google_url : 'javascript:void(0)'">Google</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.instagram_url ? performer.social_profiles.instagram_url : 'javascript:void(0)'">Instagram</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.linkedin_url ? performer.social_profiles.linkedin_url : 'javascript:void(0)'">Linkedin</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.snapchat_url ? performer.social_profiles.snapchat_url : 'javascript:void(0)'">Snapchat</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.tiktok_url ? performer.social_profiles.tiktok_url : 'javascript:void(0)'">Tiktok</a></li>
-                                                <li><a title="" [href]="performer.social_profiles.whatsapp_url ? performer.social_profiles.whatsapp_url : 'javascript:void(0)'">Whatsapp</a></li>
-                                            </ul>
-                                            <div class="clearfix"></div>
-                                        </div>
-                                        <div class="link-pr">
-                                            <h2 class="ab-fd">{{ 'single_channel.organization_info' | translate }}</h2>
-                                            <ul>
-                                                <li>
-                                                    <a href="mailto:{{ performer.organization_name }}" title="">{{ performer.organization_name }}</a>
-                                                </li>
-                                                <li>
-                                                    <a href="mailto:{{ performer.organization_email }}" title="">{{ performer.organization_email }}</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <!-- <div class="col-lg-4">
+                        <li>
+                          <a
+                            title=""
+                            [href]="performer.social_profiles.whatsapp_url ? performer.social_profiles.whatsapp_url : 'javascript:void(0)'"
+                            >Whatsapp</a
+                          >
+                        </li>
+                      </ul>
+                      <div class="clearfix"></div>
+                    </div>
+                    <div class="link-pr">
+                      <h2 class="ab-fd">
+                        {{ 'single_channel.organization_info' | translate }}
+                      </h2>
+                      <ul>
+                        <li>
+                          <a
+                            href="mailto:{{ performer.organization_name }}"
+                            title=""
+                            >{{ performer.organization_name }}</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="mailto:{{ performer.organization_email }}"
+                            title=""
+                            >{{ performer.organization_email }}</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <!-- <div class="col-lg-4">
                                         <div class="stats">
                                             <h2 class="ab-fd">Stats</h2>
                                             <ul>
@@ -133,63 +272,123 @@
                                             </ul>
                                         </div>
                                     </div> -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!--about_tab_content end-->
                 </div>
-                <div class="tab-pane fade show active" id="events_tabs" *ngIf="activeTab == 'events'">
-                    <div class="videso_tb_details">
-                        <div class="container">
-                            <div class="vidz_sec">
-                                <!-- <h3>{{ 'single_channel.upcoming_events' | translate }}</h3> -->
-                                <div class="clearfix"></div>
-                                <div class="vidz_list">
-                                    <div class="row">
-                                        <app-event-block class="col-lg-3 col-md-3 col-sm-6 col-6 full_wdth" [eventData]="event" *ngFor="let event of performer.events"></app-event-block>
-                                    </div>
-                                    <div class="text-center" *ngIf="eventsLoadMoreBtn">
-                                        <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMoreEvents()">{{ 'load_more_btn' | translate }}</a>
-                                    </div>
-                                </div>
-                                <!--vidz_list end-->
-                            </div>
-                            <!--vidz_videos end-->
-                        </div>
-                    </div>
-                    <!--videso_tb_details end-->
-                </div>
-                <div class="tab-pane fade show active" id="rating_tab" *ngIf="activeTab == 'reviews'">
-                    <div class="container">
-                        <ul class="cmn-lst mt-4">
-                            <li *ngFor="let review of performer.reviews">
-                                <div class="vcp_inf w-100">
-                                    <div class="vc_hd">
-                                        <img [src]="review.reviewer.photo ? review.reviewer.photo : './assets/images/resources/th3.png' " alt="" />
-                                    </div>
-                                    <div class="coments">
-                                        <h6 class="mb-2 fw-bold">{{ review.reviewer.full_name }}
-                                            <small class="posted_dt">(@{{ review.reviewer.username }}) <span class="ms-3">{{ review.created_at  | date : 'dd/MM/yyyy HH:mm'  }}</span></small>
-                                        </h6>
-                                        <h6 class="mb-2">
-                                            <small class="posted_dt"><strong>{{ 'single_channel.event' | translate }} : </strong>{{ review.event.title }}</small>
-                                        </h6>
-                                        <div class="rating-starts mb-1">
-                                            <i class="bi me-2" *ngFor="let star of stars; let i = index;" [ngClass]=" i < review.stars ? 'bi-star-fill' : 'bi-star' "></i>
-                                        </div>
-                                        <p>{{ review.review }}</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                        <div class="text-center" *ngIf="reviewLoadMoreBtn">
-                            <a href="javascript:void(0)" class="btn btn-dark" (click)="loadMoreReviews()">{{ 'load_more_btn' | translate }}</a>
-                        </div>
-                    </div>
-                </div>
+              </div>
             </div>
-        </section>
-    </div>
-    <app-footer></app-footer>
+          </div>
+          <!--about_tab_content end-->
+        </div>
+        <div
+          class="tab-pane fade show active"
+          id="events_tabs"
+          *ngIf="activeTab == 'events'"
+        >
+          <div class="videso_tb_details">
+            <div class="container">
+              <div class="vidz_sec">
+                <!-- <h3>{{ 'single_channel.upcoming_events' | translate }}</h3> -->
+                <div class="clearfix"></div>
+                <div class="vidz_list">
+                  <div class="row">
+                    <app-event-block
+                      class="col-lg-3 col-md-3 col-sm-6 col-6 full_wdth"
+                      [eventData]="event"
+                      *ngFor="let event of performer.events"
+                    ></app-event-block>
+                  </div>
+                  <div class="text-center" *ngIf="eventsLoadMoreBtn">
+                    <a
+                      href="javascript:void(0)"
+                      class="btn btn-dark"
+                      (click)="loadMoreEvents()"
+                      >{{ 'load_more_btn' | translate }}</a
+                    >
+                  </div>
+                </div>
+                <!--vidz_list end-->
+              </div>
+              <!--vidz_videos end-->
+            </div>
+          </div>
+          <!--videso_tb_details end-->
+        </div>
+        <div
+          class="tab-pane fade show active"
+          id="rating_tab"
+          *ngIf="activeTab == 'reviews'"
+        >
+          <div class="container">
+            <ul class="cmn-lst mt-4">
+              <li *ngFor="let review of performer.reviews">
+                <div class="vcp_inf w-100">
+                  <div class="vc_hd">
+                    <img
+                      [src]="review.reviewer.photo ? review.reviewer.photo : './assets/images/resources/th3.png' "
+                      alt=""
+                    />
+                  </div>
+                  <div class="coments">
+                    <h6 class="mb-2 fw-bold">
+                      {{ review.reviewer.full_name }}
+                      <small class="posted_dt"
+                        >(@{{ review.reviewer.username }})
+                        <span class="ms-3"
+                          >{{ review.created_at | date : 'dd/MM/yyyy HH:mm'
+                          }}</span
+                        ></small
+                      >
+                    </h6>
+                    <h6 class="mb-2">
+                      <small class="posted_dt"
+                        ><strong
+                          >{{ 'single_channel.event' | translate }} : </strong
+                        >{{ review.event.title }}</small
+                      >
+                    </h6>
+                    <div class="rating-starts mb-1">
+                      <i
+                        class="bi me-2"
+                        *ngFor="let star of stars; let i = index;"
+                        [ngClass]=" i < review.stars ? 'bi-star-fill' : 'bi-star' "
+                      ></i>
+                    </div>
+                    <p>{{ review.review }}</p>
+                  </div>
+                </div>
+              </li>
+            </ul>
+            <div class="text-center" *ngIf="reviewLoadMoreBtn">
+              <a
+                href="javascript:void(0)"
+                class="btn btn-dark"
+                (click)="loadMoreReviews()"
+                >{{ 'load_more_btn' | translate }}</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          class="tab-pane fade show active"
+          id="rating_tab"
+          *ngIf="activeTab == 'posts'"
+        >
+          <div class="container pt-5">
+            <div class="row justify-content-center">
+              <div class="create-post_conatiner col-sm-8">
+                <app-post-card
+                  class="col-lg-3 col-md-4 col-sm-6 col-6 full_wdth"
+                  [comment_post]="comment_post"
+                  [like_post]="like_post"
+                  [userData]="postuser"
+                  [postData]="post"
+                  *ngFor="let post of postList"
+                ></app-post-card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <app-footer></app-footer>
 </ion-content>

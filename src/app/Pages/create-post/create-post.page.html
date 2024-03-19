@@ -4,12 +4,13 @@
       <div class="row justify-content-center">
         <div class="create-post_conatiner col-sm-8">
           <h1>Create Post</h1>
-          <form name="createPostForm" [formGroup]="form" (ngSubmit)="submitForm()">
+          <form name="createPostForm" [formGroup]="myFormGroup" (ngSubmit)="submitPost()">
             <label for="postTitle">Title</label>
             <input
               type="text"
               id="postTitle"
               #title
+              formControlName="title"
               class="input"
               ng-model="post.title"
               required
@@ -20,6 +21,7 @@
               id="postContent"
               #content
               ng-model="post.content"
+              formControlName="content"
               rows="4"
               cols="50"
               required
@@ -33,9 +35,10 @@
               #post_media
               ng-model="post.image"
               name="file"
-              accept="image/*"
               ngf-max-size="2MB"
+              (change)="showBannerPreview($event, previewImg)"
             />
+            <img #previewImg [src]="(userinfo && userinfo.banner) ? userinfo.banner : './assets/images/resources/banner-img.jpg'" width="600" height="200">
             <br />
             <button type="submit"  class="btn btn-primary">
               Post

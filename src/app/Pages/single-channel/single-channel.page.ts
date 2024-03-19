@@ -28,14 +28,55 @@ export class SingleChannelPage implements OnInit {
   eventsParams = {
     page: 1,
   };
-
+  postList = [];
+  postuser;
   constructor(
     public app: AppComponent,
     private rest: RestService,
     private commonService: CommonService,
     private activatedRoute: ActivatedRoute
   ) {}
+  getposts = () => {
+    let user_id = this.performer.id;
+    this.rest.getuserposts({ user_id: user_id }).subscribe((res) => {
+      console.log(res);
+      // if (!this.Friendlist.length) {
+      // console.log(res.)
 
+      this.postList = res.posts;
+      this.postuser = res.user;
+      // }
+    });
+  };
+  like_post = (post_id) => {
+    console.log(post_id);
+    this.rest
+      .likepost(post_id, { user_id: this.app.userinfo.id })
+      .subscribe((res) => {
+        console.log(res);
+        // if (!this.Friendlist.length) {
+        // console.log(res.)
+
+        this.getposts();
+        // }
+      });
+  };
+  comment_post = (post_id, content) => {
+    console.log(post_id, content);
+    this.rest
+      .commentpost(post_id, {
+        user_id: this.app.userinfo.id,
+        content: content.value,
+      })
+      .subscribe((res) => {
+        console.log(res);
+        // if (!this.Friendlist.length) {
+        // console.log(res.)
+
+        this.getposts();
+        // }
+      });
+  };
   loadMoreReviews() {
     this.reviewParams.page++;
     this.rest
@@ -63,7 +104,7 @@ export class SingleChannelPage implements OnInit {
 
     this.rest.sendFriendRequest(obj).subscribe((res) => {
       if (res.friend_request) {
-        this.checkFriendStatus()
+        this.checkFriendStatus();
       }
     });
   }
@@ -82,8 +123,8 @@ export class SingleChannelPage implements OnInit {
           this.friendRequestPending = false;
           this.friendRequestAccepted = true;
         } else {
-        console.log(data?.status,"dsakjdklsakd");
-        this.friendRequestPending = false;
+          console.log(data?.status, 'dsakjdklsakd');
+          this.friendRequestPending = false;
           this.friendRequestAccepted = false;
         }
       });
@@ -122,6 +163,7 @@ export class SingleChannelPage implements OnInit {
         if (this.performer.events.length == 12) {
           this.eventsLoadMoreBtn = true;
         }
+        this.getposts();
       }
     });
   }

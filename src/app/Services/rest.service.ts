@@ -705,6 +705,28 @@ export class RestService {
                 catchError(this.handleError('send User Message'))
             );
     }
+    likepost(post_id,data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('like/post/'+post_id, data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('send User Message'))
+            );
+    }
+    commentpost(post_id,data): Observable<any> {
+        this.commanService.showLoader();
+        return this.http.post('comment/post/'+post_id, data)
+            .pipe(
+                tap((res) => {
+                    console.log(res);
+                    this.commanService.hideLoader();
+                }),
+                catchError(this.handleError('send User Message'))
+            );
+    }
     getuserposts(obj): Observable<any> {
         this.commanService.showLoader();
         return this.http.get(`getpost/${obj.user_id}`)

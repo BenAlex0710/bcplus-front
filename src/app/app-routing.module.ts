@@ -35,7 +35,7 @@ const routes: Routes = [
         canActivate: [AuthGuard]
     },
     {
-        path: 'allPost',
+        path: 'allPost/:user_id',
         loadChildren: () => import('./Pages/all-post/all-post.module').then(m => m.AllPostPageModule),
         canActivate: [AuthGuard]
     },

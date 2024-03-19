@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { CreatePostPageRoutingModule } from './create-post-routing.module';
 import { CreatePostPage } from './create-post.page';
@@ -13,6 +13,7 @@ import { CustomComponentsModule } from 'src/app/Components/custom-components.mod
         FormsModule,
         IonicModule,
         TranslateModule,
+        ReactiveFormsModule,
         CustomComponentsModule,
         CreatePostPageRoutingModule
     ],
