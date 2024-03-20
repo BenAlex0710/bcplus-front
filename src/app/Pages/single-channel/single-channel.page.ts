@@ -43,7 +43,10 @@ export class SingleChannelPage implements OnInit {
       // if (!this.Friendlist.length) {
       // console.log(res.)
 
-      this.postList = res.posts;
+      this.postList = res.posts.sort(
+        // @ts-ignore
+        (a: any, b: any) => new Date(b.created_at) - new Date(a.created_at)
+      );
       this.postuser = res.user;
       // }
     });
